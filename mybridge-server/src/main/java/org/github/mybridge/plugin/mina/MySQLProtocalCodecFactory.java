@@ -6,11 +6,11 @@ import org.apache.mina.filter.codec.ProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 
 
-public class MyProtocalCodecFactory implements ProtocolCodecFactory {
+public class MySQLProtocalCodecFactory implements ProtocolCodecFactory {
 	private final MySQLProtocalEncoder encoder;
 	private final MySQLProtocalDecoder decoder;
 
-	public MyProtocalCodecFactory() {
+	public MySQLProtocalCodecFactory() {
 		encoder = new MySQLProtocalEncoder();
 		decoder = new MySQLProtocalDecoder();
 	}

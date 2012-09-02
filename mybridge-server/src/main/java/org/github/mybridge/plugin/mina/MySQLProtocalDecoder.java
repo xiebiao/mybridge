@@ -5,7 +5,7 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
-import org.github.mybridge.core.packet.PacketHeader;
+import org.github.mybridge.core.packet.HeaderPacket;
 import org.github.mybridge.core.packet.PacketNum;
 
 
@@ -19,7 +19,7 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 		if (currentState == READ_HEADER) {
 			byte[] by = new byte[in.limit()];
 			in.get(by, 0, in.limit());
-			PacketHeader header = new PacketHeader();
+			HeaderPacket header = new HeaderPacket();
 			header.putBytes(by);
 			PacketNum.num = (byte) (header.packetNum + 1);
 			in.flip();

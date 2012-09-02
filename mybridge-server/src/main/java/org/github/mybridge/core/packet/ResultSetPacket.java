@@ -44,7 +44,7 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * @author xiebiao
  * 
  */
-public class PacketResultSet extends BasePacket {
+public class ResultSetPacket extends BasePacket {
 	public long fieldCount;
 
 	@Override

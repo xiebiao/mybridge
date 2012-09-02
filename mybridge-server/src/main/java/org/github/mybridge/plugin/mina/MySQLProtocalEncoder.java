@@ -5,7 +5,7 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
-import org.github.mybridge.core.packet.PacketHeader;
+import org.github.mybridge.core.packet.HeaderPacket;
 import org.github.mybridge.core.packet.PacketNum;
 
 
@@ -17,7 +17,7 @@ public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
 			ProtocolEncoderOutput out) throws Exception {
 		byte[] temp = (byte[]) message;
 		buffer = IoBuffer.allocate(temp.length + 4);
-		PacketHeader header = new PacketHeader();
+		HeaderPacket header = new HeaderPacket();
 		header.packetLen = temp.length;
 		header.packetNum = PacketNum.num;
 		PacketNum.add();

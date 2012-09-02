@@ -12,11 +12,11 @@ import org.github.mybridge.core.handler.MysqlCommondHandler;
 import org.github.mybridge.core.packet.BasePacket;
 import org.github.mybridge.core.packet.HandShakeState;
 import org.github.mybridge.core.packet.MysqlInitPacket;
-import org.github.mybridge.core.packet.PacketAuth;
-import org.github.mybridge.core.packet.PacketCommand;
-import org.github.mybridge.core.packet.PacketError;
+import org.github.mybridge.core.packet.AuthenticationPacket;
+import org.github.mybridge.core.packet.CommandPacket;
+import org.github.mybridge.core.packet.ErrorPacket;
 import org.github.mybridge.core.packet.PacketNum;
-import org.github.mybridge.core.packet.PacketOk;
+import org.github.mybridge.core.packet.OkPacket;
 
 
 public class MysqlServerHandler extends IoHandlerAdapter {
@@ -34,7 +34,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 		switch (state) {
 		case READ_AUTH:
 			state = HandShakeState.WRITE_RESULT;
-			PacketAuth auth = new PacketAuth();
+			AuthenticationPacket auth = new AuthenticationPacket();
 			auth.putBytes(bt);
 			String user = "";
 			if (auth.user.length() > 1) {
@@ -55,26 +55,26 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 				}
 				// 验证用户名与密码
 				if (auth.checkAuth(user, auth.pass)) {
-					PacketOk ok = new PacketOk();
+					OkPacket ok = new OkPacket();
 					session.write(ok.getBytes());
 					break;
 				}
 			} catch (Exception e) {
 				LOG.debug("packet auth failed  " + e);
 				msg = "handshake authpacket failed  ";
-				PacketError errPacket = new PacketError(1045, msg);
+				ErrorPacket errPacket = new ErrorPacket(1045, msg);
 				session.write(errPacket.getBytes());
 				state = HandShakeState.CLOSE;
 				break;
 			}
 			msg = "Access denied for user " + auth.user;
-			PacketError errPacket = new PacketError(1045, msg);
+			ErrorPacket errPacket = new ErrorPacket(1045, msg);
 			session.write(errPacket.getBytes());
 			state = HandShakeState.CLOSE;
 			break;
 		case READ_COMMOND:
 			state = HandShakeState.WRITE_RESULT;
-			PacketCommand cmd = new PacketCommand();
+			CommandPacket cmd = new CommandPacket();
 			cmd.putBytes(bt);
 			List<BasePacket> resultlist = handler.executeCommand(cmd);
 			if (resultlist != null && resultlist.size() > 0) {

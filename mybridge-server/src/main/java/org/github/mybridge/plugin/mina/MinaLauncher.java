@@ -28,7 +28,7 @@ public class MinaLauncher implements Launcher {
 			chain.addLast("logging", loggingFilter);
 		}
 		acceptor.getFilterChain().addLast("codec",
-				new ProtocolCodecFilter(new MyProtocalCodecFactory()));
+				new ProtocolCodecFilter(new MySQLProtocalCodecFactory()));
 		acceptor.getFilterChain().addLast("threadPool",
 				new ExecutorFilter(Executors.newCachedThreadPool()));
 		acceptor.setHandler(new MysqlServerHandler());

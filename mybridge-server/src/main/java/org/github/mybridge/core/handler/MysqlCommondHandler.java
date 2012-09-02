@@ -12,13 +12,13 @@ import java.util.List;
 import org.apache.commons.dbutils.DbUtils;
 import org.github.mybridge.core.MysqlCommand;
 import org.github.mybridge.core.packet.BasePacket;
-import org.github.mybridge.core.packet.PacketCommand;
-import org.github.mybridge.core.packet.PacketEOF;
-import org.github.mybridge.core.packet.PacketError;
-import org.github.mybridge.core.packet.PacketField;
-import org.github.mybridge.core.packet.PacketOk;
-import org.github.mybridge.core.packet.PacketResultSet;
-import org.github.mybridge.core.packet.PacketRowData;
+import org.github.mybridge.core.packet.CommandPacket;
+import org.github.mybridge.core.packet.EOFPacket;
+import org.github.mybridge.core.packet.ErrorPacket;
+import org.github.mybridge.core.packet.FieldPacket;
+import org.github.mybridge.core.packet.OkPacket;
+import org.github.mybridge.core.packet.ResultSetPacket;
+import org.github.mybridge.core.packet.RowDataPacket;
 import org.github.mybridge.engine.DbServer;
 import org.github.mybridge.engine.DbServerFactory;
 
@@ -32,7 +32,7 @@ public class MysqlCommondHandler implements Handler {
 	private final static DbServer dbServer = DbServerFactory.getDbserver("");
 	String db = "";
 
-	public List<BasePacket> executeCommand(PacketCommand cmd) throws Exception {
+	public List<BasePacket> executeCommand(CommandPacket cmd) throws Exception {
 		List<BasePacket> packetList = new ArrayList<BasePacket>();
 		if (cmd.type == MysqlCommand.COM_QUERY) {
 			String sql = new String(cmd.value, charset);
@@ -40,7 +40,7 @@ public class MysqlCommondHandler implements Handler {
 		} else if (cmd.type == MysqlCommand.COM_QUIT) {
 			return null;
 		} else if (cmd.type == MysqlCommand.COM_FIELD_LIST) {
-			packetList.add(new PacketEOF());
+			packetList.add(new EOFPacket());
 			return packetList;
 		} else if (cmd.type == MysqlCommand.COM_INIT_DB) {
 			String db = new String(cmd.value, charset);
@@ -62,7 +62,7 @@ public class MysqlCommondHandler implements Handler {
 		try {
 			packetList = execute(sql);
 		} catch (Exception e) {
-			packetList.add(new PacketError());
+			packetList.add(new ErrorPacket());
 		}
 		return packetList;
 	}
@@ -90,24 +90,24 @@ public class MysqlCommondHandler implements Handler {
 			state = connection.createStatement();
 			result = state.execute(sql);
 		} catch (SQLException e) {
-			PacketError err = new PacketError(e.getErrorCode(),
+			ErrorPacket err = new ErrorPacket(e.getErrorCode(),
 					e.getSQLState(), e.getMessage());
 			packetList.add(err);
 			return packetList;
 		}
 		if (result == false) {
-			PacketOk ok = new PacketOk();
+			OkPacket ok = new OkPacket();
 			ok.affectedRows = state.getUpdateCount();
 			packetList.add(ok);
 			return packetList;
 		}
 		ResultSet rs = state.getResultSet();
 		ResultSetMetaData meta = rs.getMetaData();
-		PacketResultSet resultPacket = new PacketResultSet();
+		ResultSetPacket resultPacket = new ResultSetPacket();
 		resultPacket.fieldCount = meta.getColumnCount();
 		packetList.add(resultPacket);
 		for (int i = 1; i <= meta.getColumnCount(); i++) {
-			PacketField fieldPacket = new PacketField();
+			FieldPacket fieldPacket = new FieldPacket();
 			fieldPacket.db = meta.getCatalogName(i);
 			fieldPacket.table = meta.getTableName(i);
 			fieldPacket.orgTable = meta.getTableName(i);
@@ -118,16 +118,16 @@ public class MysqlCommondHandler implements Handler {
 			fieldPacket.length = meta.getColumnDisplaySize(i);
 			packetList.add(fieldPacket);
 		}
-		packetList.add(new PacketEOF());
+		packetList.add(new EOFPacket());
 		while (rs.next()) {
-			PacketRowData rowPacket = new PacketRowData(charset);
+			RowDataPacket rowPacket = new RowDataPacket(charset);
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String value = rs.getString(i);
 				rowPacket.addValue(value);
 			}
 			packetList.add(rowPacket);
 		}
-		packetList.add(new PacketEOF());
+		packetList.add(new EOFPacket());
 		DbUtils.closeQuietly(connection, state, rs);
 		return packetList;
 	}

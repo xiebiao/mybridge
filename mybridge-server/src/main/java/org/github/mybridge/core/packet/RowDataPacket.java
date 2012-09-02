@@ -40,11 +40,11 @@ import mybridge2.util.CharsetUtils;
  * @author xiebiao
  * 
  */
-public class PacketRowData extends BasePacket {
+public class RowDataPacket extends BasePacket {
 	String charset = "utf8";
 	List<String> valueList = new ArrayList<String>();
 
-	public PacketRowData(String charset) {
+	public RowDataPacket(String charset) {
 		this.charset = charset;
 	}
 
