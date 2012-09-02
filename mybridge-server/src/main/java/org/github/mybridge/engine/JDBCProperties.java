@@ -81,6 +81,10 @@ public class JDBCProperties {
 		return maxWait;
 	}
 
+	public String getDriverName() {
+		return driverName;
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);

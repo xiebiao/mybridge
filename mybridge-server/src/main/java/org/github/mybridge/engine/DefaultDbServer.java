@@ -8,7 +8,7 @@ import com.jolbox.bonecp.BoneCPConfig;
 
 public class DefaultDbServer implements DbServer {
 	private JDBCProperties jdbc;
-	private BoneCP pool;
+	private static BoneCP pool;
 
 	public DefaultDbServer(JDBCProperties jdbc) throws SQLException {
 		if (jdbc == null) {
@@ -23,7 +23,6 @@ public class DefaultDbServer implements DbServer {
 		config.setPassword(this.jdbc.getPassword());
 		config.setMinConnectionsPerPartition(10);
 		config.setMaxConnectionsPerPartition(50);
-
 		pool = new BoneCP(config);
 	}
 

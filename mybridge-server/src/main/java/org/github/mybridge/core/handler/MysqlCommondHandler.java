@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.apache.commons.dbutils.DbUtils;
 import org.github.mybridge.core.MysqlCommand;
 import org.github.mybridge.core.packet.BasePacket;
@@ -21,7 +20,6 @@ import org.github.mybridge.core.packet.ResultSetPacket;
 import org.github.mybridge.core.packet.RowDataPacket;
 import org.github.mybridge.engine.DbServer;
 import org.github.mybridge.engine.DbServerFactory;
-
 
 public class MysqlCommondHandler implements Handler {
 
@@ -128,6 +126,9 @@ public class MysqlCommondHandler implements Handler {
 			packetList.add(rowPacket);
 		}
 		packetList.add(new EOFPacket());
+		// rs.close();
+		// state.close();
+		// connection.close();
 		DbUtils.closeQuietly(connection, state, rs);
 		return packetList;
 	}

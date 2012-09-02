@@ -10,26 +10,19 @@ public class TestJdbc {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(
 				"jdbc:mysql://127.0.0.1:3307/amesit", "root", "yes");
-		for (int i = 0; i < 1; i++) {
-			final Connection con = conn;
-			//new Thread() {
-				//public void run() {
-					try {
-						Statement stmt = con.createStatement();
-						ResultSet rs = stmt
-								.executeQuery("select * from city_info");
-						while (rs.next()) {
-							System.out.println(rs.getString("city_id") + ":"
-									+ rs.getString("city_name"));
-							break;
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				};
-			//}.start();
-		//}
-
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from city_info");			
+			while (rs.next()) {
+				System.out.println(rs.getString("city_id")
+						+ ":"
+						+ new String(rs.getString("city_name").getBytes("iso-8859-1"),
+								"gbk"));
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
