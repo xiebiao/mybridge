@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>mybridge</groupId>
+	<artifactId>mybridge</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Log libs -->
+		<log4j_version>1.2.16</log4j_version>
+		<slf4j_version>1.6.6</slf4j_version>
+		<slf4j_log4j12_version>1.6.4</slf4j_log4j12_version>
+		<!-- Log libs END -->
+		<mysql_driver_version>5.1.21</mysql_driver_version>
+		<findbugs_version>2.5.2</findbugs_version>
+		<jdepend_version>2.0-beta-2</jdepend_version>
+		<!-- test -->
+		<junit_version>4.10</junit_version>
+	</properties>
+	<modules>
+		<module>mybridge-server</module>
+		<module>mybridge-test</module>
+	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql_driver_version}</version>
+		</dependency>
+	</dependencies>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>cd-repository</id>
+			<url>http://cd.artifactory.360buy-develop.com/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${findbugs_version}</version>
+					<configuration>
+						<!-- 输出报告文件 -->
+						<findbugsXmlOutput>true</findbugsXmlOutput>
+						<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+						<xmlOutput>true</xmlOutput>
+						<!-- 过滤报告内容 -->
+						<!-- excludeFilterFile>findbugs-exclude.xml</excludeFilterFile -->
+						<!-- includeFilterFile>findbugs-include.xml</includeFilterFile -->
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

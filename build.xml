@@ -1,0 +1,17 @@
+<project default="dist" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+	<property name="project_name" value="mybridge" />
+	<property name="bin_dir" value="${basedir}/bin" />
+	<property name="src_dir" value="${basedir}/mybridge-server" />
+	<target name="init">
+		<!-- -->
+
+	</target>
+	<target name="compile">
+		<!-- -->
+
+	</target>
+	<target name="dist">
+		<!-- -->
+
+	</target>
+</project>

@@ -1,0 +1,8 @@
+<mybridge>
+	<pool>
+		<datasource initialPoolSize="3" minPoolSize="2" maxPoolSize="40" user="root"
+			password="111111" driverClass="com.mysql.jdbc.Driver" jdbcUrl="jdbc:mysql://127.0.0.1:3306" />
+		<datasource initialPoolSize="3" minPoolSize="2" maxPoolSize="40" user="qwgqq"
+			password="111111" driverClass="com.mysql.jdbc.Driver" jdbcUrl="jdbc:mysql://127.0.0.1:3306" />
+	</pool>
+</mybridge>

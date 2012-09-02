@@ -1,0 +1,16 @@
+<mybridge>
+	<server ip="127.0.0.1" port="8306" threadNum="16" userName="root"
+		password="" />
+	<tableset>
+		<table name="useracct" db="mybridge">
+			<field name="userid" len="10" type="int" value="" charset="utf8" />
+			<field name="username" len="32" type="string" value="" charset="utf8" />
+			<field name="password" len="32" type="string" value="" charset="utf8" />
+		</table>
+		<table name="userinfo" db="mybridge">
+			<field name="userid" len="10" type="int" default="" charset="utf8" />
+			<field name="username" len="32" type="string" value="" charset="utf8" />
+			<field name="password" len="32" type="string" value="" charset="utf8" />
+		</table>
+	</tableset>
+</mybridge>

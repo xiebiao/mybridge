@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pools>
+	<server schema="db1">
+	  <driverName>com.mysql.jdbc.Driver</driverName>
+	  <url>jdbc:mysql://127.0.0.1:3306/amesit</url>
+	  <user>root</user>
+	  <password>wangzhu</password>
+	  <maxActive>1000</maxActive>
+	  <maxIdle>1000</maxIdle>
+	  <minIdle>1</minIdle>
+	  <maxWait>50000</maxWait>
+	</server>
+		
+</pools>
