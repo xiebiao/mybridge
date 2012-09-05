@@ -19,6 +19,12 @@ public class ServerHandler extends SimpleChannelHandler {
 	public ServerHandler() {
 	}
 
+	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e)
+			throws Exception {
+		super.channelOpen(ctx, e);
+		LOG.debug("channelOpen...");
+	}
+
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
@@ -28,9 +34,8 @@ public class ServerHandler extends SimpleChannelHandler {
 		for (Packet request : fsm.getRequests()) {
 			if (request instanceof HandshakePacket) {
 				LOG.debug("request is ...HandshakePacket");
-
 				PacketInit pack = new PacketInit();
-				e.getChannel().write("xxx");
+				e.getChannel().write(pack.getBytes());
 			} else {
 				ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 				PacketBuffer packetBuf = new PacketBuffer(buffer);

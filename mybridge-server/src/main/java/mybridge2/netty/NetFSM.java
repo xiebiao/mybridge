@@ -51,7 +51,7 @@ public class NetFSM implements Serializable {
 	}
 
 	public void onConnect(Channel channel) {
-		LOG.debug("onConnect:");
+		LOG.debug("NetFSM.onConnect:");
 		handshakePacket = new HandshakePacket();
 		handshakePacket.setProtocolVersion((byte) (10 & 0xff));
 		handshakePacket.setServerVersion("5.5.10-rds");
@@ -63,7 +63,7 @@ public class NetFSM implements Serializable {
 		handshakePacket.setRestOfScrambleBuff(Util.getNRandomString(12));
 		requests.add(handshakePacket);
 		status = Status.STATE_AUTH;
-		LOG.debug("onConnect END");
+		LOG.debug("NetFSM.onConnect END");
 	}
 
 	public void onMessage(Channel channel, PacketBuffer buffer) {

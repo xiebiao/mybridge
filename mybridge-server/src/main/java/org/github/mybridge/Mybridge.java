@@ -2,12 +2,13 @@ package org.github.mybridge;
 
 import java.util.Properties;
 
-
 import org.apache.log4j.PropertyConfigurator;
 import org.github.mybridge.launch.Launcher;
 import org.github.mybridge.plugin.mina.MinaLauncher;
 
 public class Mybridge {
+	public static final String version = "0.0.1";
+	public static final String name = "Mybridge";
 	public static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory
 			.getLogger(Mybridge.class);
 

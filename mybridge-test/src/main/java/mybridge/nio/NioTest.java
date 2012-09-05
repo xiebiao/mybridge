@@ -5,10 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
-
-import mybridge2.util.CharsetUtils;
 
 public class NioTest {
 	public static void fileRead() {
@@ -17,7 +14,7 @@ public class NioTest {
 			FileInputStream in = new FileInputStream(file);
 			byte[] b = new byte[1024];
 			in.read(b);
-		System.out.println(new String(b));
+			System.out.println(new String(b));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,19 +26,13 @@ public class NioTest {
 		try {
 			FileInputStream in = new FileInputStream(file);
 			FileChannel fc = in.getChannel();
-			ByteBuffer bb = ByteBuffer.allocate(1024);
 			try {
+				ByteBuffer bb = ByteBuffer.allocate((int)fc.size());
 				fc.read(bb);
 				bb.flip();
-				CharBuffer c = bb.asCharBuffer();
-				// System.out.print(System.getProperty("file.encoding"));
-				StringBuffer db = new StringBuffer();
-				while (c.hasRemaining()) {
-					db.append(c.get());
-				}
-				System.out.println(new String(db.toString().getBytes("utf-8"),
-						"gbk"));
-				System.out.println(CharsetUtils.getCharset(db.toString()));
+				byte[] bytes = new byte[bb.remaining()];
+				bb.get(bytes);
+				System.out.println("bufferRead:	" + new String(bytes));
 				fc.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
