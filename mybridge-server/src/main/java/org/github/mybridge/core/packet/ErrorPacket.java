@@ -61,7 +61,7 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * @author xiebiao
  * 
  */
-public class ErrorPacket extends BasePacket {
+public class ErrorPacket extends Packet {
 	public byte type = (byte) 0xff;
 	public int errno = 0;
 	public byte sqlStateMark = 0x23;

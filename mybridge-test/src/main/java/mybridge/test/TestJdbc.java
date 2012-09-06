@@ -9,7 +9,7 @@ public class TestJdbc {
 	public static void main(String[] args) throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(
-				"jdbc:mysql://127.0.0.1:3307/amesit", "root", "yes");
+				"jdbc:mysql://10.28.162.75:3307/amesit", "root", "yes");
 		try {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from city_info");			

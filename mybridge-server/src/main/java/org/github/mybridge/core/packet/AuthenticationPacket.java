@@ -58,7 +58,7 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * @author xiaog
  * 
  */
-public class AuthenticationPacket extends BasePacket {
+public class AuthenticationPacket extends Packet {
 
 	public long clientFlag;
 	public long maxPacketSize;

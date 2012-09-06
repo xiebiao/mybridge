@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.github.mybridge.core.MysqlCommand;
-import org.github.mybridge.core.packet.BasePacket;
+import org.github.mybridge.core.packet.Packet;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.EOFPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
@@ -30,8 +30,8 @@ public class MysqlCommondHandler implements Handler {
 	private final static DbServer dbServer = DbServerFactory.getDbserver("");
 	String db = "";
 
-	public List<BasePacket> executeCommand(CommandPacket cmd) throws Exception {
-		List<BasePacket> packetList = new ArrayList<BasePacket>();
+	public List<Packet> executeCommand(CommandPacket cmd) throws Exception {
+		List<Packet> packetList = new ArrayList<Packet>();
 		if (cmd.type == MysqlCommand.COM_QUERY) {
 			String sql = new String(cmd.value, charset);
 			return executeSQL(sql);
@@ -55,8 +55,8 @@ public class MysqlCommondHandler implements Handler {
 	 * 
 	 * @param sql
 	 */
-	private List<BasePacket> executeSQL(String sql) {
-		List<BasePacket> packetList = new ArrayList<BasePacket>();
+	private List<Packet> executeSQL(String sql) {
+		List<Packet> packetList = new ArrayList<Packet>();
 		try {
 			packetList = execute(sql);
 		} catch (Exception e) {
@@ -65,8 +65,8 @@ public class MysqlCommondHandler implements Handler {
 		return packetList;
 	}
 
-	private List<BasePacket> execute(String sql) throws SQLException {
-		List<BasePacket> packetList = new ArrayList<BasePacket>();
+	private List<Packet> execute(String sql) throws SQLException {
+		List<Packet> packetList = new ArrayList<Packet>();
 		// Connection con= MysqlUtil.getConnection();
 		// GenericObjectPool<Connection> pool = ServerConnectionPool.poolMap
 		// .get("db1");
