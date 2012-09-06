@@ -11,7 +11,7 @@ import org.github.mybridge.core.handler.Handler;
 import org.github.mybridge.core.handler.MysqlCommondHandler;
 import org.github.mybridge.core.packet.Packet;
 import org.github.mybridge.core.packet.HandshakeState;
-import org.github.mybridge.core.packet.HandshakeInitPacket;
+import org.github.mybridge.core.packet.InitialHandshakePacket;
 import org.github.mybridge.core.packet.AuthenticationPacket;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
@@ -144,7 +144,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 		PacketNum.num = 0;
 		state = HandshakeState.WRITE_INIT;
 		handler = new MysqlCommondHandler();
-		HandshakeInitPacket initPacket = new HandshakeInitPacket();
+		InitialHandshakePacket initPacket = new InitialHandshakePacket();
 		byte[] temp = initPacket.getBytes();
 		session.write(temp);
 

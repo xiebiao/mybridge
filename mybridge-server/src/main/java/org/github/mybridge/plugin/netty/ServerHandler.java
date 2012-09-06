@@ -4,7 +4,7 @@ import mybridge2.netty.NetFSM;
 import mybridge2.packet.HandshakePacket;
 import mybridge2.packet.Packet;
 
-import org.github.mybridge.core.packet.HandshakeInitPacket;
+import org.github.mybridge.core.packet.InitialHandshakePacket;
 import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -31,23 +31,23 @@ public class ServerHandler extends SimpleChannelHandler {
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
 		LOG.debug("channelConnected...");
-		NetFSM fsm = new NetFSM();
-		ctx.setAttachment(fsm);
-		fsm.onConnect(e.getChannel());
-		for (Packet request : fsm.getRequests()) {
-			if (request instanceof HandshakePacket) {
-				LOG.debug("request is ...HandshakePacket");
-				HandshakeInitPacket pack = new HandshakeInitPacket();
-				byte[] bytes = pack.getBytes();
-				LOG.debug(StringUtils.printHexadecimal(bytes));
-				e.getChannel().write(bytes);
-			} else {
-				ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-				PacketBuffer packetBuf = new PacketBuffer(buffer);
-				request.write2Buffer(packetBuf);
-				e.getChannel().write(packetBuf);
-			}
-		}
+//		NetFSM fsm = new NetFSM();
+//		ctx.setAttachment(fsm);
+//		fsm.onConnect(e.getChannel());
+//		for (Packet request : fsm.getRequests()) {
+//			if (request instanceof HandshakePacket) {
+//				LOG.debug("request is ...HandshakePacket");
+//				HandshakeInitPacket pack = new HandshakeInitPacket();
+//				byte[] bytes = pack.getBytes();
+//				LOG.debug(StringUtils.printHexadecimal(bytes));
+//				e.getChannel().write(bytes);
+//			} else {
+//				ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+//				PacketBuffer packetBuf = new PacketBuffer(buffer);
+//				request.write2Buffer(packetBuf);
+//				e.getChannel().write(packetBuf);
+//			}
+//		}
 	}
 
 	@Override
