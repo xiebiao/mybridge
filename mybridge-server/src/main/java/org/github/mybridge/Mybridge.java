@@ -22,7 +22,7 @@ public class Mybridge {
 			LOG.debug("startup...");
 			// 处理main参数
 			Configuration config = new Configuration();
-			config.setIp("127.0.0.1");
+			config.setIp("10.28.162.75");
 			config.setPort(3307);
 			config.setDebug(debug);
 			//Launcher launcher = new MinaLauncher();
