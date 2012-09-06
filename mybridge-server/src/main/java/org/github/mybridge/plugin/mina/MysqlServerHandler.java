@@ -2,7 +2,6 @@ package org.github.mybridge.plugin.mina;
 
 import java.util.List;
 
-
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
@@ -17,7 +16,6 @@ import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
 import org.github.mybridge.core.packet.PacketNum;
 import org.github.mybridge.core.packet.OkPacket;
-
 
 public class MysqlServerHandler extends IoHandlerAdapter {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
@@ -122,20 +120,10 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
 		super.sessionCreated(session);
-		/**
-		 * handershake initpacket from server to clinet the first packet also
-		 * called greet
-		 */
-		// PacketNum.num=0;
-		// state=HandShakeEnum.WRITE_INIT;
-		// handler=new MysqlCommondHandler();
-		// MysqlInitPacket initPacket=new MysqlInitPacket();
-		// byte[] temp=initPacket.getBytes();
-		// session.write(temp);
 	}
 
 	/**
-	 * handershake initpacket from server to clinet the first packet also called
+	 * handershake initpacket from server to client the first packet also called
 	 * greet
 	 */
 	@Override
@@ -147,14 +135,12 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
 		byte[] temp = initPacket.getBytes();
 		session.write(temp);
-
 	}
 
 	@Override
 	public void sessionIdle(IoSession session, IdleStatus status)
 			throws Exception {
 		super.sessionIdle(session, status);
-		// System.out.println("idle ........");
 	}
 
 }

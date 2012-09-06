@@ -3,8 +3,8 @@ package org.github.mybridge.utils;
 public class StringUtils {
 	private final static String blank = "    ";
 
-	public static String printHexadecimal(byte[] bytes) {
-		return printHexadecimal(bytes, bytes.length);
+	public static String printHex(byte[] bytes) {
+		return printHex(bytes, bytes.length);
 	}
 
 	/**
@@ -20,7 +20,7 @@ public class StringUtils {
 	 *            默认为 @param bytes 的长度
 	 * @return
 	 */
-	public static String printHexadecimal(byte[] bytes, int length) {
+	public static String printHex(byte[] bytes, int length) {
 
 		if (bytes == null) {
 			throw new java.lang.IllegalArgumentException();
@@ -77,6 +77,6 @@ public class StringUtils {
 	public final static void main(String[] args) {
 		String str = "this is a test text";
 		byte[] bytes = str.getBytes();
-		System.out.println(StringUtils.printHexadecimal(bytes, bytes.length));
+		System.out.println(StringUtils.printHex(bytes, bytes.length));
 	}
 }

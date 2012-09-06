@@ -32,7 +32,7 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 			byte[] temp = new byte[in.limit() - 4];
 			in.get(temp);
 			// debug
-			LOG.debug(StringUtils.printHexadecimal(temp));
+			LOG.debug(StringUtils.printHex(temp));
 			out.write(temp);
 		}
 

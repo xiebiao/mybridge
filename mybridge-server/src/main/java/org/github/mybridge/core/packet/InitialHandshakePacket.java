@@ -16,7 +16,7 @@ public class InitialHandshakePacket extends Packet {
 	public byte[] lastScrambleBuff = new byte[13];
 
 	/**
-	 * when clinet connect server,ther server return init packet to client,
+	 * when client connect server,ther server return init packet to client,
 	 * called greet
 	 */
 	private byte[] initPacket() {

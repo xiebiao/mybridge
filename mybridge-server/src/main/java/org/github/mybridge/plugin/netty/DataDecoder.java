@@ -1,5 +1,7 @@
 package org.github.mybridge.plugin.netty;
 
+import org.github.mybridge.core.packet.HeaderPacket;
+import org.github.mybridge.core.packet.PacketNum;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -22,9 +24,12 @@ public class DataDecoder extends FrameDecoder {
 		LOG.debug("READ_HEADER:readable");
 		if (currentState == READ_HEADER) {
 			currentState = READ_BODY;
-			if (buffer.readable()) {
-				LOG.debug("READ_HEADER:readable");
-			}
+			byte[] by = new byte[buffer.capacity()];
+			buffer.getBytes(0, by, 0, by.length);			
+			HeaderPacket header = new HeaderPacket();
+			header.putBytes(by);
+			PacketNum.num = (byte) (header.packetNum + 1);
+			currentState = READ_BODY;
 		} else {
 			currentState = READ_HEADER;
 			if (buffer.readable()) {
