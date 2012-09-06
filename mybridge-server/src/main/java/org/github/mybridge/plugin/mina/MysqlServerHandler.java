@@ -9,9 +9,9 @@ import org.apache.mina.core.session.IoSession;
 import org.github.mybridge.core.MysqlCommand;
 import org.github.mybridge.core.handler.Handler;
 import org.github.mybridge.core.handler.MysqlCommondHandler;
-import org.github.mybridge.core.packet.BasePacket;
-import org.github.mybridge.core.packet.HandShakeState;
-import org.github.mybridge.core.packet.InitPacket;
+import org.github.mybridge.core.packet.Packet;
+import org.github.mybridge.core.packet.HandshakeState;
+import org.github.mybridge.core.packet.HandshakeInitPacket;
 import org.github.mybridge.core.packet.AuthenticationPacket;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
@@ -22,7 +22,7 @@ import org.github.mybridge.core.packet.OkPacket;
 public class MysqlServerHandler extends IoHandlerAdapter {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
 			.getClass());
-	private HandShakeState state;
+	private HandshakeState state;
 	private Handler handler;
 
 	@Override
@@ -33,7 +33,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 		String msg = "";
 		switch (state) {
 		case READ_AUTH:
-			state = HandShakeState.WRITE_RESULT;
+			state = HandshakeState.WRITE_RESULT;
 			AuthenticationPacket auth = new AuthenticationPacket();
 			auth.putBytes(bt);
 			String user = "";
@@ -64,19 +64,19 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 				msg = "handshake authpacket failed  ";
 				ErrorPacket errPacket = new ErrorPacket(1045, msg);
 				session.write(errPacket.getBytes());
-				state = HandShakeState.CLOSE;
+				state = HandshakeState.CLOSE;
 				break;
 			}
 			msg = "Access denied for user " + auth.user;
 			ErrorPacket errPacket = new ErrorPacket(1045, msg);
 			session.write(errPacket.getBytes());
-			state = HandShakeState.CLOSE;
+			state = HandshakeState.CLOSE;
 			break;
 		case READ_COMMOND:
-			state = HandShakeState.WRITE_RESULT;
+			state = HandshakeState.WRITE_RESULT;
 			CommandPacket cmd = new CommandPacket();
 			cmd.putBytes(bt);
-			List<BasePacket> resultlist = handler.executeCommand(cmd);
+			List<Packet> resultlist = handler.executeCommand(cmd);
 			if (resultlist != null && resultlist.size() > 0) {
 				writePacketList(session, resultlist);
 			}
@@ -92,8 +92,8 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 	 * @param session
 	 * @param resultlist
 	 */
-	private void writePacketList(IoSession session, List<BasePacket> resultlist) {
-		for (BasePacket packet : resultlist) {
+	private void writePacketList(IoSession session, List<Packet> resultlist) {
+		for (Packet packet : resultlist) {
 			byte[] temp = packet.getBytes();
 			session.write(temp);
 		}
@@ -104,10 +104,10 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 		super.messageSent(session, message);
 		switch (state) {
 		case WRITE_INIT:
-			state = HandShakeState.READ_AUTH;
+			state = HandshakeState.READ_AUTH;
 			break;
 		case WRITE_RESULT:
-			state = HandShakeState.READ_COMMOND;
+			state = HandshakeState.READ_COMMOND;
 		case CLOSE:
 		default:
 			break;
@@ -142,9 +142,9 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 	public void sessionOpened(IoSession session) throws Exception {
 		super.sessionOpened(session);
 		PacketNum.num = 0;
-		state = HandShakeState.WRITE_INIT;
+		state = HandshakeState.WRITE_INIT;
 		handler = new MysqlCommondHandler();
-		InitPacket initPacket = new InitPacket();
+		HandshakeInitPacket initPacket = new HandshakeInitPacket();
 		byte[] temp = initPacket.getBytes();
 		session.write(temp);
 

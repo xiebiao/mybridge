@@ -60,7 +60,7 @@ package org.github.mybridge.core.packet;
  * @author xiebiao
  * 
  */
-public class ExecutePacket extends BasePacket {
+public class ExecutePacket extends Packet {
 
 	@Override
 	public byte[] getBytes() {

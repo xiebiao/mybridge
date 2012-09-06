@@ -4,7 +4,7 @@ import mybridge2.netty.NetFSM;
 import mybridge2.packet.HandshakePacket;
 import mybridge2.packet.Packet;
 
-import org.github.mybridge.core.packet.InitPacket;
+import org.github.mybridge.core.packet.HandshakeInitPacket;
 import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -37,7 +37,7 @@ public class ServerHandler extends SimpleChannelHandler {
 		for (Packet request : fsm.getRequests()) {
 			if (request instanceof HandshakePacket) {
 				LOG.debug("request is ...HandshakePacket");
-				InitPacket pack = new InitPacket();
+				HandshakeInitPacket pack = new HandshakeInitPacket();
 				byte[] bytes = pack.getBytes();
 				LOG.debug(StringUtils.printHexadecimal(bytes));
 				e.getChannel().write(bytes);

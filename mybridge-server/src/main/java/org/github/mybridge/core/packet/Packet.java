@@ -1,6 +1,6 @@
 package org.github.mybridge.core.packet;
 
-public abstract class BasePacket {
+public abstract class Packet {
 
 	public abstract byte[] getBytes();
 

@@ -64,7 +64,7 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * @author xiaog
  * 
  */
-public class OkPacket extends BasePacket {
+public class OkPacket extends Packet {
 	public byte type = 0;
 	public long affectedRows = 0;
 	public long insertId = 0;

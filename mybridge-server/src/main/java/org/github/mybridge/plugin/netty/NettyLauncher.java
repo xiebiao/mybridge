@@ -22,7 +22,7 @@ public class NettyLauncher implements Launcher {
 						Executors.newCachedThreadPool(),
 						Executors.newCachedThreadPool()));
 		// Set up the pipeline factory.
-		bootstrap.setPipelineFactory(new ServerFactory());
+		bootstrap.setPipelineFactory(new ServerPipelineFactory());
 		// Bind and start to accept incoming connections.
 		bootstrap.bind(new InetSocketAddress(config.getIp(), config.getPort()));
 

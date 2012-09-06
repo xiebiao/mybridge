@@ -1,6 +1,6 @@
 package org.github.mybridge.core.packet;
 
-public enum HandShakeState {
+public enum HandshakeState {
 	WRITE_INIT, // 初始化
 	READ_AUTH, // 验证客户端用户名密码
 	WRITE_RESULT, // 结束

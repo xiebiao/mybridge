@@ -126,7 +126,7 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * @author xiebiao
  * 
  */
-public class FieldPacket extends BasePacket {
+public class FieldPacket extends Packet {
 	public String catalog = "def";
 	public String db = "";
 	public String table = "";
