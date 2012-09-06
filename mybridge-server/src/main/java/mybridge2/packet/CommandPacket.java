@@ -2,7 +2,8 @@ package mybridge2.packet;
 
 import java.io.UnsupportedEncodingException;
 
-import mybridge2.netty.PacketBuffer;
+import org.github.mybridge.plugin.netty.PacketBuffer;
+
 
 public abstract class CommandPacket extends Packet {
 	public static final byte COM_SLEEP = 0;

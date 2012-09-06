@@ -2,7 +2,8 @@ package mybridge2.packet;
 
 import java.io.UnsupportedEncodingException;
 
-import mybridge2.netty.PacketBuffer;
+import org.github.mybridge.plugin.netty.PacketBuffer;
+
 
 /**
  * <一句话功能简述> 所有packet的父类. <功能详细描述>

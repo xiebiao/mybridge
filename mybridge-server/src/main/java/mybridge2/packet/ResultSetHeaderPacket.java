@@ -3,7 +3,8 @@ package mybridge2.packet;
 
 import java.io.UnsupportedEncodingException;
 
-import mybridge2.netty.PacketBuffer;
+import org.github.mybridge.plugin.netty.PacketBuffer;
+
 
 /**
  * Bytes Name ----- ---- 1-9 (Length-Coded-Binary) field_count 1-9

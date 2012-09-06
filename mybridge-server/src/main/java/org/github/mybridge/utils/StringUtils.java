@@ -1,8 +1,11 @@
 package org.github.mybridge.utils;
 
-
 public class StringUtils {
 	private final static String blank = "    ";
+
+	public static String printHexadecimal(byte[] bytes) {
+		return printHexadecimal(bytes, bytes.length);
+	}
 
 	/**
 	 * 

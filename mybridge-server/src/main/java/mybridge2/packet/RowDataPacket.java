@@ -4,7 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import mybridge2.netty.PacketBuffer;
+import org.github.mybridge.plugin.netty.PacketBuffer;
+
 import mybridge2.util.Constants;
 
 /**

@@ -1,9 +1,11 @@
-package mybridge2.netty;
+package org.github.mybridge.plugin.netty;
 
+import mybridge2.netty.NetFSM;
 import mybridge2.packet.HandshakePacket;
 import mybridge2.packet.Packet;
-import mybridge2.packet2.PacketInit;
 
+import org.github.mybridge.core.packet.InitPacket;
+import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -28,14 +30,17 @@ public class ServerHandler extends SimpleChannelHandler {
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
+		LOG.debug("channelConnected...");
 		NetFSM fsm = new NetFSM();
 		ctx.setAttachment(fsm);
 		fsm.onConnect(e.getChannel());
 		for (Packet request : fsm.getRequests()) {
 			if (request instanceof HandshakePacket) {
 				LOG.debug("request is ...HandshakePacket");
-				PacketInit pack = new PacketInit();
-				e.getChannel().write(pack.getBytes());
+				InitPacket pack = new InitPacket();
+				byte[] bytes = pack.getBytes();
+				LOG.debug(StringUtils.printHexadecimal(bytes));
+				e.getChannel().write(bytes);
 			} else {
 				ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 				PacketBuffer packetBuf = new PacketBuffer(buffer);
@@ -49,6 +54,11 @@ public class ServerHandler extends SimpleChannelHandler {
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
 			throws Exception {
 		e.getChannel().close();
+	}
+
+	public void channelBound(ChannelHandlerContext ctx, ChannelStateEvent e)
+			throws Exception {
+		LOG.debug("channelBound");		
 	}
 
 	@Override

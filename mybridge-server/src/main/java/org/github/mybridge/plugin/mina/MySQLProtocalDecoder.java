@@ -1,15 +1,16 @@
 package org.github.mybridge.plugin.mina;
 
-
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.github.mybridge.core.packet.HeaderPacket;
 import org.github.mybridge.core.packet.PacketNum;
-
+import org.github.mybridge.utils.StringUtils;
 
 public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
+	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
+			.getClass());
 	static int READ_HEADER = 0;//
 	static int READ_BODY = 1;//
 	int currentState = READ_HEADER;
@@ -30,8 +31,9 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 			currentState = READ_HEADER;
 			byte[] temp = new byte[in.limit() - 4];
 			in.get(temp);
+			// debug
+			LOG.debug(StringUtils.printHexadecimal(temp));
 			out.write(temp);
-
 		}
 
 	}

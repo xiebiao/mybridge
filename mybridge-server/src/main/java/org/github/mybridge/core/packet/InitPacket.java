@@ -2,7 +2,7 @@ package org.github.mybridge.core.packet;
 
 import org.github.mybridge.core.buffer.ByteBuffer;
 
-public class MysqlInitPacket extends BasePacket {
+public class InitPacket extends BasePacket {
 
 	public byte protocol_version = 0x0a;
 	public String serverVersion = "5.5.22 MySQL Community Server \0";// 这里要用'\0'结束

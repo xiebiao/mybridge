@@ -18,6 +18,7 @@ import mybridge2.util.Security;
 import mybridge2.util.Util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.github.mybridge.plugin.netty.PacketBuffer;
 import org.jboss.netty.channel.Channel;
 
 public class NetFSM implements Serializable {
@@ -52,9 +53,10 @@ public class NetFSM implements Serializable {
 
 	public void onConnect(Channel channel) {
 		LOG.debug("NetFSM.onConnect:");
+	
 		handshakePacket = new HandshakePacket();
 		handshakePacket.setProtocolVersion((byte) (10 & 0xff));
-		handshakePacket.setServerVersion("5.5.10-rds");
+		handshakePacket.setServerVersion("5.5.10-rds\0");
 		handshakePacket.setThreadId(Thread.currentThread().hashCode());
 		handshakePacket.setSeed(Util.getNRandomString(8));
 		handshakePacket.setServerCapabilities(0x800FF7FF); // : 填写对应的SERVER能力

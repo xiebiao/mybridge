@@ -2,7 +2,8 @@ package mybridge2.packet;
 
 import java.io.UnsupportedEncodingException;
 
-import mybridge2.netty.PacketBuffer;
+import org.github.mybridge.plugin.netty.PacketBuffer;
+
 import mybridge2.util.Constants;
 
 public class FieldPacket extends Packet {

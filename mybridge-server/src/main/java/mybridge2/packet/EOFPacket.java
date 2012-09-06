@@ -2,7 +2,8 @@ package mybridge2.packet;
 
 import java.io.UnsupportedEncodingException;
 
-import mybridge2.netty.PacketBuffer;
+import org.github.mybridge.plugin.netty.PacketBuffer;
+
 
 public class EOFPacket extends Packet {
 	private static final byte PACKET_TYPE_EOF = (byte) 0xfe;

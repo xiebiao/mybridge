@@ -2,10 +2,10 @@ package mybridge2.packet;
 
 import java.util.Arrays;
 
-import mybridge2.netty.PacketBuffer;
 import mybridge2.util.Constants;
 
 import org.apache.log4j.Logger;
+import org.github.mybridge.plugin.netty.PacketBuffer;
 
 /**
  * From client to server during initial handshake.

@@ -24,7 +24,6 @@ public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
 		buffer.put(header.getBytes());
 		buffer.put(temp);
 		buffer.flip();
-
 		out.write(buffer);
 		out.flush();
 	}

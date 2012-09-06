@@ -1,9 +1,9 @@
 package mybridge2.packet;
 
 
-import mybridge2.netty.PacketBuffer;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.github.mybridge.plugin.netty.PacketBuffer;
 
 
 /**
