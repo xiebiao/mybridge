@@ -15,6 +15,7 @@ import org.github.mybridge.core.packet.OkPacket;
 import org.github.mybridge.core.packet.Packet;
 import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 public class MySQLProtocol {
@@ -40,14 +41,15 @@ public class MySQLProtocol {
 		String msg = "";
 		ErrorPacket errPacket = null;
 		switch (state) {
-		case READ_AUTH:			
+		case READ_AUTH:
 			state = HandshakeState.WRITE_RESULT;
 			AuthenticationPacket auth = new AuthenticationPacket();
-			auth.putBytes(bytes);					
+			auth.putBytes(bytes);
 			String user = "";
 			if (auth.clientUser.length() > 1) {
-				user = auth.clientUser.substring(0, auth.clientUser.length() - 1);
-			}		
+				user = auth.clientUser.substring(0,
+						auth.clientUser.length() - 1);
+			}
 			try {
 				// 编码
 				if (MySQLCommand.index2Charset
@@ -62,10 +64,13 @@ public class MySQLProtocol {
 					handler.setDb(dbname);
 				}
 				// 验证用户名与密码
-			
+
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
-					channel.write(ok.getBytes());
+					ChannelBuffer buffer = ChannelBuffers
+							.buffer(ok.getBytes().length);
+					buffer.writeBytes(ok.getBytes());
+					channel.write(buffer);
 					LOG.debug(user);
 					break;
 				}
