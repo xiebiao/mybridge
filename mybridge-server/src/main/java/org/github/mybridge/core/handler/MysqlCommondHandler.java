@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
-import org.github.mybridge.core.MysqlCommand;
+import org.github.mybridge.core.MySQLCommand;
 import org.github.mybridge.core.packet.Packet;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.EOFPacket;
@@ -32,15 +32,15 @@ public class MysqlCommondHandler implements Handler {
 
 	public List<Packet> executeCommand(CommandPacket cmd) throws Exception {
 		List<Packet> packetList = new ArrayList<Packet>();
-		if (cmd.type == MysqlCommand.COM_QUERY) {
+		if (cmd.type == MySQLCommand.COM_QUERY) {
 			String sql = new String(cmd.value, charset);
 			return executeSQL(sql);
-		} else if (cmd.type == MysqlCommand.COM_QUIT) {
+		} else if (cmd.type == MySQLCommand.COM_QUIT) {
 			return null;
-		} else if (cmd.type == MysqlCommand.COM_FIELD_LIST) {
+		} else if (cmd.type == MySQLCommand.COM_FIELD_LIST) {
 			packetList.add(new EOFPacket());
 			return packetList;
-		} else if (cmd.type == MysqlCommand.COM_INIT_DB) {
+		} else if (cmd.type == MySQLCommand.COM_INIT_DB) {
 			String db = new String(cmd.value, charset);
 			LOG.debug("com init db " + db);
 			String sql = "USE" + db;
@@ -111,7 +111,7 @@ public class MysqlCommondHandler implements Handler {
 			fieldPacket.orgTable = meta.getTableName(i);
 			fieldPacket.name = meta.getColumnName(i);
 			fieldPacket.orgName = meta.getColumnName(i);
-			fieldPacket.type = (byte) MysqlCommand.javaTypeToMysql(meta
+			fieldPacket.type = (byte) MySQLCommand.javaTypeToMysql(meta
 					.getColumnType(i));
 			fieldPacket.length = meta.getColumnDisplaySize(i);
 			packetList.add(fieldPacket);

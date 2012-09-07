@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
-import org.github.mybridge.core.MysqlCommand;
+import org.github.mybridge.core.MySQLCommand;
 import org.github.mybridge.core.handler.Handler;
 import org.github.mybridge.core.handler.MysqlCommondHandler;
 import org.github.mybridge.core.packet.Packet;
@@ -40,9 +40,9 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 			}
 			try {
 				// 编码
-				if (MysqlCommand.index2Charset
+				if (MySQLCommand.index2Charset
 						.containsKey((int) auth.charsetNum)) {
-					handler.setCharset(MysqlCommand.index2Charset
+					handler.setCharset(MySQLCommand.index2Charset
 							.get((int) auth.charsetNum));
 				}
 				// 取得schema
