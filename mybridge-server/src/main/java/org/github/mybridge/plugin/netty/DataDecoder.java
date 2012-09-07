@@ -14,6 +14,7 @@ public class DataDecoder extends FrameDecoder {
 	static int READ_HEADER = 0;//
 	static int READ_BODY = 1;//
 	int currentState = READ_HEADER;
+	static int sum = 0;
 
 	public DataDecoder() {
 		LOG.debug("DataDecoder init...");
@@ -22,22 +23,28 @@ public class DataDecoder extends FrameDecoder {
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer) throws Exception {
+		LOG.debug("READ_HEADER:" + sum);
+		sum++;
+		if (buffer.readableBytes() < 5) {
+			return null;
+		}
 		if (currentState == READ_HEADER) {
-			LOG.debug("READ_HEADER:readable");
-			currentState = READ_BODY;
-			byte[] by = new byte[buffer.capacity()];
-			buffer.getBytes(0, by, 0, by.length);
-			//这里可以使用netty POJO编码
+			currentState = READ_BODY;	
+			byte[] bytes = new byte[buffer.capacity() - 4];
+			buffer.getBytes(4, bytes, 0, bytes.length);
+			// 这里可以使用netty POJO编码
 			HeaderPacket header = new HeaderPacket();
-			header.putBytes(by);
-			LOG.debug(StringUtils.printHex(by));
-			PacketNum.num = (byte) (header.packetNum + 1);
-			//channel.write(by);
-			return header;
-	} else {
+			header.putBytes(bytes);
+			LOG.debug(StringUtils.printHex(bytes));
+			PacketNum.num = (byte) (header.packetNum + 1);			
+			return bytes;
+		} else {
 			currentState = READ_HEADER;
+			LOG.debug("READ_BODY");
 			if (buffer.readable()) {
-				LOG.debug("READ_BODY:readable");
+				byte[] bytes = new byte[buffer.capacity()];
+				buffer.getBytes(0, bytes, 0, bytes.length);
+				LOG.debug(StringUtils.printHex(bytes));
 			}
 		}
 		return null;

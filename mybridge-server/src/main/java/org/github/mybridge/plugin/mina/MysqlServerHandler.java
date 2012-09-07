@@ -16,6 +16,7 @@ import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
 import org.github.mybridge.core.packet.PacketNum;
 import org.github.mybridge.core.packet.OkPacket;
+import org.github.mybridge.utils.StringUtils;
 
 public class MysqlServerHandler extends IoHandlerAdapter {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
@@ -27,16 +28,16 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		super.messageReceived(session, message);
-		byte[] bt = (byte[]) message;
+		byte[] bytes = (byte[]) message;
 		String msg = "";
 		switch (state) {
 		case READ_AUTH:
 			state = HandshakeState.WRITE_RESULT;
 			AuthenticationPacket auth = new AuthenticationPacket();
-			auth.putBytes(bt);
+			auth.putBytes(bytes);
 			String user = "";
-			if (auth.user.length() > 1) {
-				user = auth.user.substring(0, auth.user.length() - 1);
+			if (auth.clientUser.length() > 1) {
+				user = auth.clientUser.substring(0, auth.clientUser.length() - 1);
 			}
 			try {
 				// 编码
@@ -52,7 +53,8 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 					handler.setDb(dbname);
 				}
 				// 验证用户名与密码
-				if (auth.checkAuth(user, auth.pass)) {
+				LOG.debug(StringUtils.printHex(auth.clientPassword));
+				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
 					session.write(ok.getBytes());
 					break;
@@ -65,7 +67,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 				state = HandshakeState.CLOSE;
 				break;
 			}
-			msg = "Access denied for user " + auth.user;
+			msg = "Access denied for user " + auth.clientUser;
 			ErrorPacket errPacket = new ErrorPacket(1045, msg);
 			session.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;
@@ -73,7 +75,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 		case READ_COMMOND:
 			state = HandshakeState.WRITE_RESULT;
 			CommandPacket cmd = new CommandPacket();
-			cmd.putBytes(bt);
+			cmd.putBytes(bytes);
 			List<Packet> resultlist = handler.executeCommand(cmd);
 			if (resultlist != null && resultlist.size() > 0) {
 				writePacketList(session, resultlist);

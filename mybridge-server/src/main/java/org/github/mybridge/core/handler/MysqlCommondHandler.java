@@ -10,12 +10,13 @@ import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.github.mybridge.core.MySQLCommand;
-import org.github.mybridge.core.packet.Packet;
+import org.github.mybridge.core.handler.exception.CommandException;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.EOFPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
 import org.github.mybridge.core.packet.FieldPacket;
 import org.github.mybridge.core.packet.OkPacket;
+import org.github.mybridge.core.packet.Packet;
 import org.github.mybridge.core.packet.ResultSetPacket;
 import org.github.mybridge.core.packet.RowDataPacket;
 import org.github.mybridge.engine.DbServer;
@@ -30,22 +31,28 @@ public class MysqlCommondHandler implements Handler {
 	private final static DbServer dbServer = DbServerFactory.getDbserver("");
 	String db = "";
 
-	public List<Packet> executeCommand(CommandPacket cmd) throws Exception {
-		List<Packet> packetList = new ArrayList<Packet>();
-		if (cmd.type == MySQLCommand.COM_QUERY) {
-			String sql = new String(cmd.value, charset);
-			return executeSQL(sql);
-		} else if (cmd.type == MySQLCommand.COM_QUIT) {
-			return null;
-		} else if (cmd.type == MySQLCommand.COM_FIELD_LIST) {
-			packetList.add(new EOFPacket());
-			return packetList;
-		} else if (cmd.type == MySQLCommand.COM_INIT_DB) {
-			String db = new String(cmd.value, charset);
-			LOG.debug("com init db " + db);
-			String sql = "USE" + db;
-			setDb(db);
-			return executeSQL(sql);
+	public List<Packet> executeCommand(CommandPacket cmd)
+			throws CommandException {
+		List<Packet> packetList = null;
+		try {
+			packetList = new ArrayList<Packet>();
+			if (cmd.type == MySQLCommand.COM_QUERY) {
+				String sql = new String(cmd.value, charset);
+				return executeSQL(sql);
+			} else if (cmd.type == MySQLCommand.COM_QUIT) {
+				return null;
+			} else if (cmd.type == MySQLCommand.COM_FIELD_LIST) {
+				packetList.add(new EOFPacket());
+				return packetList;
+			} else if (cmd.type == MySQLCommand.COM_INIT_DB) {
+				String db = new String(cmd.value, charset);
+				String sql = "USE" + db;
+				setDb(db);
+				return executeSQL(sql);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CommandException("Command excute error");
 		}
 		return packetList;
 	}
@@ -67,21 +74,7 @@ public class MysqlCommondHandler implements Handler {
 
 	private List<Packet> execute(String sql) throws SQLException {
 		List<Packet> packetList = new ArrayList<Packet>();
-		// Connection con= MysqlUtil.getConnection();
-		// GenericObjectPool<Connection> pool = ServerConnectionPool.poolMap
-		// .get("db1");
 		Connection connection = dbServer.getConnection();
-		// try {
-		// con = pool.borrowObject();
-		// } catch (Exception e1) {
-		// LOG.debug("abtain connection faild : ", e1);
-		// } finally {
-		// try {
-		// pool.returnObject(con);
-		// } catch (Exception e) {
-		// LOG.debug("return connection to pool faild: ", e);
-		// }
-		// }
 		boolean result;
 		Statement state;
 		try {
@@ -141,11 +134,11 @@ public class MysqlCommondHandler implements Handler {
 
 	}
 
-	public void setCharset(String charset) throws Exception {
+	public void setCharset(String charset) {
 		this.charset = charset;
 	}
 
-	public void setDb(String db) throws Exception {
+	public void setDb(String db) {
 		this.db = db;
 	}
 

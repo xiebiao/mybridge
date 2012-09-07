@@ -25,7 +25,7 @@ public class Mybridge {
 			config.setIp("127.0.0.1");
 			config.setPort(3307);
 			config.setDebug(debug);
-			//Launcher launcher = new MinaLauncher();
+			// Launcher launcher = new MinaLauncher();
 			Launcher launcher = new NettyLauncher();
 			launcher.start(config);
 		} catch (Exception e) {

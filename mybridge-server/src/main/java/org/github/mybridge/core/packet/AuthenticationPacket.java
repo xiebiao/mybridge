@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 
 import org.github.mybridge.core.buffer.ByteBuffer;
 
-
 /**
  * <pre>
  * From client to server during initial handshake.
@@ -64,12 +63,12 @@ public class AuthenticationPacket extends Packet {
 	public long maxPacketSize;
 	public byte charsetNum;
 	public byte[] filler;
-	public String user;// from client user name
-	public byte[] pass;// from client pass
-	public String dbName;// from client schema
+	public String clientUser;
+	public byte[] clientPassword;
+	public String dbName;
 
-	private String serverName = "root";// the server name
-	private String serverPass = "yes";// the server pass
+	private String serverUser = "root";// the server name
+	private String serverPassword = "yes";// the server pass
 
 	@Override
 	public byte[] getBytes() {
@@ -83,19 +82,19 @@ public class AuthenticationPacket extends Packet {
 		maxPacketSize = buf.readUInt32();
 		charsetNum = buf.readByte();
 		filler = buf.readBytes(23);
-		user = buf.readNullString();
-		pass = buf.readLCBytes();
+		clientUser = buf.readNullString();
+		clientPassword = buf.readLCBytes();
 		dbName = buf.readNullString();
 	}
 
 	public boolean checkAuth(String clientUser, byte[] cPass) throws Exception {
-		if (!serverName.equals(clientUser)) {
+		if (!serverUser.equals(clientUser)) {
 			return false;
 		}
-		if (cPass.length == 0 && serverPass.length() == 0) {
+		if (cPass.length == 0 && serverPassword.length() == 0) {
 			return true;
 		}
-		byte[] sPass = encodePassword(serverPass);
+		byte[] sPass = encodePassword(serverPassword);
 		if (cPass.length != sPass.length) {
 			return false;
 		}
@@ -111,23 +110,17 @@ public class AuthenticationPacket extends Packet {
 		MessageDigest md;
 		byte[] seed = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 };
 		md = MessageDigest.getInstance("SHA-1");
-
 		byte[] passwordHashStage1 = md.digest(password.getBytes("ASCII"));
 		md.reset();
-
 		byte[] passwordHashStage2 = md.digest(passwordHashStage1);
 		md.reset();
 		md.update(seed);
 		md.update(passwordHashStage2);
-
 		byte[] toBeXord = md.digest();
-
 		int numToXor = toBeXord.length;
-
 		for (int i = 0; i < numToXor; i++) {
 			toBeXord[i] = (byte) (toBeXord[i] ^ passwordHashStage1[i]);
 		}
-
 		return toBeXord;
 	}
 
