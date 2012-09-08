@@ -12,6 +12,7 @@ public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
 			.getClass());
 	private IoBuffer buffer;
+	public static int num = 0;
 
 	public void encode(IoSession session, Object message,
 			ProtocolEncoderOutput out) throws Exception {
@@ -19,15 +20,18 @@ public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
 		buffer = IoBuffer.allocate(temp.length + 4);
 		HeaderPacket header = new HeaderPacket();
 		header.packetLen = temp.length;
-		header.packetNum = PacketNum.num;
+		header.packetNum = PacketNum.get();
 		PacketNum.add();
-		LOG.debug(StringUtils.printHex(header.getBytes()));
-		LOG.debug(StringUtils.printHex(temp));
+		if(num<=2){
+		LOG.debug(num+":"+StringUtils.printHex(header.getBytes()));
+		LOG.debug(num+":"+StringUtils.printHex(temp));
+		}
 		buffer.put(header.getBytes());
 		buffer.put(temp);
 		buffer.flip();
 		out.write(buffer);
 		out.flush();
+		num++;
 	}
 
 }

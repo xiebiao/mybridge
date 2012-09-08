@@ -13,9 +13,6 @@ import org.github.mybridge.core.packet.HandshakeState;
 import org.github.mybridge.core.packet.InitialHandshakePacket;
 import org.github.mybridge.core.packet.OkPacket;
 import org.github.mybridge.core.packet.Packet;
-import org.github.mybridge.utils.StringUtils;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
 public class MySQLProtocol {
@@ -31,10 +28,22 @@ public class MySQLProtocol {
 	}
 
 	public void onConnected(Channel channel) {
-		state = HandshakeState.READ_AUTH;
+		state = HandshakeState.WRITE_INIT;
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
-		LOG.debug(StringUtils.printHex(initPacket.getBytes()));
 		channel.write(initPacket.getBytes());
+	}
+
+	public void writeComplete() {
+		switch (state) {
+		case WRITE_INIT:
+			state = HandshakeState.READ_AUTH;
+			break;
+		case WRITE_RESULT:
+			state = HandshakeState.READ_COMMOND;
+		case CLOSE:
+		default:
+			break;
+		}
 	}
 
 	public void onRequestReceived(Channel channel, byte[] bytes) {
@@ -67,11 +76,7 @@ public class MySQLProtocol {
 
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
-					ChannelBuffer buffer = ChannelBuffers
-							.buffer(ok.getBytes().length);
-					buffer.writeBytes(ok.getBytes());
-					channel.write(buffer);
-					LOG.debug(user);
+					channel.write(ok.getBytes());
 					break;
 				}
 			} catch (Exception e) {
@@ -82,7 +87,7 @@ public class MySQLProtocol {
 				state = HandshakeState.CLOSE;
 				break;
 			}
-			LOG.debug(StringUtils.printHex(auth.clientPassword));
+
 			msg = "Access denied for user " + auth.clientUser;
 			errPacket = new ErrorPacket(1045, msg);
 			channel.write(errPacket.getBytes());
@@ -92,19 +97,27 @@ public class MySQLProtocol {
 			state = HandshakeState.WRITE_RESULT;
 			CommandPacket cmd = new CommandPacket();
 			cmd.putBytes(bytes);
+			List<Packet> resultlist = null;
 			try {
-				List<Packet> resultlist = handler.executeCommand(cmd);
+				resultlist = handler.executeCommand(cmd);
 			} catch (CommandException e) {
 				e.printStackTrace();
 				errPacket = new ErrorPacket(1046, "server error");
 				channel.write(errPacket);
 			}
-			// if (resultlist != null && resultlist.size() > 0) {
-			// writePacketList(session, resultlist);
-			// }
+			if (resultlist != null && resultlist.size() > 0) {
+				writePacketList(channel, resultlist);
+			}
 			break;
 		default:
 			break;
+		}
+	}
+
+	private void writePacketList(Channel channel, List<Packet> resultlist) {
+		for (Packet packet : resultlist) {
+			byte[] temp = packet.getBytes();
+			channel.write(temp);
 		}
 	}
 }

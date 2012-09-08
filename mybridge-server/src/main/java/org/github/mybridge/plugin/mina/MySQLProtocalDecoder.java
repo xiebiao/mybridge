@@ -22,7 +22,7 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 			in.get(by, 0, in.limit());
 			HeaderPacket header = new HeaderPacket();
 			header.putBytes(by);
-			PacketNum.num = (byte) (header.packetNum + 1);
+			PacketNum.set((byte) (header.packetNum + 1));
 			in.flip();
 			in.position(4);
 			in.limit(header.packetLen + 4);
@@ -32,7 +32,7 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 			byte[] temp = new byte[in.limit() - 4];
 			in.get(temp);
 			// debug
-			LOG.debug(StringUtils.printHex(temp));
+		//	LOG.debug(StringUtils.printHex(temp));
 			out.write(temp);
 		}
 

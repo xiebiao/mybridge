@@ -8,6 +8,7 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.jboss.netty.channel.WriteCompletionEvent;
 
 public class ServerHandler extends SimpleChannelHandler {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
@@ -31,6 +32,13 @@ public class ServerHandler extends SimpleChannelHandler {
 	}
 
 	@Override
+	public void writeComplete(ChannelHandlerContext ctx, WriteCompletionEvent e)
+			throws Exception {
+		mysql.writeComplete();
+		LOG.debug("writeComplete...");
+	}
+
+	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
 			throws Exception {
 		e.getChannel().close();
@@ -46,7 +54,7 @@ public class ServerHandler extends SimpleChannelHandler {
 			throws Exception {
 		if (e.getMessage() instanceof ChannelBuffer) {
 			ChannelBuffer buffer = (ChannelBuffer) e.getMessage();
-			byte[] bytes = new byte[buffer.capacity()-4];
+			byte[] bytes = new byte[buffer.capacity() - 4];
 			buffer.getBytes(4, bytes, 0, bytes.length);
 			mysql.onRequestReceived(e.getChannel(), bytes);
 		}

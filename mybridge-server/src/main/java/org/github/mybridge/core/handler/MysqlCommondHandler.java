@@ -35,6 +35,7 @@ public class MysqlCommondHandler implements Handler {
 			throws CommandException {
 		List<Packet> packetList = null;
 		try {
+			LOG.debug(cmd.type+"");
 			packetList = new ArrayList<Packet>();
 			if (cmd.type == MySQLCommand.COM_QUERY) {
 				String sql = new String(cmd.value, charset);

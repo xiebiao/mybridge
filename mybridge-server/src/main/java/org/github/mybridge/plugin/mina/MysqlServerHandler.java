@@ -37,7 +37,8 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 			auth.putBytes(bytes);
 			String user = "";
 			if (auth.clientUser.length() > 1) {
-				user = auth.clientUser.substring(0, auth.clientUser.length() - 1);
+				user = auth.clientUser.substring(0,
+						auth.clientUser.length() - 1);
 			}
 			try {
 				// 编码
@@ -131,7 +132,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		super.sessionOpened(session);
-		PacketNum.num = 0;
+		PacketNum.set((byte) 0);
 		state = HandshakeState.WRITE_INIT;
 		handler = new MysqlCommondHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
