@@ -23,26 +23,19 @@ public class DataDecoder extends FrameDecoder {
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer) throws Exception {
-		if (buffer.readableBytes() < 4) {
+		if (buffer.readableBytes() < 5) {
 			return null;
+		} else {
+			byte[] bytes = new byte[buffer.capacity() - 4];
+			buffer.getBytes(4, bytes, 0, bytes.length);
+			HeaderPacket header = new HeaderPacket();
+			header.putBytes(bytes);
+			header.setPacketId((byte)(header.getPacketId()+1));
+			header.packetIdInc();
+			buffer.skipBytes(4);
+			sum++;
+			return buffer;
 		}
-		// LOG.debug("READ_HEADER:" + sum);
-		// currentState = READ_BODY;
-		// byte[] bytes = new byte[buffer.capacity() - 4];
-		// buffer.getBytes(4, bytes, 0, bytes.length);
-		// // 这里可以使用netty POJO编码
-		// HeaderPacket header = new HeaderPacket();
-		// header.putBytes(bytes);
-		// LOG.debug(StringUtils.printHex(bytes));
-		// PacketNum.num = (byte) (header.packetNum + 1);
-		byte[] bytes = new byte[buffer.capacity() - 4];
-		buffer.getBytes(4, bytes, 0, bytes.length);
-		HeaderPacket header = new HeaderPacket();
-		header.putBytes(bytes);
-		PacketNum.set((byte) (header.packetNum + 1));
-		buffer.skipBytes(4);
-		sum++;
-		return buffer;
 
 	}
 }

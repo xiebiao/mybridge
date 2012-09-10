@@ -16,18 +16,18 @@ public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
 
 	public void encode(IoSession session, Object message,
 			ProtocolEncoderOutput out) throws Exception {
-		byte[] temp = (byte[]) message;
-		buffer = IoBuffer.allocate(temp.length + 4);
+		byte[] msg = (byte[]) message;
+		buffer = IoBuffer.allocate(msg.length + 4);
 		HeaderPacket header = new HeaderPacket();
-		header.packetLen = temp.length;
-		header.packetNum = PacketNum.get();
-		PacketNum.add();
-		if(num<=2){
-		LOG.debug(num+":"+StringUtils.printHex(header.getBytes()));
-		LOG.debug(num+":"+StringUtils.printHex(temp));
+		header.setPacketLen(msg.length);
+		header.setPacketId(header.getPacketId());
+		header.packetIdInc();
+		if (num <= 2) {
+			LOG.debug(num + ":" + StringUtils.printHex(header.getBytes()));
+			LOG.debug(num + ":" + StringUtils.printHex(msg));
 		}
 		buffer.put(header.getBytes());
-		buffer.put(temp);
+		buffer.put(msg);
 		buffer.flip();
 		out.write(buffer);
 		out.flush();

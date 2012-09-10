@@ -6,4 +6,17 @@ public abstract class Packet {
 
 	public abstract void putBytes(byte[] bytes);
 
+	private static byte packetId = 0;
+
+	public synchronized void packetIdInc() {
+		packetId++;
+	}
+
+	public synchronized void setPacketId(byte id) {
+		packetId = id;
+	}
+
+	public byte getPacketId() {
+		return packetId;
+	}
 }

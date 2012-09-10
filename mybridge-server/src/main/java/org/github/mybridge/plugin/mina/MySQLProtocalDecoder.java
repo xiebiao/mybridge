@@ -22,10 +22,10 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 			in.get(by, 0, in.limit());
 			HeaderPacket header = new HeaderPacket();
 			header.putBytes(by);
-			PacketNum.set((byte) (header.packetNum + 1));
+			PacketNum.set((byte) (header.getPacketId() + 1));
 			in.flip();
 			in.position(4);
-			in.limit(header.packetLen + 4);
+			in.limit(header.getPacketLen() + 4);
 			currentState = READ_BODY;
 		} else {
 			currentState = READ_HEADER;

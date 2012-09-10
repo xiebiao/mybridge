@@ -30,9 +30,8 @@ package org.github.mybridge.core.packet;
  */
 
 public class HeaderPacket extends Packet {
-	public final static int size = 4;
-	public int packetLen;
-	public byte packetNum;
+	private final static int size = 4;
+	private int packetLen;
 
 	@Override
 	public byte[] getBytes() {
@@ -40,7 +39,7 @@ public class HeaderPacket extends Packet {
 		temp[0] = (byte) (packetLen & 0xff);
 		temp[1] = (byte) ((packetLen >> 8) & 0xff);
 		temp[2] = (byte) ((packetLen >> 16) & 0xff);
-		temp[3] = packetNum;
+		temp[3] = this.getPacketId();
 		return temp;
 	}
 
@@ -48,7 +47,14 @@ public class HeaderPacket extends Packet {
 	public void putBytes(byte[] bs) {
 		packetLen = (bs[0] & 0xff) | ((bs[1] & 0xff) << 8)
 				| ((bs[2] & 0xff) << 16);
-		packetNum = bs[3];
+		this.setPacketId(bs[3]);
 	}
 
+	public int getPacketLen() {
+		return this.packetLen;
+	}
+
+	public void setPacketLen(int len) {
+		this.packetLen = len;
+	}
 }

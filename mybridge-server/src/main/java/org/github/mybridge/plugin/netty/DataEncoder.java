@@ -27,8 +27,8 @@ public class DataEncoder extends OneToOneEncoder {
 		}
 		byte[] body = (byte[]) msg;
 		HeaderPacket header = new HeaderPacket();
-		header.packetLen = body.length;
-		header.packetNum = PacketNum.get();
+		header.setPacketLen(body.length);
+		header.setPacketId(header.getPacketId());
 		ChannelBuffer buffer = ChannelBuffers.buffer(body.length + 4);
 		// debug
 		if (num <= 2) {

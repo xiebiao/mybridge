@@ -54,7 +54,6 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 					handler.setDb(dbname);
 				}
 				// 验证用户名与密码
-				LOG.debug(StringUtils.printHex(auth.clientPassword));
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
 					session.write(ok.getBytes());
