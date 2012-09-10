@@ -22,13 +22,12 @@ public class DataEncoder extends OneToOneEncoder {
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel,
 			Object msg) throws Exception {
-		if (msg instanceof Packet) {
-			LOG.debug(" encode: is Packet ...");
-		}
+		LOG.debug(" encode ...");
 		byte[] body = (byte[]) msg;
 		HeaderPacket header = new HeaderPacket();
 		header.setPacketLen(body.length);
 		header.setPacketId(header.getPacketId());
+		header.packetIdInc();
 		ChannelBuffer buffer = ChannelBuffers.buffer(body.length + 4);
 		// debug
 		if (num <= 2) {

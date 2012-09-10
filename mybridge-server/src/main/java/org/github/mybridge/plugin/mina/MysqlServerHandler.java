@@ -102,6 +102,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 		super.messageSent(session, message);
+
 		switch (state) {
 		case WRITE_INIT:
 			state = HandshakeState.READ_AUTH;

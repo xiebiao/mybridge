@@ -23,14 +23,17 @@ public class DataDecoder extends FrameDecoder {
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer) throws Exception {
-		if (buffer.readableBytes() < 5) {
+		if (buffer.readableBytes() < 4) {
 			return null;
 		} else {
 			byte[] bytes = new byte[buffer.capacity() - 4];
 			buffer.getBytes(4, bytes, 0, bytes.length);
 			HeaderPacket header = new HeaderPacket();
 			header.putBytes(bytes);
-			header.setPacketId((byte)(header.getPacketId()+1));
+			if (sum < 3) {
+				LOG.debug(StringUtils.printHex(bytes));
+				LOG.debug("packetId:"+header.getPacketId() + "");
+			}
 			header.packetIdInc();
 			buffer.skipBytes(4);
 			sum++;

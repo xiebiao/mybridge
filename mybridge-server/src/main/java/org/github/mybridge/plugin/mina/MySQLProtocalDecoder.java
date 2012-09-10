@@ -18,22 +18,21 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 	public void decode(IoSession session, IoBuffer in, ProtocolDecoderOutput out)
 			throws Exception {
 		if (currentState == READ_HEADER) {
+			currentState = READ_BODY;
 			byte[] by = new byte[in.limit()];
 			in.get(by, 0, in.limit());
 			HeaderPacket header = new HeaderPacket();
 			header.putBytes(by);
+			LOG.debug("packetId:" + header.getPacketId());
 			PacketNum.set((byte) (header.getPacketId() + 1));
 			in.flip();
 			in.position(4);
 			in.limit(header.getPacketLen() + 4);
-			currentState = READ_BODY;
 		} else {
 			currentState = READ_HEADER;
-			byte[] temp = new byte[in.limit() - 4];
-			in.get(temp);
-			// debug
-		//	LOG.debug(StringUtils.printHex(temp));
-			out.write(temp);
+			byte[] msg = new byte[in.limit() - 4];
+			in.get(msg);
+			out.write(msg);
 		}
 
 	}
