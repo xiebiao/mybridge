@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.github.mybridge.core.buffer.ByteBuffer;
-
-import mybridge2.util.CharsetUtils;
+import org.github.mybridge.utils.CharsetUtils;
 
 /**
  * <pre>

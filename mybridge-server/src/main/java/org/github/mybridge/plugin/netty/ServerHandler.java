@@ -1,7 +1,6 @@
 package org.github.mybridge.plugin.netty;
 
 import org.github.mybridge.core.MySQLProtocol;
-import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
@@ -54,8 +53,8 @@ public class ServerHandler extends SimpleChannelHandler {
 			throws Exception {
 		if (e.getMessage() instanceof ChannelBuffer) {
 			ChannelBuffer buffer = (ChannelBuffer) e.getMessage();
-			byte[] bytes = new byte[buffer.capacity() - 4];
-			buffer.getBytes(4, bytes, 0, bytes.length);
+			byte[] bytes = new byte[buffer.readableBytes()];
+			buffer.readBytes(bytes);
 			mysql.onRequestReceived(e.getChannel(), bytes);
 		}
 	}

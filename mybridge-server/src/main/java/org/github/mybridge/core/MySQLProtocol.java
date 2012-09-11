@@ -13,6 +13,7 @@ import org.github.mybridge.core.packet.HandshakeState;
 import org.github.mybridge.core.packet.InitialHandshakePacket;
 import org.github.mybridge.core.packet.OkPacket;
 import org.github.mybridge.core.packet.Packet;
+import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.channel.Channel;
 
 public class MySQLProtocol {
@@ -51,9 +52,12 @@ public class MySQLProtocol {
 		ErrorPacket errPacket = null;
 		switch (state) {
 		case READ_AUTH:
+			LOG.debug("READ_AUTH");
+			LOG.debug(StringUtils.printHex(bytes));
 			state = HandshakeState.WRITE_RESULT;
 			AuthenticationPacket auth = new AuthenticationPacket();
 			auth.putBytes(bytes);
+			
 			String user = "";
 			if (auth.clientUser.length() > 1) {
 				user = auth.clientUser.substring(0,
@@ -87,13 +91,13 @@ public class MySQLProtocol {
 				state = HandshakeState.CLOSE;
 				break;
 			}
-
 			msg = "Access denied for user " + auth.clientUser;
 			errPacket = new ErrorPacket(1045, msg);
 			channel.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;
 			break;
 		case READ_COMMOND:
+			LOG.debug("READ_COMMOND");
 			state = HandshakeState.WRITE_RESULT;
 			CommandPacket cmd = new CommandPacket();
 			cmd.putBytes(bytes);

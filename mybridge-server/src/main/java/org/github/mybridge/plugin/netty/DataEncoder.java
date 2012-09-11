@@ -16,23 +16,21 @@ public class DataEncoder extends OneToOneEncoder {
 	public static int num = 0;
 
 	public DataEncoder() {
-		LOG.debug("DataEncoder init...");
 	}
 
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel,
 			Object msg) throws Exception {
-		LOG.debug(" encode ...");
 		byte[] body = (byte[]) msg;
 		HeaderPacket header = new HeaderPacket();
 		header.setPacketLen(body.length);
 		header.setPacketId(header.getPacketId());
-		header.packetIdInc();
 		ChannelBuffer buffer = ChannelBuffers.buffer(body.length + 4);
 		// debug
-		if (num <= 2) {
-			LOG.debug(num + ":" + StringUtils.printHex(header.getBytes()));
-			LOG.debug(num + ":" + StringUtils.printHex(body));
+		if (num <3) {
+			LOG.debug(num + ":packetId:" + header.getPacketId());
+			//LOG.debug(num + ":" + StringUtils.printHex(header.getBytes()));
+			//LOG.debug(num + ":" + StringUtils.printHex(body));
 		}
 		buffer.writeBytes(header.getBytes());
 		buffer.writeBytes(body);

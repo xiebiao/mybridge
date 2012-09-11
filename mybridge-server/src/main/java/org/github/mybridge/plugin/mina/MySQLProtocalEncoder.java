@@ -23,6 +23,7 @@ public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
 		header.setPacketId(header.getPacketId());
 		header.packetIdInc();
 		if (num <= 2) {
+			LOG.debug(num + ": packetId:" + header.getPacketId());
 			LOG.debug(num + ":" + StringUtils.printHex(header.getBytes()));
 			LOG.debug(num + ":" + StringUtils.printHex(msg));
 		}

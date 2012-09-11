@@ -17,28 +17,54 @@ public class DataDecoder extends FrameDecoder {
 	static int sum = 0;
 
 	public DataDecoder() {
-		LOG.debug("DataDecoder init...");
 	}
 
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer) throws Exception {
-		if (buffer.readableBytes() < 4) {
+		if (buffer.readableBytes() < 5) {
 			return null;
 		} else {
-			byte[] bytes = new byte[buffer.capacity() - 4];
-			buffer.getBytes(4, bytes, 0, bytes.length);
-			HeaderPacket header = new HeaderPacket();
-			header.putBytes(bytes);
-			if (sum < 3) {
-				LOG.debug(StringUtils.printHex(bytes));
-				LOG.debug("packetId:"+header.getPacketId() + "");
-			}
-			header.packetIdInc();
+			byte[] header = new byte[4];
+			buffer.getBytes(0, header);
+			HeaderPacket headerPacket = new HeaderPacket();
+			headerPacket.putBytes(header);
 			buffer.skipBytes(4);
+			//byte[] body = new byte[buffer.readableBytes()];
+			//buffer.readBytes(body);
+			if (sum < 3) {
+				LOG.debug("READ_HEADER bytes.length:" + header.length
+						+ " packetId:" + headerPacket.getPacketId() + " bytes:"
+						+ StringUtils.printHex(header));
+			}
+			// header.packetIdInc();
+
 			sum++;
 			return buffer;
 		}
+		// if (buffer.readableBytes() < 5) {
+		// return null;
+		// }
+		// if (currentState == READ_HEADER) {
+		// currentState = READ_BODY;
+		// byte[] bytes = new byte[buffer.readableBytes()];
+		// buffer.getBytes(0, bytes, 0, bytes.length);
+		// HeaderPacket header = new HeaderPacket();
+		// header.putBytes(bytes);
+		// LOG.debug("READ_HEADER bytes.length:"+bytes.length+" packetId:" +
+		// header.getPacketId());
+		// PacketNum.set((byte) (header.getPacketId() + 1));
+		// buffer.skipBytes(4);
+		// return null;
+		// } else {
+		// currentState = READ_HEADER;
+		// //debug
+		// byte[] msg = new byte[buffer.readableBytes()];
+		// buffer.getBytes(0, msg, 0, msg.length);
+		// LOG.debug("READ_BODY bytes.length:"+msg.length+" packetId:" +
+		// StringUtils.printHex(msg));
+		// return buffer;
+		// }
 
 	}
 }

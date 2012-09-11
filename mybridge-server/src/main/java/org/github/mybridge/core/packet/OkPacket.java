@@ -68,7 +68,7 @@ public class OkPacket extends Packet {
 	public byte type = 0;
 	public long affectedRows = 0;
 	public long insertId = 0;
-	public int serverStatus = 0;
+	public int serverStatus = 2;
 	public int warningCount = 0;
 	public String message = "";
 

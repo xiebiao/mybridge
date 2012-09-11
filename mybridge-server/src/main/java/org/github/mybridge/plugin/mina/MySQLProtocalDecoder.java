@@ -19,19 +19,20 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 			throws Exception {
 		if (currentState == READ_HEADER) {
 			currentState = READ_BODY;
-			byte[] by = new byte[in.limit()];
-			in.get(by, 0, in.limit());
+			byte[] bytes = new byte[in.limit()];
+			in.get(bytes, 0, in.limit());
 			HeaderPacket header = new HeaderPacket();
-			header.putBytes(by);
-			LOG.debug("packetId:" + header.getPacketId());
+			header.putBytes(bytes);
+			LOG.debug("READ_HEADER bytes.length:"+bytes.length+" packetId:" + header.getPacketId()+"  bytes:"+StringUtils.printHex(bytes));
 			PacketNum.set((byte) (header.getPacketId() + 1));
 			in.flip();
 			in.position(4);
 			in.limit(header.getPacketLen() + 4);
-		} else {
+		} else {			
 			currentState = READ_HEADER;
 			byte[] msg = new byte[in.limit() - 4];
 			in.get(msg);
+			LOG.debug("READ_BODY bytes.length:"+msg.length+" packetId:" + StringUtils.printHex(msg));
 			out.write(msg);
 		}
 

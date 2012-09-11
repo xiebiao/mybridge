@@ -1,5 +1,7 @@
 package org.github.mybridge.core.packet;
 
+import org.github.mybridge.utils.StringUtils;
+
 /**
  * <pre>
  * Bytes                 Name
@@ -47,7 +49,7 @@ public class HeaderPacket extends Packet {
 	public void putBytes(byte[] bs) {
 		packetLen = (bs[0] & 0xff) | ((bs[1] & 0xff) << 8)
 				| ((bs[2] & 0xff) << 16);
-		this.setPacketId(bs[3]);
+		this.setPacketId(bs[3]);		
 	}
 
 	public int getPacketLen() {

@@ -1,4 +1,4 @@
-package mybridge2.util;
+package org.github.mybridge.utils;
 
 public class CharsetUtils {
 	public static String getCharset(String str) {
