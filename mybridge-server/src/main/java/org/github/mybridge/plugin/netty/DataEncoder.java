@@ -1,6 +1,7 @@
 package org.github.mybridge.plugin.netty;
 
 import org.github.mybridge.core.packet.HeaderPacket;
+import org.github.mybridge.core.packet.Packet;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
@@ -8,9 +9,9 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
 public class DataEncoder extends OneToOneEncoder {
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
-	public static int num = 0;
+	// private final org.slf4j.Logger LOG =
+	// org.slf4j.LoggerFactory.getLogger(this
+	// .getClass());
 
 	public DataEncoder() {
 	}
@@ -21,17 +22,10 @@ public class DataEncoder extends OneToOneEncoder {
 		byte[] body = (byte[]) msg;
 		HeaderPacket header = new HeaderPacket();
 		header.setPacketLen(body.length);
-		header.setPacketId(header.getPacketId());
-		ChannelBuffer buffer = ChannelBuffers.buffer(body.length + 4);
-		// debug
-		if (num <3) {
-			LOG.debug(num + ":packetId:" + header.getPacketId());
-			//LOG.debug(num + ":" + StringUtils.printHex(header.getBytes()));
-			//LOG.debug(num + ":" + StringUtils.printHex(body));
-		}
+		Packet.setPacketId(header.getPacketId());
+		ChannelBuffer buffer = ChannelBuffers.buffer(body.length + 4);		
 		buffer.writeBytes(header.getBytes());
 		buffer.writeBytes(body);
-		num++;
 		return buffer;
 	}
 }
