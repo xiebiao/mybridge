@@ -1,7 +1,6 @@
 package org.github.mybridge.plugin.netty;
 
 import org.github.mybridge.core.packet.HeaderPacket;
-import org.github.mybridge.core.packet.PacketNum;
 import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;

@@ -5,7 +5,6 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.github.mybridge.core.packet.HeaderPacket;
-import org.github.mybridge.core.packet.PacketNum;
 import org.github.mybridge.utils.StringUtils;
 
 public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
@@ -24,7 +23,7 @@ public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
 			HeaderPacket header = new HeaderPacket();
 			header.putBytes(bytes);
 			LOG.debug("READ_HEADER bytes.length:"+bytes.length+" packetId:" + header.getPacketId()+"  bytes:"+StringUtils.printHex(bytes));
-			PacketNum.set((byte) (header.getPacketId() + 1));
+			header.setPacketId((byte) (header.getPacketId() + 1));
 			in.flip();
 			in.position(4);
 			in.limit(header.getPacketLen() + 4);

@@ -8,15 +8,14 @@ import org.apache.mina.core.session.IoSession;
 import org.github.mybridge.core.MySQLCommand;
 import org.github.mybridge.core.handler.Handler;
 import org.github.mybridge.core.handler.MysqlCommondHandler;
-import org.github.mybridge.core.packet.Packet;
-import org.github.mybridge.core.packet.HandshakeState;
-import org.github.mybridge.core.packet.InitialHandshakePacket;
 import org.github.mybridge.core.packet.AuthenticationPacket;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
-import org.github.mybridge.core.packet.PacketNum;
+import org.github.mybridge.core.packet.HandshakeState;
+import org.github.mybridge.core.packet.HeaderPacket;
+import org.github.mybridge.core.packet.InitialHandshakePacket;
 import org.github.mybridge.core.packet.OkPacket;
-import org.github.mybridge.utils.StringUtils;
+import org.github.mybridge.core.packet.Packet;
 
 public class MysqlServerHandler extends IoHandlerAdapter {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
@@ -132,7 +131,8 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		super.sessionOpened(session);
-		PacketNum.set((byte) 0);
+		HeaderPacket header = new HeaderPacket();
+		Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
 		handler = new MysqlCommondHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();

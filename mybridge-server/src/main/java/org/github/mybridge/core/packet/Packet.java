@@ -8,11 +8,11 @@ public abstract class Packet {
 
 	private static byte packetId = 0;
 
-	public synchronized void packetIdInc() {
+	public static synchronized void packetIdInc() {
 		packetId++;
 	}
 
-	public synchronized void setPacketId(byte id) {
+	public static synchronized void setPacketId(byte id) {
 		packetId = id;
 	}
 

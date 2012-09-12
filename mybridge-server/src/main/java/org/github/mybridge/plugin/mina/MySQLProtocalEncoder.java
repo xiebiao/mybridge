@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 import org.github.mybridge.core.packet.HeaderPacket;
-import org.github.mybridge.core.packet.PacketNum;
+import org.github.mybridge.core.packet.Packet;
 import org.github.mybridge.utils.StringUtils;
 
 public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
@@ -20,8 +20,8 @@ public class MySQLProtocalEncoder extends ProtocolEncoderAdapter {
 		buffer = IoBuffer.allocate(msg.length + 4);
 		HeaderPacket header = new HeaderPacket();
 		header.setPacketLen(msg.length);
-		header.setPacketId(header.getPacketId());
-		header.packetIdInc();
+		Packet.setPacketId(header.getPacketId());
+		Packet.packetIdInc();
 		if (num <= 2) {
 			LOG.debug(num + ": packetId:" + header.getPacketId());
 			LOG.debug(num + ":" + StringUtils.printHex(header.getBytes()));
