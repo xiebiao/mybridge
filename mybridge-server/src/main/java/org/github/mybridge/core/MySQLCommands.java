@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MySQLCommand {
+public final class MySQLCommands {
 	/* *
 	 * Closes the current connection. No arguments.
 	 */

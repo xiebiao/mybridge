@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
-import org.github.mybridge.core.MySQLCommand;
+import org.github.mybridge.core.MySQLCommands;
 import org.github.mybridge.core.handler.Handler;
-import org.github.mybridge.core.handler.MysqlCommondHandler;
+import org.github.mybridge.core.handler.MySQLCommandHandler;
 import org.github.mybridge.core.packet.AuthenticationPacket;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
@@ -40,9 +40,9 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 			}
 			try {
 				// 编码
-				if (MySQLCommand.index2Charset
+				if (MySQLCommands.index2Charset
 						.containsKey((int) auth.charsetNum)) {
-					handler.setCharset(MySQLCommand.index2Charset
+					handler.setCharset(MySQLCommands.index2Charset
 							.get((int) auth.charsetNum));
 				}
 				// 取得schema
@@ -74,7 +74,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 			state = HandshakeState.WRITE_RESULT;
 			CommandPacket cmd = new CommandPacket();
 			cmd.putBytes(bytes);
-			List<Packet> resultlist = handler.executeCommand(cmd);
+			List<Packet> resultlist = handler.execute(cmd);
 			if (resultlist != null && resultlist.size() > 0) {
 				writePacketList(session, resultlist);
 			}
@@ -132,7 +132,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 		super.sessionOpened(session);
 		Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
-		handler = new MysqlCommondHandler();
+		handler = new MySQLCommandHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
 		byte[] temp = initPacket.getBytes();
 		session.write(temp);
