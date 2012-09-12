@@ -31,21 +31,21 @@ public class MySQLCommandHandler implements Handler {
 	private final static DbServer dbServer = DbServerFactory.getDbserver("");
 	String db = "";
 
-	public List<Packet> execute(CommandPacket cmd)
-			throws CommandExecuteException {
+	public List<Packet> execute(Packet packet) throws CommandExecuteException {
 		List<Packet> packetList = null;
+		CommandPacket cmdPacket = (CommandPacket) packet;
 		try {
 			packetList = new ArrayList<Packet>();
-			if (cmd.type == MySQLCommands.COM_QUERY) {
-				String sql = new String(cmd.value, charset);
+			if (cmdPacket.type == MySQLCommands.COM_QUERY) {
+				String sql = new String(cmdPacket.value, charset);
 				return executeSQL(sql);
-			} else if (cmd.type == MySQLCommands.COM_QUIT) {
+			} else if (cmdPacket.type == MySQLCommands.COM_QUIT) {
 				return null;
-			} else if (cmd.type == MySQLCommands.COM_FIELD_LIST) {
+			} else if (cmdPacket.type == MySQLCommands.COM_FIELD_LIST) {
 				packetList.add(new EOFPacket());
 				return packetList;
-			} else if (cmd.type == MySQLCommands.COM_INIT_DB) {
-				String db = new String(cmd.value, charset);
+			} else if (cmdPacket.type == MySQLCommands.COM_INIT_DB) {
+				String db = new String(cmdPacket.value, charset);
 				String sql = "USE" + db;
 				setDb(db);
 				return executeSQL(sql);
@@ -122,7 +122,7 @@ public class MySQLCommandHandler implements Handler {
 		// rs.close();
 		// state.close();
 		// connection.close();
-		//DbUtils.closeQuietly(connection, state, rs);
+		// DbUtils.closeQuietly(connection, state, rs);
 		return packetList;
 	}
 
