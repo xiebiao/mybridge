@@ -10,8 +10,9 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 import org.jboss.netty.channel.WriteCompletionEvent;
 
 public class ServerHandler extends SimpleChannelHandler {
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
+	// private final org.slf4j.Logger LOG =
+	// org.slf4j.LoggerFactory.getLogger(this
+	// .getClass());
 	private MySQLProtocol mysql = new MySQLProtocol();
 
 	public ServerHandler() {
@@ -20,13 +21,11 @@ public class ServerHandler extends SimpleChannelHandler {
 	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
 		super.channelOpen(ctx, e);
-		LOG.debug("channelOpen...");
 	}
 
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
-		LOG.debug("channelConnected...");
 		mysql.onConnected(e.getChannel());
 	}
 
@@ -34,18 +33,12 @@ public class ServerHandler extends SimpleChannelHandler {
 	public void writeComplete(ChannelHandlerContext ctx, WriteCompletionEvent e)
 			throws Exception {
 		mysql.writeComplete();
-		LOG.debug("writeComplete...");
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
 			throws Exception {
 		e.getChannel().close();
-	}
-
-	public void channelBound(ChannelHandlerContext ctx, ChannelStateEvent e)
-			throws Exception {
-		LOG.debug("channelBound");
 	}
 
 	@Override

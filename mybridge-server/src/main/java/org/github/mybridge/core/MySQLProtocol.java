@@ -1,6 +1,5 @@
 package org.github.mybridge.core;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.github.mybridge.core.handler.Handler;
@@ -13,18 +12,15 @@ import org.github.mybridge.core.packet.HandshakeState;
 import org.github.mybridge.core.packet.InitialHandshakePacket;
 import org.github.mybridge.core.packet.OkPacket;
 import org.github.mybridge.core.packet.Packet;
-import org.github.mybridge.utils.StringUtils;
 import org.jboss.netty.channel.Channel;
 
 public class MySQLProtocol {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
 			.getClass());
-	private List<Packet> requests = null;
 	private HandshakeState state;
 	private Handler handler;
 
 	public MySQLProtocol() {
-		requests = new ArrayList<Packet>();
 		handler = new MysqlCommondHandler();
 	}
 
@@ -52,12 +48,10 @@ public class MySQLProtocol {
 		ErrorPacket errPacket = null;
 		switch (state) {
 		case READ_AUTH:
-			LOG.debug("READ_AUTH");
-			LOG.debug(StringUtils.printHex(bytes));
 			state = HandshakeState.WRITE_RESULT;
 			AuthenticationPacket auth = new AuthenticationPacket();
 			auth.putBytes(bytes);
-			
+
 			String user = "";
 			if (auth.clientUser.length() > 1) {
 				user = auth.clientUser.substring(0,
@@ -84,7 +78,6 @@ public class MySQLProtocol {
 					break;
 				}
 			} catch (Exception e) {
-				LOG.debug("packet auth failed  " + e);
 				msg = "handshake authpacket failed  ";
 				errPacket = new ErrorPacket(1045, msg);
 				channel.write(errPacket.getBytes());
@@ -97,7 +90,6 @@ public class MySQLProtocol {
 			state = HandshakeState.CLOSE;
 			break;
 		case READ_COMMOND:
-			LOG.debug("READ_COMMOND");
 			state = HandshakeState.WRITE_RESULT;
 			CommandPacket cmd = new CommandPacket();
 			cmd.putBytes(bytes);

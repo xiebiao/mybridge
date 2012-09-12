@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.dbutils.DbUtils;
 import org.github.mybridge.core.MySQLCommand;
 import org.github.mybridge.core.handler.exception.CommandException;
 import org.github.mybridge.core.packet.CommandPacket;
@@ -24,8 +23,9 @@ import org.github.mybridge.engine.DbServerFactory;
 
 public class MysqlCommondHandler implements Handler {
 
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
+	// private final org.slf4j.Logger LOG =
+	// org.slf4j.LoggerFactory.getLogger(this
+	// .getClass());
 	// private String charset = "latin1";
 	private String charset = "utf-8";
 	private final static DbServer dbServer = DbServerFactory.getDbserver("");
@@ -35,7 +35,6 @@ public class MysqlCommondHandler implements Handler {
 			throws CommandException {
 		List<Packet> packetList = null;
 		try {
-			LOG.debug(cmd.type+"");
 			packetList = new ArrayList<Packet>();
 			if (cmd.type == MySQLCommand.COM_QUERY) {
 				String sql = new String(cmd.value, charset);
@@ -123,7 +122,7 @@ public class MysqlCommondHandler implements Handler {
 		// rs.close();
 		// state.close();
 		// connection.close();
-		DbUtils.closeQuietly(connection, state, rs);
+		//DbUtils.closeQuietly(connection, state, rs);
 		return packetList;
 	}
 
