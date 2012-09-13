@@ -2,14 +2,13 @@ package org.github.mybridge.core.handler;
 
 import java.util.List;
 
-import org.github.mybridge.core.handler.exception.CommandException;
-import org.github.mybridge.core.packet.CommandPacket;
+import org.github.mybridge.core.handler.exception.CommandExecuteException;
 import org.github.mybridge.core.packet.Packet;
 
 public interface Handler {
 
-	public List<Packet> executeCommand(CommandPacket cmd)
-			throws CommandException;
+	public List<Packet> execute(	Packet cmd)
+			throws CommandExecuteException;
 
 	public void open();
 

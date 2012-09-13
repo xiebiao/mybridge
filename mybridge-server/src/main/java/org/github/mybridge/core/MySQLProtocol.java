@@ -3,8 +3,8 @@ package org.github.mybridge.core;
 import java.util.List;
 
 import org.github.mybridge.core.handler.Handler;
-import org.github.mybridge.core.handler.MysqlCommondHandler;
-import org.github.mybridge.core.handler.exception.CommandException;
+import org.github.mybridge.core.handler.MySQLCommandHandler;
+import org.github.mybridge.core.handler.exception.CommandExecuteException;
 import org.github.mybridge.core.packet.AuthenticationPacket;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
@@ -15,13 +15,14 @@ import org.github.mybridge.core.packet.Packet;
 import org.jboss.netty.channel.Channel;
 
 public class MySQLProtocol {
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
+	// private final org.slf4j.Logger LOG =
+	// org.slf4j.LoggerFactory.getLogger(this
+	// .getClass());
 	private HandshakeState state;
 	private Handler handler;
 
 	public MySQLProtocol() {
-		handler = new MysqlCommondHandler();
+		handler = new MySQLCommandHandler();
 	}
 
 	public void onConnected(Channel channel) {
@@ -58,20 +59,16 @@ public class MySQLProtocol {
 						auth.clientUser.length() - 1);
 			}
 			try {
-				// 编码
-				if (MySQLCommand.index2Charset
+				if (MySQLCommands.index2Charset
 						.containsKey((int) auth.charsetNum)) {
-					handler.setCharset(MySQLCommand.index2Charset
+					handler.setCharset(MySQLCommands.index2Charset
 							.get((int) auth.charsetNum));
 				}
-				// 取得schema
 				if (auth.dbName.length() > 0) {
 					String dbname = auth.dbName.substring(0,
 							auth.dbName.length() - 1);
 					handler.setDb(dbname);
 				}
-				// 验证用户名与密码
-
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
 					channel.write(ok.getBytes());
@@ -95,8 +92,8 @@ public class MySQLProtocol {
 			cmd.putBytes(bytes);
 			List<Packet> resultlist = null;
 			try {
-				resultlist = handler.executeCommand(cmd);
-			} catch (CommandException e) {
+				resultlist = handler.execute(cmd);
+			} catch (CommandExecuteException e) {
 				e.printStackTrace();
 				errPacket = new ErrorPacket(1046, "server error");
 				channel.write(errPacket);

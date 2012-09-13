@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.github.mybridge.core.MySQLCommand;
-import org.github.mybridge.core.handler.exception.CommandException;
+import org.github.mybridge.core.MySQLCommands;
+import org.github.mybridge.core.handler.exception.CommandExecuteException;
 import org.github.mybridge.core.packet.CommandPacket;
 import org.github.mybridge.core.packet.EOFPacket;
 import org.github.mybridge.core.packet.ErrorPacket;
@@ -21,7 +21,7 @@ import org.github.mybridge.core.packet.RowDataPacket;
 import org.github.mybridge.engine.DbServer;
 import org.github.mybridge.engine.DbServerFactory;
 
-public class MysqlCommondHandler implements Handler {
+public class MySQLCommandHandler implements Handler {
 
 	// private final org.slf4j.Logger LOG =
 	// org.slf4j.LoggerFactory.getLogger(this
@@ -31,28 +31,28 @@ public class MysqlCommondHandler implements Handler {
 	private final static DbServer dbServer = DbServerFactory.getDbserver("");
 	String db = "";
 
-	public List<Packet> executeCommand(CommandPacket cmd)
-			throws CommandException {
+	public List<Packet> execute(Packet packet) throws CommandExecuteException {
 		List<Packet> packetList = null;
+		CommandPacket cmdPacket = (CommandPacket) packet;
 		try {
 			packetList = new ArrayList<Packet>();
-			if (cmd.type == MySQLCommand.COM_QUERY) {
-				String sql = new String(cmd.value, charset);
+			if (cmdPacket.type == MySQLCommands.COM_QUERY) {
+				String sql = new String(cmdPacket.value, charset);
 				return executeSQL(sql);
-			} else if (cmd.type == MySQLCommand.COM_QUIT) {
+			} else if (cmdPacket.type == MySQLCommands.COM_QUIT) {
 				return null;
-			} else if (cmd.type == MySQLCommand.COM_FIELD_LIST) {
+			} else if (cmdPacket.type == MySQLCommands.COM_FIELD_LIST) {
 				packetList.add(new EOFPacket());
 				return packetList;
-			} else if (cmd.type == MySQLCommand.COM_INIT_DB) {
-				String db = new String(cmd.value, charset);
+			} else if (cmdPacket.type == MySQLCommands.COM_INIT_DB) {
+				String db = new String(cmdPacket.value, charset);
 				String sql = "USE" + db;
 				setDb(db);
 				return executeSQL(sql);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new CommandException("Command excute error");
+			throw new CommandExecuteException("Command excute error");
 		}
 		return packetList;
 	}
@@ -104,7 +104,7 @@ public class MysqlCommondHandler implements Handler {
 			fieldPacket.orgTable = meta.getTableName(i);
 			fieldPacket.name = meta.getColumnName(i);
 			fieldPacket.orgName = meta.getColumnName(i);
-			fieldPacket.type = (byte) MySQLCommand.javaTypeToMysql(meta
+			fieldPacket.type = (byte) MySQLCommands.javaTypeToMysql(meta
 					.getColumnType(i));
 			fieldPacket.length = meta.getColumnDisplaySize(i);
 			packetList.add(fieldPacket);
@@ -122,7 +122,7 @@ public class MysqlCommondHandler implements Handler {
 		// rs.close();
 		// state.close();
 		// connection.close();
-		//DbUtils.closeQuietly(connection, state, rs);
+		// DbUtils.closeQuietly(connection, state, rs);
 		return packetList;
 	}
 
