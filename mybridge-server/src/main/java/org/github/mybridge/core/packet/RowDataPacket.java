@@ -40,7 +40,7 @@ import org.github.mybridge.utils.CharsetUtils;
  * 
  */
 public class RowDataPacket extends Packet {
-	private String charset = "utf8";
+	private String charset = "utf-8";
 	private List<String> valueList = new ArrayList<String>();
 
 	public RowDataPacket(String charset) {
@@ -55,7 +55,7 @@ public class RowDataPacket extends Packet {
 		}
 		ByteBuffer buf = new ByteBuffer(len);
 		for (String value : valueList) {
-			buf.putLCString(value, CharsetUtils.getCharset(value));
+			buf.putLCString(value, CharsetUtils.getCharset(value));// 编码
 		}
 		return buf.getBytes();
 	}

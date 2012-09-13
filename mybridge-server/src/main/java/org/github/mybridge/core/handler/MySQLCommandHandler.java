@@ -1,5 +1,6 @@
 package org.github.mybridge.core.handler;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -20,16 +21,20 @@ import org.github.mybridge.core.packet.ResultSetPacket;
 import org.github.mybridge.core.packet.RowDataPacket;
 import org.github.mybridge.engine.DbServer;
 import org.github.mybridge.engine.DbServerFactory;
+import org.github.mybridge.utils.CharsetUtils;
 
 public class MySQLCommandHandler implements Handler {
 
-	// private final org.slf4j.Logger LOG =
-	// org.slf4j.LoggerFactory.getLogger(this
-	// .getClass());
+	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
+			.getClass());
 	// private String charset = "latin1";
 	private String charset = "utf-8";
 	private final static DbServer dbServer = DbServerFactory.getDbserver("");
 	String db = "";
+
+	public MySQLCommandHandler() {
+		charset = "utf-8";
+	}
 
 	public List<Packet> execute(Packet packet) throws CommandExecuteException {
 		List<Packet> packetList = null;
@@ -113,7 +118,7 @@ public class MySQLCommandHandler implements Handler {
 		while (rs.next()) {
 			RowDataPacket rowPacket = new RowDataPacket(charset);
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
-				String value = rs.getString(i);
+				String value = rs.getString(i);				
 				rowPacket.addValue(value);
 			}
 			packetList.add(rowPacket);
