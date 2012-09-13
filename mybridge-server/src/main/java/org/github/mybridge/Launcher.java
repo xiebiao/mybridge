@@ -1,6 +1,18 @@
 package org.github.mybridge;
 
+import org.github.mybridge.exception.ConfigurationException;
 
 public interface Launcher {
-	public void start(Configuration config) throws Exception;
+	/**
+	 * 启动
+	 * 
+	 */
+	public void start();
+
+	/**
+	 * 初始化配置
+	 * 
+	 * @throws Exception
+	 */
+	public void init() throws ConfigurationException;
 }

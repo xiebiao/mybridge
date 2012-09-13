@@ -1,0 +1,18 @@
+<mybridge>
+	<groups>
+		<!-- 将server分组 -->
+		<group database="amesit">
+			<!-- 定义分库分表策略 -->
+			<strategy></strategy>
+			<!-- 双master -->
+			<master userName="root" password="">
+				<server ip="127.0.0.1" port="3307" />
+				<server ip="127.0.0.1" port="3307" />
+			</master>
+			<slave userName="root" password="">
+				<server ip="127.0.0.1" port="3307" />
+				<server ip="127.0.0.1" port="3307" />
+			</slave>
+		</group>
+	</groups>
+</mybridge>

@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import mybridge2.util.CharsetUtils;
-
 public class TestJdbc {
 	private static org.slf4j.Logger LOG = org.slf4j.LoggerFactory
 			.getLogger(TestJdbc.class);
@@ -27,7 +25,6 @@ public class TestJdbc {
 						+ ":\n"
 						+ new String(rs.getString("city_name").getBytes(
 								"iso-8859-1"), "GBK"));
-				LOG.debug(CharsetUtils.getCharset(rs.getString("city_name")));
 			}
 			conn.close();
 		} catch (Exception e) {
