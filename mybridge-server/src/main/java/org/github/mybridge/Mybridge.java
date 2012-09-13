@@ -3,7 +3,6 @@ package org.github.mybridge;
 import java.util.Properties;
 
 import org.apache.log4j.PropertyConfigurator;
-import org.github.mybridge.launch.Launcher;
 import org.github.mybridge.plugin.netty.NettyLauncher;
 
 public class Mybridge {

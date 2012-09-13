@@ -12,7 +12,7 @@ import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import org.github.mybridge.Configuration;
-import org.github.mybridge.launch.Launcher;
+import org.github.mybridge.Launcher;
 
 public class MinaLauncher implements Launcher {
 	public final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
