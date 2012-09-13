@@ -127,19 +127,19 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * 
  */
 public class FieldPacket extends Packet {
-	public String catalog = "def";
-	public String db = "";
-	public String table = "";
-	public String orgTable = "";
-	public String name = "";
-	public String orgName = "";
-	public byte fill1 = 0x0c;// 影响client 显示格式
-	public int charsetnr = 0x08;
-	public long length;
-	public byte type;
-	public int flag = 0;
-	public byte decimals = 0;
-	public byte[] fill2 = new byte[2];
+	private String catalog = "def";
+	private String db = "";
+	private String table = "";
+	private String orgTable = "";
+	private String name = "";
+	private String orgName = "";
+	private byte fill1 = 0x0c;// 影响client 显示格式
+	private int charsetnr = 0x08;
+	private long length;
+	private byte type;
+	private int flag = 0;
+	private byte decimals = 0;
+	private byte[] fill2 = new byte[2];
 
 	@Override
 	public byte[] getBytes() {
@@ -168,6 +168,34 @@ public class FieldPacket extends Packet {
 
 	@Override
 	public void putBytes(byte[] bs) {
+	}
+
+	public void setDb(String db) {
+		this.db = db;
+	}
+
+	public void setTable(String table) {
+		this.table = table;
+	}
+
+	public void setOrgTable(String orgTable) {
+		this.orgTable = orgTable;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public void setType(byte type) {
+		this.type = type;
+	}
+
+	public void setLength(long length) {
+		this.length = length;
 	}
 
 }

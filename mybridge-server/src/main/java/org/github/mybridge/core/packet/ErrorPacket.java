@@ -62,11 +62,11 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * 
  */
 public class ErrorPacket extends Packet {
-	public byte type = (byte) 0xff;
-	public int errno = 0;
-	public byte sqlStateMark = 0x23;
-	public String sqlstate = "12345";
-	public String message = "";
+	private byte type = (byte) 0xff;
+	private int errno = 0;
+	private byte sqlStateMark = 0x23;
+	private String sqlstate = "12345";
+	private String message = "";
 
 	public ErrorPacket() {
 	}

@@ -33,8 +33,8 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * 
  */
 public class CommandPacket extends Packet {
-	public byte type;// 占一个字节,表示客户端请求类型,如0x03 mysql_real_query
-	public byte[] value;
+	private byte type;// 占一个字节,表示客户端请求类型,如0x03 mysql_real_query
+	private byte[] value;
 
 	@Override
 	public byte[] getBytes() {
@@ -46,6 +46,14 @@ public class CommandPacket extends Packet {
 		ByteBuffer buf = new ByteBuffer(bs);
 		type = buf.readByte();
 		value = buf.readRemainBytes();
+	}
+
+	public byte getType() {
+		return type;
+	}
+
+	public byte[] getValue() {
+		return value;
 	}
 
 }

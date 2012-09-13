@@ -36,16 +36,16 @@ public class MySQLCommandHandler implements Handler {
 		CommandPacket cmdPacket = (CommandPacket) packet;
 		try {
 			packetList = new ArrayList<Packet>();
-			if (cmdPacket.type == MySQLCommands.COM_QUERY) {
-				String sql = new String(cmdPacket.value, charset);
+			if (cmdPacket.getType() == MySQLCommands.COM_QUERY) {
+				String sql = new String(cmdPacket.getValue(), charset);
 				return executeSQL(sql);
-			} else if (cmdPacket.type == MySQLCommands.COM_QUIT) {
+			} else if (cmdPacket.getType() == MySQLCommands.COM_QUIT) {
 				return null;
-			} else if (cmdPacket.type == MySQLCommands.COM_FIELD_LIST) {
+			} else if (cmdPacket.getType() == MySQLCommands.COM_FIELD_LIST) {
 				packetList.add(new EOFPacket());
 				return packetList;
-			} else if (cmdPacket.type == MySQLCommands.COM_INIT_DB) {
-				String db = new String(cmdPacket.value, charset);
+			} else if (cmdPacket.getType() == MySQLCommands.COM_INIT_DB) {
+				String db = new String(cmdPacket.getValue(), charset);
 				String sql = "USE" + db;
 				setDb(db);
 				return executeSQL(sql);
@@ -88,25 +88,25 @@ public class MySQLCommandHandler implements Handler {
 		}
 		if (result == false) {
 			OkPacket ok = new OkPacket();
-			ok.affectedRows = state.getUpdateCount();
+			ok.setAffectedRows(state.getUpdateCount());
 			packetList.add(ok);
 			return packetList;
 		}
 		ResultSet rs = state.getResultSet();
 		ResultSetMetaData meta = rs.getMetaData();
-		ResultSetPacket resultPacket = new ResultSetPacket();
-		resultPacket.fieldCount = meta.getColumnCount();
+		ResultSetPacket resultPacket = new ResultSetPacket(
+				meta.getColumnCount());
 		packetList.add(resultPacket);
 		for (int i = 1; i <= meta.getColumnCount(); i++) {
 			FieldPacket fieldPacket = new FieldPacket();
-			fieldPacket.db = meta.getCatalogName(i);
-			fieldPacket.table = meta.getTableName(i);
-			fieldPacket.orgTable = meta.getTableName(i);
-			fieldPacket.name = meta.getColumnName(i);
-			fieldPacket.orgName = meta.getColumnName(i);
-			fieldPacket.type = (byte) MySQLCommands.javaTypeToMysql(meta
-					.getColumnType(i));
-			fieldPacket.length = meta.getColumnDisplaySize(i);
+			fieldPacket.setDb(meta.getCatalogName(i));
+			fieldPacket.setTable(meta.getTableName(i));
+			fieldPacket.setOrgTable(meta.getTableName(i));
+			fieldPacket.setName(meta.getColumnName(i));
+			fieldPacket.setOrgName(meta.getColumnName(i));
+			fieldPacket.setType((byte) MySQLCommands.javaTypeToMysql(meta
+					.getColumnType(i)));
+			fieldPacket.setLength(meta.getColumnDisplaySize(i));
 			packetList.add(fieldPacket);
 		}
 		packetList.add(new EOFPacket());

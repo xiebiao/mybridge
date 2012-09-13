@@ -45,7 +45,14 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * 
  */
 public class ResultSetPacket extends Packet {
-	public long fieldCount;
+	private long fieldCount;
+
+	public ResultSetPacket() {
+	}
+
+	public ResultSetPacket(long fieldCount) {
+		this.fieldCount = fieldCount;
+	}
 
 	@Override
 	public byte[] getBytes() {
@@ -57,6 +64,10 @@ public class ResultSetPacket extends Packet {
 
 	@Override
 	public void putBytes(byte[] bs) {
+	}
+
+	public void setFieldCount(long fieldCount) {
+		this.fieldCount = fieldCount;
 	}
 
 }

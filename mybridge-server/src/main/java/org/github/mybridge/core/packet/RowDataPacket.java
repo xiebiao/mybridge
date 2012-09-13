@@ -40,8 +40,8 @@ import org.github.mybridge.utils.CharsetUtils;
  * 
  */
 public class RowDataPacket extends Packet {
-	String charset = "utf8";
-	List<String> valueList = new ArrayList<String>();
+	private String charset = "utf8";
+	private List<String> valueList = new ArrayList<String>();
 
 	public RowDataPacket(String charset) {
 		this.charset = charset;

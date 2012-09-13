@@ -65,12 +65,12 @@ import org.github.mybridge.core.buffer.ByteBuffer;
  * 
  */
 public class OkPacket extends Packet {
-	public byte type = 0;
-	public long affectedRows = 0;
-	public long insertId = 0;
-	public int serverStatus = 2;
-	public int warningCount = 0;
-	public String message = "";
+	private byte type = 0;
+	private long affectedRows = 0;
+	private long insertId = 0;
+	private int serverStatus = 2;
+	private int warningCount = 0;
+	private String message = "";
 
 	@Override
 	public byte[] getBytes() {
@@ -90,6 +90,10 @@ public class OkPacket extends Packet {
 	@Override
 	public void putBytes(byte[] bs) {
 
+	}
+
+	public void setAffectedRows(long affectedRows) {
+		this.affectedRows = affectedRows;
 	}
 
 }
