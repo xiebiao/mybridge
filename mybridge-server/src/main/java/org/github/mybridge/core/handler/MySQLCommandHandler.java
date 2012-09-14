@@ -79,6 +79,10 @@ public class MySQLCommandHandler implements Handler {
 
 	private List<Packet> execute(String sql) throws SQLException {
 		List<Packet> packetList = new ArrayList<Packet>();
+		//
+		// 解析SQL
+		// 路由器
+		//
 		Connection connection = dbServer.getConnection();
 		boolean result;
 		Statement state;
@@ -118,7 +122,7 @@ public class MySQLCommandHandler implements Handler {
 		while (rs.next()) {
 			RowDataPacket rowPacket = new RowDataPacket(charset);
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
-				String value = rs.getString(i);				
+				String value = rs.getString(i);
 				rowPacket.addValue(value);
 			}
 			packetList.add(rowPacket);
