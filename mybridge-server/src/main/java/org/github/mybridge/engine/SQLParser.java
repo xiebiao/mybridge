@@ -8,8 +8,8 @@ public class SQLParser implements Parser {
 			return new SQL("ERROR");
 		}
 		sql = sql.trim();
-		String[] sqlArr=sql.split(" ");
-		return null;
+		String[] sqlArr = sql.split(" ");
+		return new SQL(sqlArr[0].toUpperCase());
 	}
 
 }

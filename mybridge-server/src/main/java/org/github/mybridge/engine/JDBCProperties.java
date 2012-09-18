@@ -26,7 +26,9 @@ public class JDBCProperties {
 	 @XStreamOmitField
 	 private Properties properties;
 	 
-	 
+	 public JDBCProperties(){
+		 
+	 }
 	public String getSchema() {
 		return schema;
 	}

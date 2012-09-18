@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.github.mybridge.plugin.netty.NettyLauncher;
-import org.github.mybridge.utils.Configuration;
 
 public class Mybridge {
 	public static final String version = "0.0.1";
@@ -14,16 +13,14 @@ public class Mybridge {
 
 	public static void main(String args[]) {
 		try {
-			boolean debug = true;
 			Properties properties = new Properties();
 			properties.load(Mybridge.class.getClassLoader()
 					.getResourceAsStream("log4j.properties"));
 			PropertyConfigurator.configure(properties);
 			// 处理main参数
-			Configuration config = new Configuration();
+			Parameter config = new Parameter();
 			config.setIp("127.0.0.1");
 			config.setPort(3307);
-			config.setDebug(debug);
 			// Launcher launcher = new MinaLauncher();
 			Launcher launcher = new NettyLauncher(config);
 			launcher.start();

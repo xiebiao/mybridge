@@ -1,18 +1,16 @@
 <route>
-		<!-- 将server分组 -->
-		<group database="amesit">
-			<!-- 定义分库/分表策略
-			http://zhengdl126.iteye.com/blog/419850
-			 -->
-			<strategy></strategy>
-			<!-- 双master -->
-			<master user="root" password="">
-				<server ip="127.0.0.1" port="3307" />
-				<server ip="127.0.0.1" port="3307" />
-			</master>
-			<slave user="root" password="">
-				<server ip="127.0.0.1" port="3307" />
-				<server ip="127.0.0.1" port="3307" />
-			</slave>
-		</group>
+	<!-- 将server分组 -->
+	<group database="amesit">
+		<!-- 定义分库/分表策略 -->
+		<!-- http://zhengdl126.iteye.com/blog/419850 -->
+		<!-- http://rdc.taobao.com/team/jm/archives/590 -->
+		<master user="root" password="">
+			<server id="0" ip="127.0.0.1" port="3307" />
+			<server id="1" ip="127.0.0.1" port="3307" />
+		</master>
+		<slave user="root" password="">
+			<server id="0" ip="127.0.0.1" port="3307" />
+			<server id="1" ip="127.0.0.1" port="3307" />
+		</slave>
+	</group>
 </route>

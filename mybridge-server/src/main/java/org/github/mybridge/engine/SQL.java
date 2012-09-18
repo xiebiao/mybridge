@@ -5,9 +5,13 @@ public final class SQL {
 	public static final SQL INSERT = new SQL("INSERT");
 	public static final SQL DELETE = new SQL("DELETE");
 	public static final SQL UPDATE = new SQL("UPDATE");
-	private String sql;
+	private String action;
 
-	public SQL(String sql) {
-		this.sql = sql;
+	public SQL(String action) {
+		this.action = action;
+	}
+
+	public String getAction() {
+		return this.action;
 	}
 }

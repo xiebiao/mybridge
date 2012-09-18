@@ -10,7 +10,7 @@ public class DefaultDbServer implements DbServer {
 	private JDBCProperties jdbc;
 	private static BoneCP pool;
 
-	public DefaultDbServer(JDBCProperties jdbc) throws SQLException {
+	public DefaultDbServer(JDBCProperties jdbc) {
 		if (jdbc == null) {
 			throw new java.lang.IllegalArgumentException();
 		}
@@ -23,7 +23,12 @@ public class DefaultDbServer implements DbServer {
 		config.setPassword(this.jdbc.getPassword());
 		config.setMinConnectionsPerPartition(10);
 		config.setMaxConnectionsPerPartition(50);
-		pool = new BoneCP(config);
+		try {
+			pool = new BoneCP(config);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 
 	public JDBCProperties getJdbc() {
@@ -36,6 +41,12 @@ public class DefaultDbServer implements DbServer {
 
 	public void destroy() {
 		pool.shutdown();
+	}
+
+	@Override
+	public boolean isMaster() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

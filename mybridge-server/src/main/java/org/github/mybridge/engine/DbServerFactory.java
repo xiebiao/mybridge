@@ -15,8 +15,7 @@ public final class DbServerFactory {
 		jdbc.user = "root";
 		jdbc.password = "wangzhu";
 		jdbc.driverName = "com.mysql.jdbc.Driver";
-
-		DbServer dbServer = new DefaultDbServer1(jdbc);
+		DbServer dbServer = new DefaultDbServer(jdbc);
 		return dbServer;
 
 	}
