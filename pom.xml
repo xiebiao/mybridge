@@ -4,7 +4,7 @@
 	<groupId>mybridge</groupId>
 	<artifactId>mybridge</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- Log libs -->
@@ -18,15 +18,60 @@
 		<!-- Test -->
 		<junit_version>4.10</junit_version>
 	</properties>
-	<modules>
-		<module>mybridge-server</module>
-		<module>mybridge-test</module>
-	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql_driver_version}</version>
+		</dependency>
+	<!-- pool -->
+		<dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+			<version>0.8.0-alpha1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.2-pre4</version>
+		</dependency>
+		<!-- pool END -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.5.4.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.mina</groupId>
+			<artifactId>mina-core</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+		<!-- logging -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j_version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j_log4j12_version}</version>
+		</dependency>
+		<!-- logging END -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbutils</groupId>
+			<artifactId>commons-dbutils</artifactId>
+			<version>1.5</version>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
@@ -60,4 +105,13 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+				<version>${jdepend_version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

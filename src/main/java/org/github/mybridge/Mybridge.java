@@ -1,9 +1,5 @@
 package org.github.mybridge;
 
-import java.util.Properties;
-
-import org.apache.log4j.PropertyConfigurator;
-import org.github.mybridge.netty.NettyLauncher;
 
 public class Mybridge {
 	public static final String version = "0.0.1";
@@ -13,16 +9,12 @@ public class Mybridge {
 
 	public static void main(String args[]) {
 		try {
-			Properties properties = new Properties();
-			properties.load(Mybridge.class.getClassLoader()
-					.getResourceAsStream("log4j.properties"));
-			PropertyConfigurator.configure(properties);
 			// 处理main参数
-			Parameter config = new Parameter();
+			Configuration config = new Configuration();
 			config.setIp("127.0.0.1");
 			config.setPort(3307);
 			// Launcher launcher = new MinaLauncher();
-			Launcher launcher = new NettyLauncher(config);
+			Launcher launcher = new DefaultLauncher(config);
 			launcher.start();
 		} catch (Exception e) {
 			e.printStackTrace();

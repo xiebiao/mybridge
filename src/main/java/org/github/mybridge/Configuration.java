@@ -1,6 +1,6 @@
 package org.github.mybridge;
 
-public class Parameter {
+public class Configuration {
 	private String ip;
 	private int port;
 	public String getIp() {

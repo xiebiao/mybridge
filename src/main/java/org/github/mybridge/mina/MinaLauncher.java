@@ -55,4 +55,10 @@ public class MinaLauncher extends AbstractLauncher implements Launcher {
 		
 	}
 
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

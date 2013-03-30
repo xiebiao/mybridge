@@ -12,7 +12,7 @@ public abstract class AbstractLauncher implements Launcher {
 
 	@Override
 	public  void init() throws ConfigurationException {
-		System.out.println("init");
+
 		
 	}
 

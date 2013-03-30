@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 
 import org.github.mybridge.AbstractLauncher;
 import org.github.mybridge.Launcher;
-import org.github.mybridge.Parameter;
+import org.github.mybridge.Configuration;
 import org.github.mybridge.exception.ConfigurationException;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
@@ -13,12 +13,12 @@ import org.jboss.netty.logging.InternalLoggerFactory;
 import org.jboss.netty.logging.Log4JLoggerFactory;
 
 public class NettyLauncher extends AbstractLauncher implements Launcher {
-	private Parameter parameter;
+	private Configuration parameter;
 
 	public NettyLauncher() {
 	}
 
-	public NettyLauncher(Parameter parameter) {
+	public NettyLauncher(Configuration parameter) {
 		this.parameter = parameter;
 	}
 
@@ -47,6 +47,12 @@ public class NettyLauncher extends AbstractLauncher implements Launcher {
 	@Override
 	public void init() throws ConfigurationException {
 		super.init();
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

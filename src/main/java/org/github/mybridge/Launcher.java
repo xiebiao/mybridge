@@ -15,4 +15,6 @@ public interface Launcher {
 	 * @throws Exception
 	 */
 	public void init() throws ConfigurationException;
+
+	public void stop();
 }
