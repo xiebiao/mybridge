@@ -4,13 +4,11 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
 import org.github.mybridge.AbstractLauncher;
-import org.github.mybridge.Launcher;
 import org.github.mybridge.Configuration;
+import org.github.mybridge.Launcher;
 import org.github.mybridge.exception.ConfigurationException;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-import org.jboss.netty.logging.InternalLoggerFactory;
-import org.jboss.netty.logging.Log4JLoggerFactory;
 
 public class NettyLauncher extends AbstractLauncher implements Launcher {
 	private Configuration parameter;
@@ -26,7 +24,6 @@ public class NettyLauncher extends AbstractLauncher implements Launcher {
 	public void start() {
 		try {
 			this.init();
-			InternalLoggerFactory.setDefaultFactory(new Log4JLoggerFactory());
 			// Configure the server.
 			ServerBootstrap bootstrap = new ServerBootstrap(
 					new NioServerSocketChannelFactory(

@@ -11,10 +11,10 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
-import org.github.mybridge.Launcher;
 import org.github.mybridge.AbstractLauncher;
+import org.github.mybridge.Configuration;
+import org.github.mybridge.Launcher;
 import org.github.mybridge.exception.ConfigurationException;
-import org.github.mybridge.utils.Configuration;
 
 public class MinaLauncher extends AbstractLauncher implements Launcher {
 	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
@@ -22,6 +22,7 @@ public class MinaLauncher extends AbstractLauncher implements Launcher {
 	private Configuration config;
 
 	public MinaLauncher(Configuration config) {
+		this.config = config;
 	}
 
 	public void start() {
@@ -42,7 +43,7 @@ public class MinaLauncher extends AbstractLauncher implements Launcher {
 		InetSocketAddress address = new InetSocketAddress(config.getIp(),
 				config.getPort());
 		try {
-			acceptor.bind(address);			
+			acceptor.bind(address);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -52,13 +53,13 @@ public class MinaLauncher extends AbstractLauncher implements Launcher {
 	@Override
 	public void init() throws ConfigurationException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

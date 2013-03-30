@@ -13,7 +13,7 @@ public class TestJdbc {
 		LOG.debug("xxx1");
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(
-				"jdbc:mysql://127.0.0.1:3307/amesit", "root", "yes");
+				"jdbc:mysql://127.0.0.1:3306/amesit", "root", "yaes");
 		try {
 			LOG.debug("xxx2");
 			Statement stmt = conn.createStatement();
