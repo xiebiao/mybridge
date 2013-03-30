@@ -1,4 +1,4 @@
-package org.github.mybridge.plugin.netty;
+package org.github.mybridge.netty;
 
 import org.github.mybridge.core.MySQLProtocol;
 import org.jboss.netty.buffer.ChannelBuffer;

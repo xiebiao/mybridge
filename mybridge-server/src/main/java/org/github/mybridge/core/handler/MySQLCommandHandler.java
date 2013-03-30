@@ -1,6 +1,5 @@
 package org.github.mybridge.core.handler;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -21,7 +20,6 @@ import org.github.mybridge.core.packet.ResultSetPacket;
 import org.github.mybridge.core.packet.RowDataPacket;
 import org.github.mybridge.engine.DbServer;
 import org.github.mybridge.engine.DbServerFactory;
-import org.github.mybridge.utils.CharsetUtils;
 
 public class MySQLCommandHandler implements Handler {
 

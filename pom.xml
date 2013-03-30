@@ -15,7 +15,7 @@
 		<mysql_driver_version>5.1.21</mysql_driver_version>
 		<findbugs_version>2.5.2</findbugs_version>
 		<jdepend_version>2.0-beta-2</jdepend_version>
-		<!-- test -->
+		<!-- Test -->
 		<junit_version>4.10</junit_version>
 	</properties>
 	<modules>
@@ -30,14 +30,19 @@
 		</dependency>
 	</dependencies>
 	<distributionManagement>
-		<snapshotRepository>
-			<id>cd-repository</id>
-			<url>http://cd.artifactory.360buy-develop.com/content/repositories/snapshots/</url>
-		</snapshotRepository>
 	</distributionManagement>
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.0.2</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>

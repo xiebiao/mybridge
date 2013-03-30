@@ -1,4 +1,4 @@
-package org.github.mybridge.plugin.netty;
+package org.github.mybridge.netty;
 
 
 import org.jboss.netty.channel.ChannelPipeline;

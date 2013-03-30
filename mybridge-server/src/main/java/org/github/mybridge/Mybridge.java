@@ -3,7 +3,7 @@ package org.github.mybridge;
 import java.util.Properties;
 
 import org.apache.log4j.PropertyConfigurator;
-import org.github.mybridge.plugin.netty.NettyLauncher;
+import org.github.mybridge.netty.NettyLauncher;
 
 public class Mybridge {
 	public static final String version = "0.0.1";
