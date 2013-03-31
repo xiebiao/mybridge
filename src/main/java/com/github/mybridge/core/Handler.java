@@ -1,8 +1,7 @@
-package com.github.mybridge.core.handler;
+package com.github.mybridge.core;
 
 import java.util.List;
 
-import com.github.mybridge.core.handler.exception.CommandExecuteException;
 import com.github.mybridge.core.packet.Packet;
 
 public interface Handler {

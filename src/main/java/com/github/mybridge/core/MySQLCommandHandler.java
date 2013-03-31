@@ -1,4 +1,4 @@
-package com.github.mybridge.core.handler;
+package com.github.mybridge.core;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.mybridge.core.MySQLCommands;
-import com.github.mybridge.core.handler.exception.CommandExecuteException;
 import com.github.mybridge.core.packet.CommandPacket;
 import com.github.mybridge.core.packet.EOFPacket;
 import com.github.mybridge.core.packet.ErrorPacket;

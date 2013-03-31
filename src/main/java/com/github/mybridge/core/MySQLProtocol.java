@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.jboss.netty.channel.Channel;
 
-import com.github.mybridge.core.handler.Handler;
-import com.github.mybridge.core.handler.MySQLCommandHandler;
-import com.github.mybridge.core.handler.exception.CommandExecuteException;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandPacket;
 import com.github.mybridge.core.packet.ErrorPacket;

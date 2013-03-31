@@ -1,4 +1,4 @@
-package com.github.mybridge.core.handler.exception;
+package com.github.mybridge.core;
 
 public class CommandExecuteException extends Exception {
 
