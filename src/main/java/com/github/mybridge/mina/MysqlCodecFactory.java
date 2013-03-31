@@ -6,13 +6,13 @@ import org.apache.mina.filter.codec.ProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolEncoder;
 
 
-public class MySQLProtocalCodecFactory implements ProtocolCodecFactory {
-	private final MySQLProtocalEncoder encoder;
-	private final MySQLProtocalDecoder decoder;
+public class MysqlCodecFactory implements ProtocolCodecFactory {
+	private final Encoder encoder;
+	private final Decoder decoder;
 
-	public MySQLProtocalCodecFactory() {
-		encoder = new MySQLProtocalEncoder();
-		decoder = new MySQLProtocalDecoder();
+	public MysqlCodecFactory() {
+		encoder = new Encoder();
+		decoder = new Decoder();
 	}
 
 	public ProtocolEncoder getEncoder(IoSession session) {

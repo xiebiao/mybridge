@@ -8,7 +8,7 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import com.github.mybridge.core.packet.HeaderPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class MySQLProtocalDecoder extends ProtocolDecoderAdapter {
+public class Decoder extends ProtocolDecoderAdapter {
 	// private final org.slf4j.Logger LOG =
 	// org.slf4j.LoggerFactory.getLogger(this
 	// .getClass());

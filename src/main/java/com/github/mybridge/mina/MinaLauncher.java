@@ -34,10 +34,10 @@ public class MinaLauncher implements Launcher {
 		chain.addLast("logging", loggingFilter);
 
 		acceptor.getFilterChain().addLast("codec",
-				new ProtocolCodecFilter(new MySQLProtocalCodecFactory()));
+				new ProtocolCodecFilter(new MysqlCodecFactory()));
 		acceptor.getFilterChain().addLast("threadPool",
 				new ExecutorFilter(Executors.newCachedThreadPool()));
-		acceptor.setHandler(new MysqlServerHandler());
+		acceptor.setHandler(new ServerHandler());
 		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
 		InetSocketAddress address = new InetSocketAddress(config.getIp(),
 				config.getPort());

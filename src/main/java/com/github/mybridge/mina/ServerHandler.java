@@ -17,9 +17,9 @@ import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class MysqlServerHandler extends IoHandlerAdapter {
+public class ServerHandler extends IoHandlerAdapter {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(MysqlServerHandler.class);
+			.getLogger(ServerHandler.class);
 	private HandshakeState state;
 	private Handler handler;
 

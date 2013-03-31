@@ -9,11 +9,11 @@ import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 import com.github.mybridge.core.packet.HeaderPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class DataEncoder extends OneToOneEncoder {
+public class Encoder extends OneToOneEncoder {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(DataEncoder.class);
+			.getLogger(Encoder.class);
 
-	public DataEncoder() {
+	public Encoder() {
 		logger.debug(this.getClass().getName() + " init");
 	}
 

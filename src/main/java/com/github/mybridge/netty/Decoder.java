@@ -7,14 +7,14 @@ import org.jboss.netty.handler.codec.frame.FrameDecoder;
 
 import com.github.mybridge.core.packet.HeaderPacket;
 
-public class DataDecoder extends FrameDecoder {
+public class Decoder extends FrameDecoder {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(DataDecoder.class);
+			.getLogger(Decoder.class);
 	static int READ_HEADER = 0;//
 	static int READ_BODY = 1;//
 	int currentState = READ_HEADER;
 
-	public DataDecoder() {
+	public Decoder() {
 	}
 
 	@Override
