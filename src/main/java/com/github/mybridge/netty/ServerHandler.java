@@ -13,9 +13,10 @@ import com.github.mybridge.core.MySQLProtocol;
 public class ServerHandler extends SimpleChannelHandler {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(ServerHandler.class);
-	private MySQLProtocol mysql = new MySQLProtocol();
+	private MySQLProtocol mysql;
 
 	public ServerHandler() {
+		mysql = new MySQLProtocol();
 	}
 
 	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e)

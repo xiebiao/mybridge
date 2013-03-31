@@ -17,17 +17,25 @@ import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class ServerHandler extends IoHandlerAdapter {
+public class ServerHandlerv2 extends IoHandlerAdapter {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(ServerHandler.class);
+			.getLogger(ServerHandlerv2.class);
 	private HandshakeState state;
 	private Handler handler;
+
+	// private MySQLProtocol mysql;
+
+	public ServerHandlerv2() {
+		// mysql = new MySQLProtocol();
+	}
 
 	@Override
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		super.messageReceived(session, message);
 		byte[] bytes = (byte[]) message;
+		// 需要重构MySQLProtocol接口,以便mina与netty公用。
+		// mysql.onRequestReceived(channel, bytes);
 		String msg = "";
 		switch (state) {
 		case READ_AUTH:
