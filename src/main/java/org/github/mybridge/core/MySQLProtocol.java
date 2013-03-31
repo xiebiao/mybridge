@@ -15,9 +15,8 @@ import org.github.mybridge.core.packet.Packet;
 import org.jboss.netty.channel.Channel;
 
 public class MySQLProtocol {
-	// private final org.slf4j.Logger LOG =
-	// org.slf4j.LoggerFactory.getLogger(this
-	// .getClass());
+	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+			.getLogger(this.getClass());
 	private HandshakeState state;
 	private Handler handler;
 
@@ -26,6 +25,7 @@ public class MySQLProtocol {
 	}
 
 	public void onConnected(Channel channel) {
+		logger.debug(channel.toString());
 		state = HandshakeState.WRITE_INIT;
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
 		channel.write(initPacket.getBytes());

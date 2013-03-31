@@ -11,14 +11,13 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
-import org.github.mybridge.AbstractLauncher;
 import org.github.mybridge.Configuration;
 import org.github.mybridge.Launcher;
 import org.github.mybridge.exception.ConfigurationException;
 
-public class MinaLauncher extends AbstractLauncher implements Launcher {
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
+public class MinaLauncher implements Launcher {
+	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+			.getLogger(this.getClass());
 	private Configuration config;
 
 	public MinaLauncher(Configuration config) {
@@ -28,12 +27,11 @@ public class MinaLauncher extends AbstractLauncher implements Launcher {
 	public void start() {
 		IoAcceptor acceptor = new NioSocketAcceptor(Runtime.getRuntime()
 				.availableProcessors() + 1);
-		if (config.isDebug()) {
-			LOG.debug("Setting io logging");
-			DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
-			LoggingFilter loggingFilter = new LoggingFilter();
-			chain.addLast("logging", loggingFilter);
-		}
+
+		DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
+		LoggingFilter loggingFilter = new LoggingFilter();
+		chain.addLast("logging", loggingFilter);
+
 		acceptor.getFilterChain().addLast("codec",
 				new ProtocolCodecFilter(new MySQLProtocalCodecFactory()));
 		acceptor.getFilterChain().addLast("threadPool",
@@ -44,6 +42,7 @@ public class MinaLauncher extends AbstractLauncher implements Launcher {
 				config.getPort());
 		try {
 			acceptor.bind(address);
+			logger.debug("MinaLauncher started");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);

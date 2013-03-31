@@ -17,8 +17,8 @@ import org.github.mybridge.core.packet.OkPacket;
 import org.github.mybridge.core.packet.Packet;
 
 public class MysqlServerHandler extends IoHandlerAdapter {
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+			.getLogger(MysqlServerHandler.class);
 	private HandshakeState state;
 	private Handler handler;
 
@@ -51,6 +51,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 							auth.dbName.length() - 1);
 					handler.setDb(dbname);
 				}
+				logger.debug(auth.clientUser);
 				// 验证用户名与密码
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
@@ -58,7 +59,7 @@ public class MysqlServerHandler extends IoHandlerAdapter {
 					break;
 				}
 			} catch (Exception e) {
-				LOG.debug("packet auth failed  " + e);
+				logger.debug("packet auth failed  " + e);
 				msg = "handshake authpacket failed  ";
 				ErrorPacket errPacket = new ErrorPacket(1045, msg);
 				session.write(errPacket.getBytes());
