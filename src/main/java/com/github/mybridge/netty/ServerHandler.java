@@ -16,20 +16,16 @@ public class ServerHandler extends SimpleChannelHandler {
 	private MySQLProtocol mysql = new MySQLProtocol();
 
 	public ServerHandler() {
-		logger.debug(this.getClass().getName() + " init");
-		System.out.println(this.getClass().getName() + " init");
 	}
 
 	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
 		super.channelOpen(ctx, e);
-		logger.debug("channelOpen");
 	}
 
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
-		logger.debug("channelConnected");
 		mysql.onConnected(e.getChannel());
 	}
 
@@ -37,19 +33,18 @@ public class ServerHandler extends SimpleChannelHandler {
 	public void writeComplete(ChannelHandlerContext ctx, WriteCompletionEvent e)
 			throws Exception {
 		mysql.writeComplete();
+		logger.debug(e.toString() + " " + ctx.toString());
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
 			throws Exception {
 		e.getChannel().close();
-		logger.debug("exceptionCaught");
 	}
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
-		logger.debug("messageReceived");
 		if (e.getMessage() instanceof ChannelBuffer) {
 			ChannelBuffer buffer = (ChannelBuffer) e.getMessage();
 			byte[] bytes = new byte[buffer.readableBytes()];

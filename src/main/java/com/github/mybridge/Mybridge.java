@@ -11,7 +11,7 @@ public class Mybridge {
 			// 处理main参数
 			Configuration config = new Configuration();
 			config.setIp("127.0.0.1");
-			config.setPort(3306);
+			config.setPort(3307);
 			// Launcher launcher = new MinaLauncher();
 			Launcher launcher = new DefaultLauncher(config);
 			launcher.start();

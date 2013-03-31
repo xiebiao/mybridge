@@ -38,7 +38,7 @@ public class CommandPacket extends Packet {
 
 	@Override
 	public byte[] getBytes() {
-		return null;
+		return value;
 	}
 
 	@Override
@@ -46,6 +46,10 @@ public class CommandPacket extends Packet {
 		ByteBuffer buf = new ByteBuffer(bs);
 		type = buf.readByte();
 		value = buf.readRemainBytes();
+	}
+
+	public void setType(byte type) {
+		this.type = type;
 	}
 
 	public byte getType() {

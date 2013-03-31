@@ -13,18 +13,14 @@ public class TestJdbc {
 		LOG.debug("xxx1");
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(
-				"jdbc:mysql://127.0.0.1:3306/amesit", "root", "yaes");
+				"jdbc:mysql://127.0.0.1:3307/wp", "root", "yes");
 		try {
 			LOG.debug("xxx2");
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from city_info");
+			ResultSet rs = stmt.executeQuery("select * from wp_users");
 			while (rs.next()) {
-				LOG.debug(rs.getString("city_id")
-						+ "\n:"
-						+ rs.getString("city_name")
-						+ ":\n"
-						+ new String(rs.getString("city_name").getBytes(
-								"iso-8859-1"), "GBK"));
+				LOG.debug(rs.getString(1) + "\n:" + rs.getString(2));
+
 			}
 			conn.close();
 		} catch (Exception e) {

@@ -15,13 +15,11 @@ public class DataDecoder extends FrameDecoder {
 	int currentState = READ_HEADER;
 
 	public DataDecoder() {
-		logger.debug(this.getClass().getName() + " init");
 	}
 
 	@Override
 	protected Object decode(ChannelHandlerContext ctx, Channel channel,
 			ChannelBuffer buffer) throws Exception {
-		logger.debug("decode...");
 		if (buffer.readableBytes() < 5) {
 			return null;
 		} else {

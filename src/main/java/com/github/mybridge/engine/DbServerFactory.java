@@ -10,10 +10,9 @@ public final class DbServerFactory {
 	public static DbServer getDbserver(Group group) {
 
 		JDBCProperties jdbc = new JDBCProperties();
-		jdbc.url = "jdbc:mysql://127.0.0.1:3306/wp";
+		jdbc.url = "jdbc:mysql://localhost:3306/wp";
 		jdbc.user = "root";
 		jdbc.password = "wangzhu";
-		jdbc.driverName = "com.mysql.jdbc.Driver";
 		DbServer dbServer = new DefaultDbServer(jdbc);
 		return dbServer;
 

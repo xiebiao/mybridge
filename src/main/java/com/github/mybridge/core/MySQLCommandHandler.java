@@ -25,13 +25,12 @@ public class MySQLCommandHandler implements Handler {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(MySQLCommandHandler.class);
 	// private String charset = "latin1";
-	private String charset = "utf-8";
+	private static String charset = "utf-8";
 	private final static DbServer dbServer = DbServerFactory
 			.getDbserver(new DefaultGroup(0));
 	String db = "";
 
 	public MySQLCommandHandler() {
-		charset = "utf-8";
 	}
 
 	public List<Packet> execute(Packet packet) throws CommandExecuteException {
@@ -41,18 +40,23 @@ public class MySQLCommandHandler implements Handler {
 			packetList = new ArrayList<Packet>();
 			if (cmdPacket.getType() == MySQLCommands.COM_QUERY) {
 				String sql = new String(cmdPacket.getValue(), charset);
+				logger.debug("COM_QUERY: " + sql);
 				return executeSQL(sql);
 			} else if (cmdPacket.getType() == MySQLCommands.COM_QUIT) {
+				logger.debug("COM_QUIT ");
 				return null;
 			} else if (cmdPacket.getType() == MySQLCommands.COM_FIELD_LIST) {
 				packetList.add(new EOFPacket());
+				logger.debug("COM_FIELD_LIST ");
 				return packetList;
 			} else if (cmdPacket.getType() == MySQLCommands.COM_INIT_DB) {
+				logger.debug("COM_INIT_DB ");
 				String db = new String(cmdPacket.getValue(), charset);
 				String sql = "USE" + db;
 				setDb(db);
 				return executeSQL(sql);
 			}
+			logger.warn("Error COM");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CommandExecuteException("Command excute error");
@@ -82,6 +86,7 @@ public class MySQLCommandHandler implements Handler {
 		// 路由器
 		//
 		Connection connection = dbServer.getConnection();
+		logger.debug(" execute sql");
 		boolean result;
 		Statement state;
 		try {

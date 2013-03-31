@@ -54,7 +54,6 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * Alternative terms: "Client authentication packet" is sometimes called "client auth response" or "client auth packet" or "login packet". "Scramble_buff" is sometimes called "crypted password".
  * </pre>
  * 
- * @author xiaog
  * 
  */
 public class AuthenticationPacket extends Packet {
@@ -66,7 +65,7 @@ public class AuthenticationPacket extends Packet {
 	public String clientUser;
 	public byte[] clientPassword;
 	public String dbName;
-
+	// Mybridge 配置
 	private String serverUser = "root";// the server name
 	private String serverPassword = "yes";// the server pass
 

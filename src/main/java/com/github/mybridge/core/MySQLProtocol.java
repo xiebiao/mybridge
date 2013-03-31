@@ -13,8 +13,8 @@ import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 
 public class MySQLProtocol {
-	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(this.getClass());
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+			.getLogger(MySQLProtocol.class);
 	private HandshakeState state;
 	private Handler handler;
 
@@ -66,6 +66,7 @@ public class MySQLProtocol {
 					String dbname = auth.dbName.substring(0,
 							auth.dbName.length() - 1);
 					handler.setDb(dbname);
+					logger.debug("dbname name:" + dbname);
 				}
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
@@ -80,6 +81,7 @@ public class MySQLProtocol {
 				break;
 			}
 			msg = "Access denied for user " + auth.clientUser;
+			logger.debug(msg);
 			errPacket = new ErrorPacket(1045, msg);
 			channel.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;
