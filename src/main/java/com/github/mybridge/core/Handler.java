@@ -8,10 +8,6 @@ public interface Handler {
 
 	public List<Packet> execute(Packet cmd) throws CommandExecuteException;
 
-	public void open();
-
-	public void close();
-
 	public void setCharset(String charset);
 
 	public void setDb(String db);

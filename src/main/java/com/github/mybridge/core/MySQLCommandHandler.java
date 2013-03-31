@@ -25,12 +25,13 @@ public class MySQLCommandHandler implements Handler {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(MySQLCommandHandler.class);
 	// private String charset = "latin1";
-	private static String charset = "utf-8";
+	private String charset = "utf-8";
 	private final static DbServer dbServer = DbServerFactory
 			.getDbserver(new DefaultGroup(0));
 	String db = "";
 
 	public MySQLCommandHandler() {
+		charset = "utf-8";
 	}
 
 	public List<Packet> execute(Packet packet) throws CommandExecuteException {
@@ -136,14 +137,6 @@ public class MySQLCommandHandler implements Handler {
 		// connection.close();
 		// DbUtils.closeQuietly(connection, state, rs);
 		return packetList;
-	}
-
-	public void open() {
-
-	}
-
-	public void close() {
-
 	}
 
 	public void setCharset(String charset) {
