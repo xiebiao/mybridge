@@ -15,7 +15,7 @@ public class DataDecoder extends FrameDecoder {
 	int currentState = READ_HEADER;
 
 	public DataDecoder() {
-		System.out.println(this.getClass().getName());
+		logger.debug(this.getClass().getName() + " init");
 	}
 
 	@Override

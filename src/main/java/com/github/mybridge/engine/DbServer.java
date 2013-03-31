@@ -19,6 +19,10 @@ public interface DbServer {
 	 */
 	boolean isMaster();
 
+	Group getGroup();
+
+	void setGroup(Group group);
+
 	/**
 	 * 关闭连接池
 	 */

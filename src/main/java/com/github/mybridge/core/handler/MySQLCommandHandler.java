@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.github.mybridge.core.MySQLCommands;
 import com.github.mybridge.core.handler.exception.CommandExecuteException;
 import com.github.mybridge.core.packet.CommandPacket;
@@ -21,14 +20,16 @@ import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
 import com.github.mybridge.engine.DbServer;
 import com.github.mybridge.engine.DbServerFactory;
+import com.github.mybridge.engine.DefaultGroup;
 
 public class MySQLCommandHandler implements Handler {
 
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+			.getLogger(MySQLCommandHandler.class);
 	// private String charset = "latin1";
 	private String charset = "utf-8";
-	private final static DbServer dbServer = DbServerFactory.getDbserver("");
+	private final static DbServer dbServer = DbServerFactory
+			.getDbserver(new DefaultGroup(0));
 	String db = "";
 
 	public MySQLCommandHandler() {

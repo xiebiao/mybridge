@@ -1,15 +1,15 @@
 package com.github.mybridge.engine;
 
 public class DefaultGroup implements Group {
-	private String name;
+	private int id;
 
-	public DefaultGroup(String name) {
-		this.name = name;
+	public DefaultGroup(int id) {
+		this.id = id;
 	}
 
 	@Override
-	public String getName() {
-		return name;
+	public int getId() {
+		return this.id;
 	}
 
 }

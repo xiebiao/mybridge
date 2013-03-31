@@ -57,7 +57,6 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j_log4j12_version}</version>
 		</dependency>
-		<!-- logging END -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -72,6 +71,13 @@
 			<groupId>commons-dbutils</groupId>
 			<artifactId>commons-dbutils</artifactId>
 			<version>1.5</version>
+		</dependency>
+		<!-- Test libs -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit_version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<distributionManagement>

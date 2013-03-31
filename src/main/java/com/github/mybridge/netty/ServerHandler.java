@@ -11,23 +11,25 @@ import org.jboss.netty.channel.WriteCompletionEvent;
 import com.github.mybridge.core.MySQLProtocol;
 
 public class ServerHandler extends SimpleChannelHandler {
-	private final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(this
-			.getClass());
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+			.getLogger(ServerHandler.class);
 	private MySQLProtocol mysql = new MySQLProtocol();
 
 	public ServerHandler() {
+		logger.debug(this.getClass().getName() + " init");
+		System.out.println(this.getClass().getName() + " init");
 	}
 
 	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
 		super.channelOpen(ctx, e);
-		LOG.debug("channelOpen");
+		logger.debug("channelOpen");
 	}
 
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 			throws Exception {
-		LOG.debug("channelConnected");
+		logger.debug("channelConnected");
 		mysql.onConnected(e.getChannel());
 	}
 
@@ -41,13 +43,13 @@ public class ServerHandler extends SimpleChannelHandler {
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
 			throws Exception {
 		e.getChannel().close();
-		LOG.debug("exceptionCaught");
+		logger.debug("exceptionCaught");
 	}
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
-		LOG.debug("messageReceived");
+		logger.debug("messageReceived");
 		if (e.getMessage() instanceof ChannelBuffer) {
 			ChannelBuffer buffer = (ChannelBuffer) e.getMessage();
 			byte[] bytes = new byte[buffer.readableBytes()];

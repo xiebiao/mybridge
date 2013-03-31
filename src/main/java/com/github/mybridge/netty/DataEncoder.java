@@ -14,8 +14,7 @@ public class DataEncoder extends OneToOneEncoder {
 			.getLogger(DataEncoder.class);
 
 	public DataEncoder() {
-		logger.debug("DataEncoder...");
-		System.out.println("DataEncoder");
+		logger.debug(this.getClass().getName() + " init");
 	}
 
 	@Override

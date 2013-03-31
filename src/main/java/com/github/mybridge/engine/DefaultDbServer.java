@@ -49,4 +49,16 @@ public class DefaultDbServer implements DbServer {
 		return false;
 	}
 
+	@Override
+	public Group getGroup() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setGroup(Group group) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
