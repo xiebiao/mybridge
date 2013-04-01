@@ -6,7 +6,7 @@ import com.github.mybridge.core.packet.Packet;
 
 public interface Handler {
 
-	public List<Packet> execute(Packet cmd) throws CommandExecuteException;
+	public List<Packet> execute(Packet cmd) throws ExecuteException;
 
 	public void setCharset(String charset);
 

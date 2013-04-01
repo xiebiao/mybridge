@@ -34,7 +34,7 @@ public class MySQLCommandHandler implements Handler {
 		charset = "utf-8";
 	}
 
-	public List<Packet> execute(Packet packet) throws CommandExecuteException {
+	public List<Packet> execute(Packet packet) throws ExecuteException {
 		List<Packet> packetList = null;
 		CommandPacket cmdPacket = (CommandPacket) packet;
 		try {
@@ -60,7 +60,7 @@ public class MySQLCommandHandler implements Handler {
 			logger.warn("Error COM");
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new CommandExecuteException("Command excute error");
+			throw new ExecuteException("Command excute error");
 		}
 		return packetList;
 	}

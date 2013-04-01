@@ -24,7 +24,7 @@ public class MySQLCommandHandlerTest extends TestCase {
 			for (Packet p : packets) {
 				System.out.println(new String(p.getBytes()));
 			}
-		} catch (CommandExecuteException e) {
+		} catch (ExecuteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

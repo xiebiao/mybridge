@@ -1,13 +1,13 @@
 package com.github.mybridge.core;
 
-public class CommandExecuteException extends Exception {
+public class ExecuteException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -106905648582784117L;
 
-	public CommandExecuteException(String msg) {
+	public ExecuteException(String msg) {
 		super(msg);
 	}
 

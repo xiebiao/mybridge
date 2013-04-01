@@ -29,7 +29,7 @@ public class MySQLProtocol {
 		channel.write(initPacket.getBytes());
 	}
 
-	public void writeComplete() {
+	public void writeCompleted() {
 		switch (state) {
 		case WRITE_INIT:
 			state = HandshakeState.READ_AUTH;
@@ -93,7 +93,7 @@ public class MySQLProtocol {
 			List<Packet> resultlist = null;
 			try {
 				resultlist = handler.execute(cmd);
-			} catch (CommandExecuteException e) {
+			} catch (ExecuteException e) {
 				e.printStackTrace();
 				errPacket = new ErrorPacket(1046, "server error");
 				channel.write(errPacket);

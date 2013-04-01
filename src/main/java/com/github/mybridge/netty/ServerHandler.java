@@ -33,7 +33,7 @@ public class ServerHandler extends SimpleChannelHandler {
 	@Override
 	public void writeComplete(ChannelHandlerContext ctx, WriteCompletionEvent e)
 			throws Exception {
-		mysql.writeComplete();
+		mysql.writeCompleted();
 		logger.debug(e.toString() + " " + ctx.toString());
 	}
 
