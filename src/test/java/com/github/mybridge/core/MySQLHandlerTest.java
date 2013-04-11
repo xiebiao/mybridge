@@ -7,12 +7,12 @@ import junit.framework.TestCase;
 import com.github.mybridge.core.packet.CommandPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class MySQLCommandHandlerTest extends TestCase {
+public class MySQLHandlerTest extends TestCase {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(MySQLCommandHandlerTest.class);
+			.getLogger(MySQLHandlerTest.class);
 
 	public void test() {
-		MySQLCommandHandler mh = new MySQLCommandHandler();
+		MySQLHandler mh = new MySQLHandler();
 		CommandPacket packet = new CommandPacket();
 		packet.setType((byte)0x03);
 		packet.putBytes("select * from wp_users".getBytes());

@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
-import com.github.mybridge.Configuration;
+import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
 import com.github.mybridge.exception.ConfigurationException;
 

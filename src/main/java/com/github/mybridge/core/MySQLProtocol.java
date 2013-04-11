@@ -19,7 +19,7 @@ public class MySQLProtocol {
 	private Handler handler;
 
 	public MySQLProtocol() {
-		handler = new MySQLCommandHandler();
+		handler = new MySQLHandler();
 	}
 
 	public void onConnected(Channel channel) {

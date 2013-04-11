@@ -12,16 +12,16 @@ import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import com.github.mybridge.Configuration;
+import com.github.mybridge.MybridgeConfiguration;
 import com.github.mybridge.Launcher;
 import com.github.mybridge.exception.ConfigurationException;
 
 public class MinaLauncher implements Launcher {
 	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(this.getClass());
-	private Configuration config;
+	private MybridgeConfiguration config;
 
-	public MinaLauncher(Configuration config) {
+	public MinaLauncher(MybridgeConfiguration config) {
 		this.config = config;
 	}
 

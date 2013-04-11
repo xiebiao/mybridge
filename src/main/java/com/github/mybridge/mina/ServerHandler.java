@@ -7,7 +7,7 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
 import com.github.mybridge.core.Handler;
-import com.github.mybridge.core.MySQLCommandHandler;
+import com.github.mybridge.core.MySQLHandler;
 import com.github.mybridge.core.MySQLCommands;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandPacket;
@@ -132,7 +132,7 @@ public class ServerHandler extends IoHandlerAdapter {
 		super.sessionOpened(session);
 		Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
-		handler = new MySQLCommandHandler();
+		handler = new MySQLHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
 		byte[] temp = initPacket.getBytes();
 		session.write(temp);

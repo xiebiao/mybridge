@@ -1,13 +1,14 @@
 package com.github.mybridge;
 
 import com.github.mybridge.exception.ConfigurationException;
-import com.github.mybridge.mina.MinaLauncher;
+import com.github.mybridge.netty.NettyLauncher;
 
 public final class DefaultLauncher implements Launcher {
 	private Launcher launcher;
 
-	public DefaultLauncher(Configuration config) {
-		launcher = new MinaLauncher(config);
+	public DefaultLauncher(com.github.jnet.Configuration config) {
+		//launcher = new JnetLauncher(config);
+		launcher = new NettyLauncher(config);
 	}
 
 	@Override

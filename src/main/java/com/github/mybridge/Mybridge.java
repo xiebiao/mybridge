@@ -1,5 +1,7 @@
 package com.github.mybridge;
 
+import com.github.jnet.Configuration;
+
 public class Mybridge {
 	public static final String version = "0.0.1";
 	public static final String name = "Mybridge";
@@ -12,7 +14,6 @@ public class Mybridge {
 			Configuration config = new Configuration();
 			config.setIp("127.0.0.1");
 			config.setPort(3307);
-			// Launcher launcher = new MinaLauncher();
 			Launcher launcher = new DefaultLauncher(config);
 			launcher.start();
 			LOG.debug(name + " started");

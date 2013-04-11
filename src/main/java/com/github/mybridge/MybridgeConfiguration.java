@@ -1,12 +1,12 @@
 package com.github.mybridge;
 
-public class Configuration {
+public class MybridgeConfiguration {
 
 	private String ip;
 	private int port;
 	private boolean debug;
 
-	public Configuration() {
+	public MybridgeConfiguration() {
 
 	}
 	public String getIp() {

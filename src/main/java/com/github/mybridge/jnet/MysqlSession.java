@@ -1,13 +1,16 @@
 package com.github.mybridge.jnet;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.github.jnet.Session;
 import com.github.jnet.utils.IOBuffer;
+import com.github.jnet.utils.IOUtils;
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.Handler;
-import com.github.mybridge.core.MySQLCommandHandler;
 import com.github.mybridge.core.MySQLCommands;
+import com.github.mybridge.core.MySQLHandler;
+import com.github.mybridge.core.MySQLProtocol;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandPacket;
 import com.github.mybridge.core.packet.ErrorPacket;
@@ -21,29 +24,54 @@ public class MysqlSession extends Session {
 			.getLogger(MysqlSession.class);
 	private HandshakeState state;
 	private Handler handler;
+	private MySQLProtocol mysql;
+	private static final int BUF_SIZE = 2048;// (2M)
 
 	public MysqlSession() {
-		handler = new MySQLCommandHandler();
+		handler = new MySQLHandler();
+		mysql = new MySQLProtocol();
 	}
 
 	@Override
 	public void open(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
+		if (readBuf.position() < 5) {
+			state = HandshakeState.READ_AUTH;
+			this.remainToRead(BUF_SIZE);
+			return;
+		}
 		logger.debug(readBuf.toString());
 		state = HandshakeState.WRITE_INIT;
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
-		writeBuf.writeBytes(initPacket.getBytes());
+		// writeBuf.writeBytes(initPacket.getBytes());
+		write(initPacket);
 	}
 
 	@Override
-	public void complateRead(IOBuffer readBuf, IOBuffer writeBuf)
+	public void readCompleted(IOBuffer readBuf, IOBuffer writeBuf)
 			throws Exception {
+
+	}
+
+	@Override
+	public void writeCompleted(IOBuffer readBuf, IOBuffer writeBuf)
+			throws Exception {
+
+	}
+
+	@Override
+	public void close() {
+
+	}
+
+	@Override
+	public void reading(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
 		String msg = "";
 		ErrorPacket errPacket = null;
 		switch (state) {
 		case READ_AUTH:
 			state = HandshakeState.WRITE_RESULT;
 			AuthenticationPacket auth = new AuthenticationPacket();
-			//auth.putBytes(bytes);
+			// auth.putBytes(bytes);
 
 			String user = "";
 			if (auth.clientUser.length() > 1) {
@@ -63,37 +91,46 @@ public class MysqlSession extends Session {
 					logger.debug("dbname name:" + dbname);
 				}
 				if (auth.checkAuth(user, auth.clientPassword)) {
-					OkPacket ok = new OkPacket();
-					//channel.write(ok.getBytes());
+					OkPacket okPacket = new OkPacket();
+
+					write(okPacket);
+					// channel.write(ok.getBytes());
 					break;
 				}
 			} catch (Exception e) {
 				msg = "handshake authpacket failed  ";
 				errPacket = new ErrorPacket(1045, msg);
-				//channel.write(errPacket.getBytes());
+
+				write(errPacket);
+				// channel.write(errPacket.getBytes());
 				state = HandshakeState.CLOSE;
 				break;
 			}
 			msg = "Access denied for user " + auth.clientUser;
 			logger.debug(msg);
 			errPacket = new ErrorPacket(1045, msg);
-			//channel.write(errPacket.getBytes());
+
+			write(errPacket);
+			// channel.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;
 			break;
 		case READ_COMMOND:
 			state = HandshakeState.WRITE_RESULT;
 			CommandPacket cmd = new CommandPacket();
-			//cmd.putBytes(bytes);
+			// cmd.putBytes(bytes);
 			List<Packet> resultlist = null;
 			try {
 				resultlist = handler.execute(cmd);
 			} catch (ExecuteException e) {
 				e.printStackTrace();
 				errPacket = new ErrorPacket(1046, "server error");
-				//channel.write(errPacket);
+
+				write(errPacket);
+				// channel.write(errPacket);
 			}
 			if (resultlist != null && resultlist.size() > 0) {
-				//writePacketList(channel, resultlist);
+				// writePacketList(channel, resultlist);
+
 			}
 			break;
 		default:
@@ -102,29 +139,21 @@ public class MysqlSession extends Session {
 
 	}
 
-	@Override
-	public void complateWrite(IOBuffer readBuf, IOBuffer writeBuf)
-			throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void reading(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
-		// TODO Auto-generated method stub
-		
+	private void write(Packet packet) {
+		IOBuffer buf = new IOBuffer();
+		buf.writeBytes(packet.getBytes());
+		try {
+			logger.debug(buf.toString());
+			IOUtils.write(this.getSocket(), buf);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void writing(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
