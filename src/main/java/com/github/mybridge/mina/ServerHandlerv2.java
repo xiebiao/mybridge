@@ -8,10 +8,10 @@ import org.apache.mina.core.session.IoSession;
 
 import com.github.mybridge.core.Handler;
 import com.github.mybridge.core.MySQLHandler;
-import com.github.mybridge.core.MySQLCommands;
+import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.packet.AuthenticationPacket;
-import com.github.mybridge.core.packet.CommandPacket;
-import com.github.mybridge.core.packet.ErrorPacket;
+import com.github.mybridge.core.packet.CommandsPacket;
+import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
@@ -48,15 +48,15 @@ public class ServerHandlerv2 extends IoHandlerAdapter {
 						auth.clientUser.length() - 1);
 			}
 			try {
-				if (MySQLCommands.index2Charset
+				if (MySQLCommandPhase.index2Charset
 						.containsKey((int) auth.charsetNum)) {
-					handler.setCharset(MySQLCommands.index2Charset
+					handler.setCharset(MySQLCommandPhase.index2Charset
 							.get((int) auth.charsetNum));
 				}
 
-				if (auth.dbName.length() > 0) {
-					String dbname = auth.dbName.substring(0,
-							auth.dbName.length() - 1);
+				if (auth.databaseName.length() > 0) {
+					String dbname = auth.databaseName.substring(0,
+							auth.databaseName.length() - 1);
 					handler.setDatabaseName(dbname);
 				}
 				logger.debug(auth.clientUser);
@@ -68,19 +68,19 @@ public class ServerHandlerv2 extends IoHandlerAdapter {
 			} catch (Exception e) {
 				logger.debug("packet auth failed  " + e);
 				msg = "handshake authpacket failed  ";
-				ErrorPacket errPacket = new ErrorPacket(1045, msg);
+				ErrPacket errPacket = new ErrPacket(1045, msg);
 				session.write(errPacket.getBytes());
 				state = HandshakeState.CLOSE;
 				break;
 			}
 			msg = "Access denied for user " + auth.clientUser;
-			ErrorPacket errPacket = new ErrorPacket(1045, msg);
+			ErrPacket errPacket = new ErrPacket(1045, msg);
 			session.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;
 			break;
 		case READ_COMMOND:
 			state = HandshakeState.WRITE_RESULT;
-			CommandPacket cmd = new CommandPacket();
+			CommandsPacket cmd = new CommandsPacket();
 			cmd.putBytes(bytes);
 			List<Packet> resultlist = handler.execute(cmd);
 			if (resultlist != null && resultlist.size() > 0) {

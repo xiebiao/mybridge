@@ -5,12 +5,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public final class MySQLCommands {
-	/* *
-	 * Closes the current connection. No arguments.
+/**
+ * <pre>
+ * https://dev.mysql.com/doc/internals/en/text-protocol.html#section-text-protocol
+ * </pre>
+ * 
+ * @author xiebiao
+ * 
+ */
+public final class MySQLCommandPhase {
+	/**
+	 * internal server command
+	 */
+	public static final int COM_SLEEP = 0;
+	/**
+	 * 
+	 * tells the server that the client wants to close the connection <br/>
+	 * response: either a connection close or a OK_Packet
 	 */
 	public static final int COM_QUIT = 1;
 	/**
+	 * A COM_QUERY is used to send the server a text-based query that is
+	 * executed immediately.<br/>
+	 * 
+	 * The server replies to a COM_QUERY packet with a COM_QUERY Response.<br/>
+	 * 
+	 * The length of the query-string is a taken from the packet length - 1<br/>
+	 * 
 	 * <pre>
 	 * The most common request type. Used to execute nonprepared SQL statements.
 	 * 
@@ -22,6 +43,9 @@ public final class MySQLCommands {
 	 */
 	public static final int COM_QUERY = 3;
 	/**
+	 * change the default schema of the connection response<br/>
+	 * response: OK_Packet or ERR_Packet
+	 * 
 	 * <pre>
 	 * Bytes                        Name
 	 *  -----                        ----

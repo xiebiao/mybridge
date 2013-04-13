@@ -32,7 +32,7 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * @author xiaog
  * 
  */
-public class CommandPacket extends Packet {
+public class CommandsPacket extends Packet {
 	private byte type;// 占一个字节,表示客户端请求类型,如0x03 mysql_real_query
 	private byte[] value;
 

@@ -45,7 +45,7 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * @author xiebiao
  * 
  */
-public class EOFPacket extends Packet {
+public class EofPacket extends Packet {
 	private byte type = (byte) 0xfe;
 	private int warningCount = 0;
 	private int statusFlags = 0;

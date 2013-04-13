@@ -61,23 +61,23 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * @author xiebiao
  * 
  */
-public class ErrorPacket extends Packet {
+public class ErrPacket extends Packet {
 	private byte type = (byte) 0xff;
 	private int errno = 0;
 	private byte sqlStateMark = 0x23;
 	private String sqlstate = "12345";
 	private String message = "";
 
-	public ErrorPacket() {
+	public ErrPacket() {
 	}
 
-	public ErrorPacket(int errno, String message) {
+	public ErrPacket(int errno, String message) {
 		super();
 		this.errno = errno;
 		this.message = message;
 	}
 
-	public ErrorPacket(int errorCode, String sqlState, String message) {
+	public ErrPacket(int errorCode, String sqlState, String message) {
 		this.errno = errorCode;
 		this.sqlstate = sqlState;
 		this.message = message;

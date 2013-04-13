@@ -8,25 +8,25 @@ import com.github.jnet.utils.IOBuffer;
 import com.github.mybridge.MySQLProtocol;
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.Handler;
-import com.github.mybridge.core.MySQLCommands;
+import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.MySQLHandler;
 import com.github.mybridge.core.packet.AuthenticationPacket;
-import com.github.mybridge.core.packet.CommandPacket;
-import com.github.mybridge.core.packet.ErrorPacket;
+import com.github.mybridge.core.packet.CommandsPacket;
+import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 import com.github.mybridge.core.packet.PacketHeader;
 
-public class MysqlSession extends Session {
+public class MySQLSession extends Session {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(MysqlSession.class);
+			.getLogger(MySQLSession.class);
 	private static int READ_HEADER = 0;
 	private static int READ_BODY = 1;
 	private int currentState = READ_HEADER;
 	private MySQLProtocol mysql;
 
-	public MysqlSession() {
+	public MySQLSession() {
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class AuthenticationPacket extends Packet {
 	public byte[] filler;
 	public String clientUser;
 	public byte[] clientPassword;
-	public String dbName;
+	public String databaseName;
 	// Mybridge 配置
 	private String serverUser = "root";// the server name
 	private String serverPassword = "yes";// the server pass
@@ -83,7 +83,7 @@ public class AuthenticationPacket extends Packet {
 		filler = buf.readBytes(23);
 		clientUser = buf.readNullString();
 		clientPassword = buf.readLCBytes();
-		dbName = buf.readNullString();
+		databaseName = buf.readNullString();
 	}
 
 	public boolean checkAuth(String clientUser, byte[] cPass) throws Exception {

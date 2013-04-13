@@ -4,7 +4,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.github.mybridge.core.packet.CommandPacket;
+import com.github.mybridge.core.packet.CommandsPacket;
 import com.github.mybridge.core.packet.Packet;
 
 public class MySQLHandlerTest extends TestCase {
@@ -13,7 +13,7 @@ public class MySQLHandlerTest extends TestCase {
 
 	public void test() {
 		MySQLHandler mh = new MySQLHandler();
-		CommandPacket packet = new CommandPacket();
+		CommandsPacket packet = new CommandsPacket();
 		packet.setType((byte)0x03);
 		packet.putBytes("select * from wp_users".getBytes());
 		try {

@@ -10,11 +10,11 @@ import com.github.jnet.utils.IOBuffer;
 import com.github.mybridge.MySQLProtocol;
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.Handler;
-import com.github.mybridge.core.MySQLCommands;
+import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.MySQLHandler;
 import com.github.mybridge.core.packet.AuthenticationPacket;
-import com.github.mybridge.core.packet.CommandPacket;
-import com.github.mybridge.core.packet.ErrorPacket;
+import com.github.mybridge.core.packet.CommandsPacket;
+import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
@@ -23,14 +23,14 @@ import com.github.mybridge.core.packet.PacketHeader;
 import com.mysql.jdbc.StringUtils;
 
 public class JnetMySQLProtocolImpl implements MySQLProtocol {
-	private MysqlSession session;
+	private MySQLSession session;
 	private HandshakeState state;
 	private static Handler handler = new MySQLHandler();
 	private byte packetId = 0;
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(JnetMySQLProtocolImpl.class);
 
-	public JnetMySQLProtocolImpl(MysqlSession session) {
+	public JnetMySQLProtocolImpl(MySQLSession session) {
 		this.session = session;
 		state = HandshakeState.WRITE_INIT;
 	}
@@ -45,7 +45,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	public void onPacketReceived(IOBuffer readBuffer, IOBuffer writeBuffer) {
 		logger.debug("onPacketReceived:" + state);
 		String msg = "";
-		ErrorPacket errPacket = null;
+		ErrPacket errPacket = null;
 		switch (state) {
 		case READ_AUTH:
 			logger.debug("onPacketReceived: XXXX");
@@ -60,14 +60,14 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 						authPacket.clientUser.length() - 1);
 			}
 			try {
-				if (MySQLCommands.index2Charset
+				if (MySQLCommandPhase.index2Charset
 						.containsKey((int) authPacket.charsetNum)) {
-					handler.setCharset(MySQLCommands.index2Charset
+					handler.setCharset(MySQLCommandPhase.index2Charset
 							.get((int) authPacket.charsetNum));
 				}
-				if (authPacket.dbName.length() > 0) {
-					String dbname = authPacket.dbName.substring(0,
-							authPacket.dbName.length() - 1);
+				if (authPacket.databaseName.length() > 0) {
+					String dbname = authPacket.databaseName.substring(0,
+							authPacket.databaseName.length() - 1);
 					handler.setDatabaseName(dbname);
 				}
 				if (authPacket.checkAuth(user, authPacket.clientPassword)) {
@@ -77,19 +77,19 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 				}
 			} catch (Exception e) {
 				msg = "handshake authpacket failed  ";
-				errPacket = new ErrorPacket(1045, msg);
+				errPacket = new ErrPacket(1045, msg);
 				this.writePacket(writeBuffer, errPacket);
 				state = HandshakeState.CLOSE;
 				break;
 			}
 			msg = "Access denied for user " + authPacket.clientUser;
-			errPacket = new ErrorPacket(1045, msg);
+			errPacket = new ErrPacket(1045, msg);
 			this.writePacket(writeBuffer, errPacket);
 			state = HandshakeState.CLOSE;
 			break;
 		case READ_COMMOND:
 			state = HandshakeState.WRITE_RESULT;
-			CommandPacket cmdPacket = new CommandPacket();
+			CommandsPacket cmdPacket = new CommandsPacket();
 			byte[] bytes = readBuffer.getBytes(0, readBuffer.limit());
 			cmdPacket.putBytes(bytes);
 			List<Packet> resultList = null;
@@ -97,7 +97,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 				resultList = handler.execute(cmdPacket);
 			} catch (ExecuteException e) {
 				e.printStackTrace();
-				errPacket = new ErrorPacket(1046, "server error");
+				errPacket = new ErrPacket(1046, "server error");
 				writePacket(writeBuffer, errPacket);
 			}
 			if (resultList != null && resultList.size() > 0) {

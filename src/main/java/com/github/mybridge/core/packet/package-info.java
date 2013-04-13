@@ -2,6 +2,7 @@ package com.github.mybridge.core.packet;
 
 /**
  * Mysql protocol.
+ * 
  * <p>
  * <a href="http://dev.mysql.com/doc/internals/en/client-server-protocol.html">Protocol</a>
  *</p>

@@ -1,5 +1,13 @@
 package com.github.mybridge.core.packet;
 
+/**
+ * <pre>
+ * https://dev.mysql.com/doc/internals/en/connection-phase.html#section-handshake-phase
+ * </pre>
+ * 
+ * @author xiebiao
+ * 
+ */
 public enum HandshakeState {
 	WRITE_INIT/** 初始化 */
 	, READ_AUTH/** 验证客户端用户名密码 */

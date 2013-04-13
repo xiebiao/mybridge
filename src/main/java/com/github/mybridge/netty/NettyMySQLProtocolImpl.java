@@ -6,11 +6,11 @@ import org.jboss.netty.channel.Channel;
 
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.Handler;
-import com.github.mybridge.core.MySQLCommands;
+import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.MySQLHandler;
 import com.github.mybridge.core.packet.AuthenticationPacket;
-import com.github.mybridge.core.packet.CommandPacket;
-import com.github.mybridge.core.packet.ErrorPacket;
+import com.github.mybridge.core.packet.CommandsPacket;
+import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
@@ -50,7 +50,7 @@ public class NettyMySQLProtocolImpl {
 
 	public void onRequestReceived(Channel channel, byte[] bytes) {
 		String msg = "";
-		ErrorPacket errPacket = null;
+		ErrPacket errPacket = null;
 		switch (state) {
 		case READ_AUTH:
 			state = HandshakeState.WRITE_RESULT;
@@ -63,14 +63,14 @@ public class NettyMySQLProtocolImpl {
 						auth.clientUser.length() - 1);
 			}
 			try {
-				if (MySQLCommands.index2Charset
+				if (MySQLCommandPhase.index2Charset
 						.containsKey((int) auth.charsetNum)) {
-					handler.setCharset(MySQLCommands.index2Charset
+					handler.setCharset(MySQLCommandPhase.index2Charset
 							.get((int) auth.charsetNum));
 				}
-				if (auth.dbName.length() > 0) {
-					String dbname = auth.dbName.substring(0,
-							auth.dbName.length() - 1);
+				if (auth.databaseName.length() > 0) {
+					String dbname = auth.databaseName.substring(0,
+							auth.databaseName.length() - 1);
 					handler.setDatabaseName(dbname);
 				}
 				if (auth.checkAuth(user, auth.clientPassword)) {
@@ -80,26 +80,26 @@ public class NettyMySQLProtocolImpl {
 				}
 			} catch (Exception e) {
 				msg = "handshake authpacket failed  ";
-				errPacket = new ErrorPacket(1045, msg);
+				errPacket = new ErrPacket(1045, msg);
 				channel.write(errPacket.getBytes());
 				state = HandshakeState.CLOSE;
 				break;
 			}
 			msg = "Access denied for user " + auth.clientUser;
-			errPacket = new ErrorPacket(1045, msg);
+			errPacket = new ErrPacket(1045, msg);
 			channel.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;
 			break;
 		case READ_COMMOND:
 			state = HandshakeState.WRITE_RESULT;
-			CommandPacket cmd = new CommandPacket();
+			CommandsPacket cmd = new CommandsPacket();
 			cmd.putBytes(bytes);
 			List<Packet> resultlist = null;
 			try {
 				resultlist = handler.execute(cmd);
 			} catch (ExecuteException e) {
 				e.printStackTrace();
-				errPacket = new ErrorPacket(1046, "server error");
+				errPacket = new ErrPacket(1046, "server error");
 				channel.write(errPacket);
 			}
 			if (resultlist != null && resultlist.size() > 0) {
