@@ -37,6 +37,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	@Override
 	public void connected(IOBuffer readBuffer, IOBuffer writeBuffer) {
 		InitialHandshakePacket init = new InitialHandshakePacket();
+		init.setPacketNumber((byte) (packetNumber + 1));
 		writePacket(writeBuffer, init);
 	}
 
@@ -99,7 +100,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 			}
 			if (resultList != null && resultList.size() > 0) {
 				writePacketList(writeBuffer, resultList);
-			}// 如果为NULL，应该回写一个ErrPacket
+			}
 			break;
 		default:
 			break;
@@ -119,10 +120,8 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 			readPacket(readBuffer);
 			break;
 		case CLOSE:
-			this.session.setNextState(IOState.CLOSE);
 			break;
 		default:
-			this.session.setNextState(IOState.CLOSE);
 		}
 
 	}
@@ -164,7 +163,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(body.length);
 		header.setPacketNumber(this.packetNumber);
-		logger.info("packetId:" + header.getPacketNumber());
+		logger.debug("packetId:" + header.getPacketNumber());
 		writeBuf.position(0);
 		writeBuf.writeBytes(header.getBytes());
 		writeBuf.writeBytes(body);

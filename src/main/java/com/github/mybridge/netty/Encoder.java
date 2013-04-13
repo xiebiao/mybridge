@@ -27,9 +27,8 @@ public class Encoder extends OneToOneEncoder {
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel,
 			Object msg) throws Exception {
-
 		byte[] body = (byte[]) msg;
-		logger.debug(StringUtils.dumpAsHex(body, body.length));
+		// logger.debug(StringUtils.dumpAsHex(body, body.length));
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(body.length);
 		header.setPacketNumber(header.getPacketNumber());

@@ -1,5 +1,6 @@
 package com.github.mybridge.jnet;
 
+import com.github.jnet.IOState;
 import com.github.jnet.Session;
 import com.github.jnet.utils.IOBuffer;
 import com.github.mybridge.MySQLProtocol;
@@ -28,7 +29,7 @@ public class MySQLSession extends Session {
 		if (currentState == READ_HEADER) {
 			PacketHeader header = new PacketHeader();
 			header.putBytes(readBuf.readBytes(0, readBuf.limit()));
-			//this.mysql.setPacketNumber((byte) (mysql.getPacketNumber() + 1));
+			// this.mysql.setPacketNumber((byte) (mysql.getPacketNumber() + 1));
 			readBuf.position(0);
 			readBuf.limit(header.getPacketLen());
 			currentState = READ_BODY;
@@ -49,6 +50,7 @@ public class MySQLSession extends Session {
 		if (this.mysql != null) {
 			this.mysql.close();
 		}
+		this.setNextState(IOState.CLOSE);
 	}
 
 	@Override
@@ -58,7 +60,6 @@ public class MySQLSession extends Session {
 
 	@Override
 	public void writing(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
-		// TODO Auto-generated method stub
 
 	}
 

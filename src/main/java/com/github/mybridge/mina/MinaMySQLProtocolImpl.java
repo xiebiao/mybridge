@@ -51,7 +51,6 @@ public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
 							auth.databaseName.length() - 1);
 					handler.setDatabase(dbname);
 				}
-				logger.debug(auth.clientUser);
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
 					session.write(ok.getBytes());
@@ -130,7 +129,7 @@ public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		super.sessionOpened(session);
-		//Packet.setPacketId((byte) 0);
+		// Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
 		handler = new MySQLHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();

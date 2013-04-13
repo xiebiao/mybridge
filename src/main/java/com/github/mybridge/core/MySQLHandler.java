@@ -40,21 +40,22 @@ public class MySQLHandler implements Handler {
 	public List<Packet> execute(Packet packet) throws ExecuteException {
 		List<Packet> packetList = null;
 		CommandsPacket cmdPacket = (CommandsPacket) packet;
+		int cmdType = cmdPacket.getType();
 		try {
 			packetList = new ArrayList<Packet>();
-			if (cmdPacket.getType() == MySQLCommandPhase.COM_QUERY) {
+			switch (cmdType) {
+			case MySQLCommandPhase.COM_QUERY:
 				String sql = new String(cmdPacket.getValue(), charset);
 				logger.debug("COM_QUERY: " + sql);
 				return executeSQL(sql);
-			} else if (cmdPacket.getType() == MySQLCommandPhase.COM_QUIT) {
+			case MySQLCommandPhase.COM_QUIT:
 				return null;
-			} else if (cmdPacket.getType() == MySQLCommandPhase.COM_FIELD_LIST) {
+			case MySQLCommandPhase.COM_FIELD_LIST:
 				packetList.add(new EofPacket());
 				return packetList;
-			} else if (cmdPacket.getType() == MySQLCommandPhase.COM_INIT_DB) {
-
+			case MySQLCommandPhase.COM_INIT_DB:
 				String db = new String(cmdPacket.getValue(), charset);
-				String sql = "USE" + db;
+				sql = "USE" + db;
 				logger.debug("COM_INIT_DB: " + db);
 				setDatabase(db);
 				return executeSQL(sql);

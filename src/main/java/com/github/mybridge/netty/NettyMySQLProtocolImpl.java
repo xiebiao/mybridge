@@ -43,8 +43,8 @@ public class NettyMySQLProtocolImpl {
 		case WRITE_RESULT:
 			state = HandshakeState.READ_COMMOND;
 		case CLOSE:
-		default:
 			break;
+		default:
 		}
 	}
 
