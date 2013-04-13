@@ -20,8 +20,8 @@ public class Encoder extends ProtocolEncoderAdapter {
 		buffer = IoBuffer.allocate(msg.length + 4);
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(msg.length);
-		header.setPacketId(header.getPacketId());
-		header.packetIdInc();
+		header.setPacketNumber(header.getPacketNumber());
+		header.packetNumberInc();
 		buffer.put(header.getBytes());
 		buffer.put(msg);
 		buffer.flip();

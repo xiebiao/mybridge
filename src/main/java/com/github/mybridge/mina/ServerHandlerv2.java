@@ -57,7 +57,7 @@ public class ServerHandlerv2 extends IoHandlerAdapter {
 				if (auth.databaseName.length() > 0) {
 					String dbname = auth.databaseName.substring(0,
 							auth.databaseName.length() - 1);
-					handler.setDatabaseName(dbname);
+					handler.setDatabase(dbname);
 				}
 				logger.debug(auth.clientUser);
 				if (auth.checkAuth(user, auth.clientPassword)) {

@@ -2,9 +2,6 @@ package com.github.mybridge.jnet;
 
 import java.util.List;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-
 import com.github.jnet.IOState;
 import com.github.jnet.utils.IOBuffer;
 import com.github.mybridge.MySQLProtocol;
@@ -26,7 +23,9 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	private MySQLSession session;
 	private HandshakeState state;
 	private static Handler handler = new MySQLHandler();
-	private byte packetId = 0;
+	// private static Handler handler = new TestHandler();
+
+	private byte packetNumber = 0;
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(JnetMySQLProtocolImpl.class);
 
@@ -36,19 +35,17 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	}
 
 	@Override
-	public void onSessionOpen(IOBuffer readBuffer, IOBuffer writeBuffer) {
+	public void connected(IOBuffer readBuffer, IOBuffer writeBuffer) {
 		InitialHandshakePacket init = new InitialHandshakePacket();
 		writePacket(writeBuffer, init);
 	}
 
 	@Override
-	public void onPacketReceived(IOBuffer readBuffer, IOBuffer writeBuffer) {
-		logger.debug("onPacketReceived:" + state);
+	public void packetReceived(IOBuffer readBuffer, IOBuffer writeBuffer) {
 		String msg = "";
 		ErrPacket errPacket = null;
 		switch (state) {
 		case READ_AUTH:
-			logger.debug("onPacketReceived: XXXX");
 			state = HandshakeState.WRITE_RESULT;
 			AuthenticationPacket authPacket = new AuthenticationPacket();
 			byte[] authByte = readBuffer.getBytes(0, readBuffer.limit());
@@ -68,7 +65,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 				if (authPacket.databaseName.length() > 0) {
 					String dbname = authPacket.databaseName.substring(0,
 							authPacket.databaseName.length() - 1);
-					handler.setDatabaseName(dbname);
+					handler.setDatabase(dbname);
 				}
 				if (authPacket.checkAuth(user, authPacket.clientPassword)) {
 					OkPacket okPacket = new OkPacket();
@@ -102,8 +99,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 			}
 			if (resultList != null && resultList.size() > 0) {
 				writePacketList(writeBuffer, resultList);
-			}// 如果为NULL，应该回写一个ErrorPacket
-
+			}// 如果为NULL，应该回写一个ErrPacket
 			break;
 		default:
 			break;
@@ -112,20 +108,19 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	}
 
 	@Override
-	public void onPacketSended(IOBuffer readBuffer, IOBuffer writeBuffer) {
+	public void packetSended(IOBuffer readBuffer, IOBuffer writeBuffer) {
 		switch (state) {
 		case WRITE_INIT:
-			logger.debug("onPacketSended case WRITE_INIT");
 			state = HandshakeState.READ_AUTH;
 			readPacket(readBuffer);
 			break;
 		case WRITE_RESULT:
-			logger.debug("onPacketSended case WRITE_RESULT");
 			state = HandshakeState.READ_COMMOND;
 			readPacket(readBuffer);
 			break;
 		case CLOSE:
 			this.session.setNextState(IOState.CLOSE);
+			break;
 		default:
 			this.session.setNextState(IOState.CLOSE);
 		}
@@ -133,24 +128,16 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	}
 
 	@Override
-	public void onSessionClose() {
-		// TODO Auto-generated method stub
-
+	public void close() {
+		this.session.setNextState(IOState.CLOSE);
 	}
 
 	@Override
-	public void setPacketId(byte id) {
-		this.packetId = id;
-
-	}
-
-	@Override
-	public byte getPacketId() {
-		return this.packetId;
+	public byte getPacketNumber() {
+		return this.packetNumber;
 	}
 
 	private void readPacket(IOBuffer readBuf) {
-		logger.debug("readPacket");
 		readBuf.position(0);
 		readBuf.limit(4);
 		session.setNextState(IOState.READ);
@@ -162,8 +149,8 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 			byte[] body = packet.getBytes();
 			PacketHeader header = new PacketHeader();
 			header.setPacketLen(body.length);
-			header.setPacketId(this.getPacketId());
-			this.packetId++;
+			header.setPacketNumber(this.packetNumber);
+			this.packetNumber++;
 			writeBuf.writeBytes(header.getBytes());
 			writeBuf.writeBytes(body);
 		}
@@ -176,8 +163,8 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 		byte[] body = packet.getBytes();
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(body.length);
-		header.setPacketId(this.getPacketId());
-		logger.info("packetId:" + header.getPacketId());
+		header.setPacketNumber(this.packetNumber);
+		logger.info("packetId:" + header.getPacketNumber());
 		writeBuf.position(0);
 		writeBuf.writeBytes(header.getBytes());
 		writeBuf.writeBytes(body);

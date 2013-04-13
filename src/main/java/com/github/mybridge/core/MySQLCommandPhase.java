@@ -329,10 +329,8 @@ public final class MySQLCommandPhase {
 
 	public static final int FIELD_TYPE_VARCHAR = 15;
 
-	//
-	// Constants defined from mysql
-	//
-	// DB Operations
+	// ---------------------  Constants defined from mysql
+
 	public static final int SLEEP = 0;
 
 	public static final int STATISTICS = 9;

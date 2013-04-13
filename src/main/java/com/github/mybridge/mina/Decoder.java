@@ -24,7 +24,7 @@ public class Decoder extends ProtocolDecoderAdapter {
 			in.get(bytes, 0, in.limit());
 			PacketHeader header = new PacketHeader();
 			header.putBytes(bytes);
-			header.setPacketId((byte) (header.getPacketId() + 1));
+			header.setPacketNumber((byte) (header.getPacketNumber() + 1));
 			in.flip();
 			in.position(4);
 			in.limit(header.getPacketLen() + 4);

@@ -10,6 +10,6 @@ public interface Handler {
 
 	public void setCharset(String charset);
 
-	public void setDatabaseName(String databaseName);
+	public void setDatabase(String database);
 
 }

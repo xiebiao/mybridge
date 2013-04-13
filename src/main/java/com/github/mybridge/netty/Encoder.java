@@ -32,7 +32,7 @@ public class Encoder extends OneToOneEncoder {
 		logger.debug(StringUtils.dumpAsHex(body, body.length));
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(body.length);
-		header.setPacketId(header.getPacketId());
+		header.setPacketNumber(header.getPacketNumber());
 		ChannelBuffer buffer = ChannelBuffers.buffer(body.length + 4);
 		buffer.writeBytes(header.getBytes());
 		buffer.writeBytes(body);

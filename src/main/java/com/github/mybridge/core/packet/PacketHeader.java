@@ -40,7 +40,7 @@ public class PacketHeader extends Packet {
 		temp[0] = (byte) (packetLen & 0xff);
 		temp[1] = (byte) ((packetLen >> 8) & 0xff);
 		temp[2] = (byte) ((packetLen >> 16) & 0xff);
-		temp[3] = this.getPacketId();
+		temp[3] = this.getPacketNumber();
 		return temp;
 	}
 
@@ -48,7 +48,7 @@ public class PacketHeader extends Packet {
 	public void putBytes(byte[] bs) {
 		packetLen = (bs[0] & 0xff) | ((bs[1] & 0xff) << 8)
 				| ((bs[2] & 0xff) << 16);
-		setPacketId(bs[3]);		
+		setPacketNumber(bs[3]);		
 	}
 
 	public int getPacketLen() {

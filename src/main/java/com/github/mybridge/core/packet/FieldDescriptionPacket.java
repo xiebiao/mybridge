@@ -128,7 +128,7 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  */
 public class FieldDescriptionPacket extends Packet {
 	private String catalog = "def";
-	private String db = "";
+	private String database = "";
 	private String table = "";
 	private String orgTable = "";
 	private String name = "";
@@ -144,14 +144,14 @@ public class FieldDescriptionPacket extends Packet {
 	@Override
 	public byte[] getBytes() {
 		int len = ByteBuffer.getLCStringLen(catalog)
-				+ ByteBuffer.getLCStringLen(db)
+				+ ByteBuffer.getLCStringLen(database)
 				+ ByteBuffer.getLCStringLen(table)
 				+ ByteBuffer.getLCStringLen(orgTable)
 				+ ByteBuffer.getLCStringLen(name)
 				+ ByteBuffer.getLCStringLen(orgName) + 13;
 		ByteBuffer buf = new ByteBuffer(len);
 		buf.putLCString(catalog);
-		buf.putLCString(db);
+		buf.putLCString(database);
 		buf.putLCString(table);
 		buf.putLCString(orgTable);
 		buf.putLCString(name);
@@ -170,8 +170,8 @@ public class FieldDescriptionPacket extends Packet {
 	public void putBytes(byte[] bs) {
 	}
 
-	public void setDb(String db) {
-		this.db = db;
+	public void setDatabase(String db) {
+		this.database = db;
 	}
 
 	public void setTable(String table) {

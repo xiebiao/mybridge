@@ -4,15 +4,13 @@ import com.github.jnet.utils.IOBuffer;
 
 public interface MySQLProtocol {
 
-	public void onSessionOpen(IOBuffer readBuffer, IOBuffer writeBuffer);
+	public void connected(IOBuffer readBuffer, IOBuffer writeBuffer);
 
-	public void onPacketReceived(IOBuffer readBuffer, IOBuffer writeBuffer);
+	public void packetReceived(IOBuffer readBuffer, IOBuffer writeBuffer);
 
-	public void onPacketSended(IOBuffer readBuffer, IOBuffer writeBuffer);
+	public void packetSended(IOBuffer readBuffer, IOBuffer writeBuffer);
 
-	public void onSessionClose();
+	public void close();
 
-	public void setPacketId(byte id);
-
-	public byte getPacketId();
+	public byte getPacketNumber();
 }

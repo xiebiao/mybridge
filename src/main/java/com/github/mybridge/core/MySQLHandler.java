@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.dbutils.DbUtils;
+
 import com.github.mybridge.core.packet.CommandsPacket;
 import com.github.mybridge.core.packet.EofPacket;
 import com.github.mybridge.core.packet.ErrPacket;
@@ -25,14 +27,14 @@ public class MySQLHandler implements Handler {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(MySQLHandler.class);
 	private String charset = "utf-8";
-	private List<DbServer> dbs = new ArrayList<DbServer>();
+	private List<DbServer> databases = new ArrayList<DbServer>();
 	// private final static DbServer dbServer = DbServerFactory
 	// .getDbserver(new DefaultGroup(0));
-	private String db = "";
+	private String database = "";
 
 	public MySQLHandler() {
 		charset = "utf-8";
-		dbs.add(DbServerFactory.getDbserver(new DefaultGroup(0)));
+		databases.add(DbServerFactory.getDbserver(new DefaultGroup(0)));
 	}
 
 	public List<Packet> execute(Packet packet) throws ExecuteException {
@@ -45,20 +47,18 @@ public class MySQLHandler implements Handler {
 				logger.debug("COM_QUERY: " + sql);
 				return executeSQL(sql);
 			} else if (cmdPacket.getType() == MySQLCommandPhase.COM_QUIT) {
-				logger.debug("COM_QUIT ");
 				return null;
 			} else if (cmdPacket.getType() == MySQLCommandPhase.COM_FIELD_LIST) {
 				packetList.add(new EofPacket());
-				logger.debug("COM_FIELD_LIST ");
 				return packetList;
 			} else if (cmdPacket.getType() == MySQLCommandPhase.COM_INIT_DB) {
-				logger.debug("COM_INIT_DB ");
+
 				String db = new String(cmdPacket.getValue(), charset);
 				String sql = "USE" + db;
-				setDatabaseName(db);
+				logger.debug("COM_INIT_DB: " + db);
+				setDatabase(db);
 				return executeSQL(sql);
 			}
-			logger.warn("Error COM");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ExecuteException("Command excute error");
@@ -87,18 +87,18 @@ public class MySQLHandler implements Handler {
 		// 解析SQL
 		// 路由器
 		//
-		if (dbs == null || dbs.size() == 0) {
+		if (databases == null || databases.size() == 0) {
 			throw new SQLException("Can't find database.");
 		}
-		Connection connection = dbs.get(0).getConnection();
+		Connection connection = databases.get(0).getConnection();
 		boolean result;
 		Statement state;
 		try {
 			state = connection.createStatement();
 			result = state.execute(sql);
 		} catch (SQLException e) {
-			ErrPacket err = new ErrPacket(e.getErrorCode(),
-					e.getSQLState(), e.getMessage());
+			ErrPacket err = new ErrPacket(e.getErrorCode(), e.getSQLState(),
+					e.getMessage());
 			packetList.add(err);
 			return packetList;
 		}
@@ -115,7 +115,7 @@ public class MySQLHandler implements Handler {
 		packetList.add(resultPacket);
 		for (int i = 1; i <= meta.getColumnCount(); i++) {
 			FieldDescriptionPacket fieldPacket = new FieldDescriptionPacket();
-			fieldPacket.setDb(meta.getCatalogName(i));
+			fieldPacket.setDatabase(meta.getCatalogName(i));
 			fieldPacket.setTable(meta.getTableName(i));
 			fieldPacket.setOrgTable(meta.getTableName(i));
 			fieldPacket.setName(meta.getColumnName(i));
@@ -135,10 +135,10 @@ public class MySQLHandler implements Handler {
 			packetList.add(rowPacket);
 		}
 		packetList.add(new EofPacket());
-		// rs.close();
-		// state.close();
-		// connection.close();
-		// DbUtils.closeQuietly(connection, state, rs);
+		rs.close();
+		state.close();
+		connection.close();
+		DbUtils.closeQuietly(connection, state, rs);
 		return packetList;
 	}
 
@@ -146,8 +146,8 @@ public class MySQLHandler implements Handler {
 		this.charset = charset;
 	}
 
-	public void setDatabaseName(String db) {
-		this.db = db;
+	public void setDatabase(String db) {
+		this.database = db;
 	}
 
 }
