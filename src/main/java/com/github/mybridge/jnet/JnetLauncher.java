@@ -6,7 +6,7 @@ import com.github.mybridge.exception.ConfigurationException;
 
 public class JnetLauncher implements Launcher {
 	Configuration config;
-	MybridgeServer server;
+	MyBridgeServer server;
 
 	public JnetLauncher(Configuration config) {
 		this.config = config;
@@ -16,7 +16,7 @@ public class JnetLauncher implements Launcher {
 	public void start() {
 		config.setIp("127.0.0.1");
 		config.setPort(3307);
-		server = new MybridgeServer(config, MysqlSession.class);
+		server = new MyBridgeServer(config, MysqlSession.class);
 		try {
 			server.start();
 		} catch (Exception e) {

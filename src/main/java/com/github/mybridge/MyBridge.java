@@ -2,7 +2,7 @@ package com.github.mybridge;
 
 import com.github.jnet.Configuration;
 
-public class Mybridge {
+public class MyBridge {
 	public static final String version = "0.0.1";
 	public static final String name = "Mybridge";
 
