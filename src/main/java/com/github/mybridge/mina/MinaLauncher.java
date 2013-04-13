@@ -12,16 +12,16 @@ import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import com.github.mybridge.MybridgeConfiguration;
+import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
 import com.github.mybridge.exception.ConfigurationException;
 
 public class MinaLauncher implements Launcher {
 	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(this.getClass());
-	private MybridgeConfiguration config;
+	private Configuration config;
 
-	public MinaLauncher(MybridgeConfiguration config) {
+	public MinaLauncher(Configuration config) {
 		this.config = config;
 	}
 
@@ -30,8 +30,8 @@ public class MinaLauncher implements Launcher {
 				.availableProcessors() + 1);
 
 		DefaultIoFilterChainBuilder chain = acceptor.getFilterChain();
-		LoggingFilter loggingFilter = new LoggingFilter();
-		chain.addLast("logging", loggingFilter);
+		// LoggingFilter loggingFilter = new LoggingFilter();
+		// chain.addLast("logging", loggingFilter);
 
 		acceptor.getFilterChain().addLast("codec",
 				new ProtocolCodecFilter(new MysqlCodecFactory()));

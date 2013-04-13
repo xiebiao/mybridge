@@ -1,9 +1,13 @@
-package com.github.mybridge.core;
+package com.github.mybridge.netty;
 
 import java.util.List;
 
 import org.jboss.netty.channel.Channel;
 
+import com.github.mybridge.core.ExecuteException;
+import com.github.mybridge.core.Handler;
+import com.github.mybridge.core.MySQLCommands;
+import com.github.mybridge.core.MySQLHandler;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandPacket;
 import com.github.mybridge.core.packet.ErrorPacket;
@@ -23,7 +27,9 @@ public class MySQLProtocol {
 	}
 
 	public void onConnected(Channel channel) {
-		logger.debug(channel.toString());
+		// byte[] bytes = (byte[]) channel.getAttachment();
+		// logger.debug("onConnected:"
+		// + StringUtils.dumpAsHex(bytes, bytes.length));
 		state = HandshakeState.WRITE_INIT;
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
 		channel.write(initPacket.getBytes());
@@ -81,7 +87,6 @@ public class MySQLProtocol {
 				break;
 			}
 			msg = "Access denied for user " + auth.clientUser;
-			logger.debug(msg);
 			errPacket = new ErrorPacket(1045, msg);
 			channel.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;

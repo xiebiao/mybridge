@@ -8,26 +8,28 @@ import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
 import com.github.mybridge.core.packet.HeaderPacket;
 import com.github.mybridge.core.packet.Packet;
+import com.mysql.jdbc.StringUtils;
 
 public class Encoder extends OneToOneEncoder {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(Encoder.class);
 
 	public Encoder() {
-		logger.debug(this.getClass().getName() + " init");
+
 	}
 
 	@Override
 	protected Object encode(ChannelHandlerContext ctx, Channel channel,
 			Object msg) throws Exception {
-		logger.debug(msg.toString() + " " + ctx.toString());
-		byte[] body = (byte[]) msg;
+
+		byte[] bytes = (byte[]) msg;
+		logger.debug(StringUtils.dumpAsHex(bytes, bytes.length));
 		HeaderPacket header = new HeaderPacket();
-		header.setPacketLen(body.length);
+		header.setPacketLen(bytes.length);
 		Packet.setPacketId(header.getPacketId());
-		ChannelBuffer buffer = ChannelBuffers.buffer(body.length + 4);
+		ChannelBuffer buffer = ChannelBuffers.buffer(bytes.length + 4);
 		buffer.writeBytes(header.getBytes());
-		buffer.writeBytes(body);
+		buffer.writeBytes(bytes);
 		return buffer;
 	}
 }

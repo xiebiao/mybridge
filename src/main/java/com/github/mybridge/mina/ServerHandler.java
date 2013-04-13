@@ -134,8 +134,8 @@ public class ServerHandler extends IoHandlerAdapter {
 		state = HandshakeState.WRITE_INIT;
 		handler = new MySQLHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
-		byte[] temp = initPacket.getBytes();
-		session.write(temp);
+		byte[] init = initPacket.getBytes();
+		session.write(init);
 	}
 
 	@Override

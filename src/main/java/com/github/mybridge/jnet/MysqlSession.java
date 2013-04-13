@@ -1,16 +1,14 @@
 package com.github.mybridge.jnet;
 
-import java.io.IOException;
 import java.util.List;
 
+import com.github.jnet.IOState;
 import com.github.jnet.Session;
 import com.github.jnet.utils.IOBuffer;
-import com.github.jnet.utils.IOUtils;
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.Handler;
 import com.github.mybridge.core.MySQLCommands;
 import com.github.mybridge.core.MySQLHandler;
-import com.github.mybridge.core.MySQLProtocol;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandPacket;
 import com.github.mybridge.core.packet.ErrorPacket;
@@ -24,38 +22,42 @@ public class MysqlSession extends Session {
 			.getLogger(MysqlSession.class);
 	private HandshakeState state;
 	private Handler handler;
-	private MySQLProtocol mysql;
+	// private MySQLProtocol mysql;
 	private static final int BUF_SIZE = 2048;// (2M)
 
 	public MysqlSession() {
 		handler = new MySQLHandler();
-		mysql = new MySQLProtocol();
+		// mysql = new MySQLProtocol();
 	}
 
 	@Override
 	public void open(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
-		if (readBuf.position() < 5) {
-			state = HandshakeState.READ_AUTH;
-			this.remainToRead(BUF_SIZE);
-			return;
-		}
-		logger.debug(readBuf.toString());
+		Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
-		// writeBuf.writeBytes(initPacket.getBytes());
-		write(initPacket);
+		writeBuf.writeBytes(initPacket.getBytes());
+		this.remainToRead(BUF_SIZE);
 	}
 
 	@Override
 	public void readCompleted(IOBuffer readBuf, IOBuffer writeBuf)
 			throws Exception {
-
+		reading(readBuf, writeBuf);
 	}
 
 	@Override
 	public void writeCompleted(IOBuffer readBuf, IOBuffer writeBuf)
 			throws Exception {
-
+		switch (state) {
+		case WRITE_INIT:
+			state = HandshakeState.READ_AUTH;
+			break;
+		case WRITE_RESULT:
+			state = HandshakeState.READ_COMMOND;
+		case CLOSE:
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -92,8 +94,9 @@ public class MysqlSession extends Session {
 				}
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket okPacket = new OkPacket();
-
-					write(okPacket);
+					writeBuf.writeBytes(okPacket.getBytes());
+					this.setNextState(IOState.WRITE);
+					// write(okPacket);
 					// channel.write(ok.getBytes());
 					break;
 				}
@@ -101,7 +104,9 @@ public class MysqlSession extends Session {
 				msg = "handshake authpacket failed  ";
 				errPacket = new ErrorPacket(1045, msg);
 
-				write(errPacket);
+				writeBuf.writeBytes(errPacket.getBytes());
+				this.setNextState(IOState.WRITE);
+				// write(errPacket);
 				// channel.write(errPacket.getBytes());
 				state = HandshakeState.CLOSE;
 				break;
@@ -110,7 +115,9 @@ public class MysqlSession extends Session {
 			logger.debug(msg);
 			errPacket = new ErrorPacket(1045, msg);
 
-			write(errPacket);
+			writeBuf.writeBytes(errPacket.getBytes());
+			this.setNextState(IOState.WRITE);
+			// write(errPacket);
 			// channel.write(errPacket.getBytes());
 			state = HandshakeState.CLOSE;
 			break;
@@ -125,7 +132,9 @@ public class MysqlSession extends Session {
 				e.printStackTrace();
 				errPacket = new ErrorPacket(1046, "server error");
 
-				write(errPacket);
+				writeBuf.writeBytes(errPacket.getBytes());
+				this.setNextState(IOState.WRITE);
+				// write(errPacket);
 				// channel.write(errPacket);
 			}
 			if (resultlist != null && resultlist.size() > 0) {
@@ -137,17 +146,6 @@ public class MysqlSession extends Session {
 			break;
 		}
 
-	}
-
-	private void write(Packet packet) {
-		IOBuffer buf = new IOBuffer();
-		buf.writeBytes(packet.getBytes());
-		try {
-			logger.debug(buf.toString());
-			IOUtils.write(this.getSocket(), buf);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override

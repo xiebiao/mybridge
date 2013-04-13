@@ -30,7 +30,7 @@ public class Decoder extends FrameDecoder {
 			HeaderPacket headerPacket = new HeaderPacket();
 			headerPacket.putBytes(header);
 			buffer.skipBytes(4);
-			logger.debug(StringUtils.toString(header));
+			logger.debug(StringUtils.dumpAsHex(header, header.length));
 			return buffer;
 		}
 	}

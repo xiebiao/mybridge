@@ -8,8 +8,6 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.jboss.netty.channel.WriteCompletionEvent;
 
-import com.github.mybridge.core.MySQLProtocol;
-
 public class ServerHandler extends SimpleChannelHandler {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(ServerHandler.class);
@@ -34,7 +32,6 @@ public class ServerHandler extends SimpleChannelHandler {
 	public void writeComplete(ChannelHandlerContext ctx, WriteCompletionEvent e)
 			throws Exception {
 		mysql.writeCompleted();
-		logger.debug(e.toString() + " " + ctx.toString());
 	}
 
 	@Override
