@@ -57,7 +57,7 @@ public class ServerHandlerv2 extends IoHandlerAdapter {
 				if (auth.dbName.length() > 0) {
 					String dbname = auth.dbName.substring(0,
 							auth.dbName.length() - 1);
-					handler.setDb(dbname);
+					handler.setDatabaseName(dbname);
 				}
 				logger.debug(auth.clientUser);
 				if (auth.checkAuth(user, auth.clientPassword)) {
@@ -138,7 +138,7 @@ public class ServerHandlerv2 extends IoHandlerAdapter {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		super.sessionOpened(session);
-		Packet.setPacketId((byte) 0);
+		//Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
 		handler = new MySQLHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();

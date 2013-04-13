@@ -21,8 +21,8 @@ public class DefaultDbServer implements DbServer {
 												// jdbc:mysql://127.0.0.1/yourdb
 		config.setUsername(this.jdbc.getUser());
 		config.setPassword(this.jdbc.getPassword());
-		config.setMinConnectionsPerPartition(10);
-		config.setMaxConnectionsPerPartition(50);
+		config.setMinConnectionsPerPartition(5);
+		config.setMaxConnectionsPerPartition(5);
 		try {
 			pool = new BoneCP(config);
 		} catch (SQLException e) {

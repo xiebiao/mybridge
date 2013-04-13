@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 
-import com.github.mybridge.core.packet.HeaderPacket;
+import com.github.mybridge.core.packet.PacketHeader;
 import com.github.mybridge.core.packet.Packet;
 
 public class Encoder extends ProtocolEncoderAdapter {
@@ -18,10 +18,10 @@ public class Encoder extends ProtocolEncoderAdapter {
 			ProtocolEncoderOutput out) throws Exception {
 		byte[] msg = (byte[]) message;
 		buffer = IoBuffer.allocate(msg.length + 4);
-		HeaderPacket header = new HeaderPacket();
+		PacketHeader header = new PacketHeader();
 		header.setPacketLen(msg.length);
-		Packet.setPacketId(header.getPacketId());
-		Packet.packetIdInc();
+		header.setPacketId(header.getPacketId());
+		header.packetIdInc();
 		buffer.put(header.getBytes());
 		buffer.put(msg);
 		buffer.flip();

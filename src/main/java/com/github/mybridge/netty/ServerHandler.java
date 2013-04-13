@@ -11,10 +11,10 @@ import org.jboss.netty.channel.WriteCompletionEvent;
 public class ServerHandler extends SimpleChannelHandler {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(ServerHandler.class);
-	private MySQLProtocol mysql;
+	private NettyMySQLProtocolImpl mysql;
 
 	public ServerHandler() {
-		mysql = new MySQLProtocol();
+		mysql = new NettyMySQLProtocolImpl();
 	}
 
 	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e)

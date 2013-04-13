@@ -2,6 +2,7 @@ package com.github.mybridge;
 
 import com.github.jnet.Configuration;
 import com.github.mybridge.exception.ConfigurationException;
+import com.github.mybridge.jnet.JnetLauncher;
 import com.github.mybridge.netty.NettyLauncher;
 
 public final class DefaultLauncher implements Launcher {
@@ -12,9 +13,9 @@ public final class DefaultLauncher implements Launcher {
 
 	public DefaultLauncher(Configuration config) {
 		this.config = config;
-		//launcher = new JnetLauncher(config);
+		launcher = new JnetLauncher(config);
 		// launcher = new MinaLauncher(config);
-		 launcher = new NettyLauncher(config);
+		//launcher = new NettyLauncher(config);
 	}
 
 	@Override

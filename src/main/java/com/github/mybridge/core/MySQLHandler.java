@@ -55,7 +55,7 @@ public class MySQLHandler implements Handler {
 				logger.debug("COM_INIT_DB ");
 				String db = new String(cmdPacket.getValue(), charset);
 				String sql = "USE" + db;
-				setDb(db);
+				setDatabaseName(db);
 				return executeSQL(sql);
 			}
 			logger.warn("Error COM");
@@ -91,7 +91,6 @@ public class MySQLHandler implements Handler {
 			throw new SQLException("Can't find database.");
 		}
 		Connection connection = dbs.get(0).getConnection();
-		logger.debug(" execute sql");
 		boolean result;
 		Statement state;
 		try {
@@ -147,7 +146,7 @@ public class MySQLHandler implements Handler {
 		this.charset = charset;
 	}
 
-	public void setDb(String db) {
+	public void setDatabaseName(String db) {
 		this.db = db;
 	}
 

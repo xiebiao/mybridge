@@ -5,9 +5,15 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 
-import com.github.mybridge.core.packet.HeaderPacket;
+import com.github.mybridge.core.packet.PacketHeader;
 import com.mysql.jdbc.StringUtils;
 
+/**
+ * 解码
+ * 
+ * @author xiebiao
+ * 
+ */
 public class Decoder extends FrameDecoder {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(Decoder.class);
@@ -26,9 +32,9 @@ public class Decoder extends FrameDecoder {
 			return null;
 		} else {
 			byte[] header = new byte[4];
-			buffer.getBytes(0, header);
-			HeaderPacket headerPacket = new HeaderPacket();
-			headerPacket.putBytes(header);
+			// buffer.getBytes(0, header);
+			// PacketHeader headerPacket = new PacketHeader();
+			// headerPacket.putBytes(header);
 			buffer.skipBytes(4);
 			logger.debug(StringUtils.dumpAsHex(header, header.length));
 			return buffer;

@@ -17,9 +17,9 @@ import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class ServerHandler extends IoHandlerAdapter {
+public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(ServerHandler.class);
+			.getLogger(MinaMySQLProtocolImpl.class);
 	private HandshakeState state;
 	private Handler handler;
 
@@ -49,7 +49,7 @@ public class ServerHandler extends IoHandlerAdapter {
 				if (auth.dbName.length() > 0) {
 					String dbname = auth.dbName.substring(0,
 							auth.dbName.length() - 1);
-					handler.setDb(dbname);
+					handler.setDatabaseName(dbname);
 				}
 				logger.debug(auth.clientUser);
 				if (auth.checkAuth(user, auth.clientPassword)) {
@@ -130,7 +130,7 @@ public class ServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		super.sessionOpened(session);
-		Packet.setPacketId((byte) 0);
+		//Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
 		handler = new MySQLHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();

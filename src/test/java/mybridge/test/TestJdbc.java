@@ -10,16 +10,17 @@ public class TestJdbc {
 			.getLogger(TestJdbc.class);
 
 	public static void main(String[] args) throws Exception {
-		LOG.debug("xxx1");
+
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(
 				"jdbc:mysql://127.0.0.1:3307/wp", "root", "yes");
 		try {
-			LOG.debug("xxx2");
+			LOG.debug("查询结果");
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from wp_users");
 			while (rs.next()) {
-				LOG.debug(rs.getString(1) + "\n:" + rs.getString(2));
+				LOG.debug(rs.getString(1) + " " + rs.getString(2) + " "
+						+ rs.getString(3));
 
 			}
 			conn.close();

@@ -37,7 +37,7 @@ public class MinaLauncher implements Launcher {
 				new ProtocolCodecFilter(new MysqlCodecFactory()));
 		acceptor.getFilterChain().addLast("threadPool",
 				new ExecutorFilter(Executors.newCachedThreadPool()));
-		acceptor.setHandler(new ServerHandler());
+		acceptor.setHandler(new MinaMySQLProtocolImpl());
 		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
 		InetSocketAddress address = new InetSocketAddress(config.getIp(),
 				config.getPort());

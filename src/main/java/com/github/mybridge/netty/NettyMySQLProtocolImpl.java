@@ -16,13 +16,13 @@ import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class MySQLProtocol {
+public class NettyMySQLProtocolImpl {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(MySQLProtocol.class);
+			.getLogger(NettyMySQLProtocolImpl.class);
 	private HandshakeState state;
 	private Handler handler;
 
-	public MySQLProtocol() {
+	public NettyMySQLProtocolImpl() {
 		handler = new MySQLHandler();
 	}
 
@@ -71,8 +71,7 @@ public class MySQLProtocol {
 				if (auth.dbName.length() > 0) {
 					String dbname = auth.dbName.substring(0,
 							auth.dbName.length() - 1);
-					handler.setDb(dbname);
-					logger.debug("dbname name:" + dbname);
+					handler.setDatabaseName(dbname);
 				}
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();

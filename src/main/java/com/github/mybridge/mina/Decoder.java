@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
-import com.github.mybridge.core.packet.HeaderPacket;
+import com.github.mybridge.core.packet.PacketHeader;
 import com.github.mybridge.core.packet.Packet;
 
 public class Decoder extends ProtocolDecoderAdapter {
@@ -22,9 +22,9 @@ public class Decoder extends ProtocolDecoderAdapter {
 			currentState = READ_BODY;
 			byte[] bytes = new byte[in.limit()];
 			in.get(bytes, 0, in.limit());
-			HeaderPacket header = new HeaderPacket();
+			PacketHeader header = new PacketHeader();
 			header.putBytes(bytes);
-			Packet.setPacketId((byte) (header.getPacketId() + 1));
+			header.setPacketId((byte) (header.getPacketId() + 1));
 			in.flip();
 			in.position(4);
 			in.limit(header.getPacketLen() + 4);

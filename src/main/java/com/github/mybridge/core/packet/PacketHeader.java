@@ -30,7 +30,7 @@ package com.github.mybridge.core.packet;
  * </pre>
  */
 
-public class HeaderPacket extends Packet {
+public class PacketHeader extends Packet {
 	private final static int size = 4;
 	private int packetLen;
 
