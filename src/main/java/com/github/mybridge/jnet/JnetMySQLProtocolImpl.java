@@ -24,8 +24,6 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	private HandshakeState state;
 	private static Handler handler = new MySQLHandler();
 	// private static Handler handler = new TestHandler();
-
-	private byte packetNumber = 0;
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(JnetMySQLProtocolImpl.class);
 
@@ -37,7 +35,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	@Override
 	public void connected(IOBuffer readBuffer, IOBuffer writeBuffer) {
 		InitialHandshakePacket init = new InitialHandshakePacket();
-		init.setPacketNumber((byte) (packetNumber + 1));
+		init.packetNumberInc();
 		writePacket(writeBuffer, init);
 	}
 
@@ -131,11 +129,6 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 		this.session.setNextState(IOState.CLOSE);
 	}
 
-	@Override
-	public byte getPacketNumber() {
-		return this.packetNumber;
-	}
-
 	private void readPacket(IOBuffer readBuf) {
 		readBuf.position(0);
 		readBuf.limit(4);
@@ -148,8 +141,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 			byte[] body = packet.getBytes();
 			PacketHeader header = new PacketHeader();
 			header.setPacketLen(body.length);
-			header.setPacketNumber(this.packetNumber);
-			this.packetNumber++;
+			header.packetNumberInc();
 			writeBuf.writeBytes(header.getBytes());
 			writeBuf.writeBytes(body);
 		}
@@ -162,7 +154,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 		byte[] body = packet.getBytes();
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(body.length);
-		header.setPacketNumber(this.packetNumber);
+		header.packetNumberInc();
 		logger.debug("packetId:" + header.getPacketNumber());
 		writeBuf.position(0);
 		writeBuf.writeBytes(header.getBytes());

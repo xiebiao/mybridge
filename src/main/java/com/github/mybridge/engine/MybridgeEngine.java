@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class MybridgeEngine implements Engine {
 	/* key: */
-	private static final Map<String, DbServer> servers = new HashMap<String, DbServer>();
+	private static final Map<String, MySQLServer> servers = new HashMap<String, MySQLServer>();
 
 	@Override
 	public void load() {
@@ -13,7 +13,7 @@ public class MybridgeEngine implements Engine {
 	}
 
 	@Override
-	public DbServer getServer(Group group, String sql) {
+	public MySQLServer getServer(Group group, String sql) {
 		Parser parser = new SQLParser();
 		SQL s = parser.parse(sql);
 		// 从servers中获取server

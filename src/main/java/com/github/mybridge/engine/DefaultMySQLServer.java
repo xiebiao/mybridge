@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
-public class DefaultDbServer implements DbServer {
+public class DefaultMySQLServer implements MySQLServer {
 	private JDBCProperties jdbc;
 	private static BoneCP pool;
 
-	public DefaultDbServer(JDBCProperties jdbc) {
+	public DefaultMySQLServer(JDBCProperties jdbc) {
 		if (jdbc == null) {
 			throw new java.lang.IllegalArgumentException();
 		}

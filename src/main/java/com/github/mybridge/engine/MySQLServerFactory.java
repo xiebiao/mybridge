@@ -1,19 +1,19 @@
 package com.github.mybridge.engine;
 
-public final class DbServerFactory {
+public final class MySQLServerFactory {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(DbServerFactory.class);
+			.getLogger(MySQLServerFactory.class);
 
-	private DbServerFactory() {
+	private MySQLServerFactory() {
 	}
 
-	public static DbServer getDbserver(Group group) {
+	public static MySQLServer getMySQLServer(Group group) {
 
 		JDBCProperties jdbc = new JDBCProperties();
 		jdbc.url = "jdbc:mysql://localhost:3306/wp";
 		jdbc.user = "root";
 		jdbc.password = "wangzhu";
-		DbServer dbServer = new DefaultDbServer(jdbc);
+		MySQLServer dbServer = new DruidMySQLServer(jdbc);
 		return dbServer;
 
 	}

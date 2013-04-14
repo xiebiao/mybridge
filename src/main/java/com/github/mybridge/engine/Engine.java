@@ -6,5 +6,5 @@ public interface Engine {
 	 */
 	public void load();
 
-	public DbServer getServer(Group group, String sql);
+	public MySQLServer getServer(Group group, String sql);
 }

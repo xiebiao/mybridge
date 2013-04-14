@@ -6,7 +6,7 @@ public abstract class Packet {
 
 	public abstract void putBytes(byte[] bytes);
 
-	private byte packetNumber = 0;
+	private static byte packetNumber = 0;
 
 	public synchronized void packetNumberInc() {
 		packetNumber++;

@@ -12,5 +12,4 @@ public interface MySQLProtocol {
 
 	public void close();
 
-	public byte getPacketNumber();
 }

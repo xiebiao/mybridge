@@ -29,7 +29,7 @@ public class MySQLSession extends Session {
 		if (currentState == READ_HEADER) {
 			PacketHeader header = new PacketHeader();
 			header.putBytes(readBuf.readBytes(0, readBuf.limit()));
-			// this.mysql.setPacketNumber((byte) (mysql.getPacketNumber() + 1));
+			header.packetNumberInc();
 			readBuf.position(0);
 			readBuf.limit(header.getPacketLen());
 			currentState = READ_BODY;

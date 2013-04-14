@@ -3,7 +3,7 @@ package com.github.mybridge.engine;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface DbServer {
+public interface MySQLServer {
 	/**
 	 * 获取连接
 	 * 
