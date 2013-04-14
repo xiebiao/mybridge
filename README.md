@@ -1,5 +1,5 @@
 MyBridge 
 ==========================
 
-MyBridge is MySQL proxy.
+MyBridge is a MySQL proxy implement by java.
 
