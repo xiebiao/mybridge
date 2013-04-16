@@ -31,12 +31,12 @@ public class Decoder extends FrameDecoder {
 		if (buffer.readableBytes() < 5) {
 			return null;
 		} else {
-			byte[] header = new byte[4];
+			//byte[] header = new byte[4];
 			// buffer.getBytes(0, header);
 			// PacketHeader headerPacket = new PacketHeader();
 			// headerPacket.putBytes(header);
 			buffer.skipBytes(4);
-			logger.debug(StringUtils.dumpAsHex(header, header.length));
+			//logger.debug(StringUtils.dumpAsHex(header, header.length));
 			return buffer;
 		}
 	}
