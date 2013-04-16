@@ -124,10 +124,6 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 
 	}
 
-	@Override
-	public void close() {
-		this.session.setNextState(IOState.CLOSE);
-	}
 
 	private void readPacket(IOBuffer readBuf) {
 		readBuf.position(0);

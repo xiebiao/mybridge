@@ -11,7 +11,13 @@ import com.github.mybridge.core.packet.Packet;
 import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
 
-public class TestHandler implements Handler {
+/**
+ * just for test
+ * 
+ * @author xiebiao
+ * 
+ */
+public class MockHandler implements Handler {
 
 	@Override
 	public List<Packet> execute(Packet cmd) throws ExecuteException {

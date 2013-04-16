@@ -29,7 +29,7 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * In the example, the value 02 in the command field stands for COM_INIT_DB. This is the packet that the client puts together for "use test;".
  * </pre>
  * 
- * @author xiaog
+ * @author xiebiao
  * 
  */
 public class CommandsPacket extends Packet {

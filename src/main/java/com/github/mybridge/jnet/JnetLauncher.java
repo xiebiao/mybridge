@@ -20,20 +20,17 @@ public class JnetLauncher implements Launcher {
 		try {
 			server.start();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void init() throws ConfigurationException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
 
 	}
 

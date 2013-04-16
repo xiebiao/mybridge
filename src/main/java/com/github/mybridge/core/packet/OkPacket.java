@@ -61,7 +61,7 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * In the example, the optional message field is missing (the client can determine this by examining the packet length). This is a packet that the server returns after a successful INSERT of a single row that contains no auto_increment columns.
  * </pre>
  * 
- * @author xiaog
+ * @author xiebiao
  * 
  */
 public class OkPacket extends Packet {

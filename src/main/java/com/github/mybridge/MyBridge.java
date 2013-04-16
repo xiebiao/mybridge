@@ -12,7 +12,7 @@ public class MyBridge {
 			Configuration config = new Configuration();
 			config.setIp("127.0.0.1");
 			config.setPort(3307);
-			config.setMaxConnection(1);
+			config.setMaxConnection(50);
 			Launcher launcher = new DefaultLauncher(config);
 			launcher.start();
 		} catch (Exception e) {

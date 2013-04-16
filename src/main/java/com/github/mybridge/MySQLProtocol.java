@@ -10,6 +10,6 @@ public interface MySQLProtocol {
 
 	public void packetSended(IOBuffer readBuffer, IOBuffer writeBuffer);
 
-	public void close();
+
 
 }

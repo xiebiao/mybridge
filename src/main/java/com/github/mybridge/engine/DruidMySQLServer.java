@@ -15,8 +15,8 @@ public class DruidMySQLServer implements MySQLServer {
 		ds.setUsername(jdbc.getUser());
 		ds.setPassword(jdbc.getPassword());
 		ds.setTestOnBorrow(false);
-		ds.setMaxActive(50);
-		ds.setInitialSize(100);
+		//ds.setMaxActive(50);
+		//ds.setInitialSize(100);
 	}
 
 	@Override

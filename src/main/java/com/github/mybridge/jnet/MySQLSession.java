@@ -1,6 +1,5 @@
 package com.github.mybridge.jnet;
 
-import com.github.jnet.IOState;
 import com.github.jnet.Session;
 import com.github.jnet.utils.IOBuffer;
 import com.github.mybridge.MySQLProtocol;
@@ -47,10 +46,7 @@ public class MySQLSession extends Session {
 
 	@Override
 	public void close() {
-		if (this.mysql != null) {
-			this.mysql.close();
-		}
-		this.setNextState(IOState.CLOSE);
+		//this.setNextState(IOState.CLOSE);
 	}
 
 	@Override
