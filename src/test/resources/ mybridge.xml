@@ -1,19 +1,2 @@
-<mybridge>
-	<engine>
-		<group id="groupName">
-			<database>
-				<jdbc_url></jdbc_url>
-				<user></user>
-				<password></password>
-				<master>true</master>
-			</database>
-			<database>
-				<jdbc_url></jdbc_url>
-				<user></user>
-				<password></password>
-				<master>true</master>
-			</database>
-		</group>
-
-	</engine>
-</mybridge>
+<!-- 一些好的sharding方案 -->
+<!-- http://blog.csdn.net/bluishglc/article/details/6161475 -->

@@ -8,10 +8,10 @@ import com.github.mybridge.exception.LifecycleException;
 public class DefaultEngine implements Engine {
 	private static final String config = "mybridge.xml";
 	/** servers */
-	private static final Map<String, DatabaseServer> servers = new HashMap<String, DatabaseServer>();
+	private static final Map<String, Database> servers = new HashMap<String, Database>();
 
 	@Override
-	public DatabaseServer getServer(String database) {
+	public Database getServer(String database) {
 		return servers.get(database);
 	}
 

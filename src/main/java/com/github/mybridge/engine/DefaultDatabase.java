@@ -5,10 +5,19 @@ import java.sql.SQLException;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
-public class DruidMySQLServer implements DatabaseServer {
+public class DefaultDatabase implements Database {
 	private static DruidDataSource ds;
 
-	public DruidMySQLServer(JDBCProperties jdbc) {
+	public DefaultDatabase() {
+
+	}
+
+	public DefaultDatabase(String host, String user, String password,
+			String groupName) {
+
+	}
+
+	public DefaultDatabase(JDBCProperties jdbc) {
 		ds = new DruidDataSource();
 		ds.setDriver(jdbc.getDriver());
 		ds.setUrl(jdbc.getUrl());
@@ -30,9 +39,21 @@ public class DruidMySQLServer implements DatabaseServer {
 	}
 
 	@Override
-	public void stop() {
+	public void shutdown() {
 		ds.close();
 
+	}
+
+	@Override
+	public Host getHost() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAlive() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

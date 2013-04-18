@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
-public class DefaultMySQLServer implements DatabaseServer {
+public class DefaultMySQLServer implements Database {
 	private JDBCProperties jdbc;
 	private static BoneCP pool;
 
@@ -46,8 +46,20 @@ public class DefaultMySQLServer implements DatabaseServer {
 	}
 
 	@Override
-	public void stop() {
+	public void shutdown() {
 		pool.shutdown();
+	}
+
+	@Override
+	public Host getHost() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isAlive() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

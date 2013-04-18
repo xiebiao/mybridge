@@ -18,22 +18,22 @@ import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
-import com.github.mybridge.engine.DatabaseServer;
-import com.github.mybridge.engine.DatabaseServerFactory;
+import com.github.mybridge.engine.Database;
+import com.github.mybridge.engine.DatabaseFactory;
 
 public class MySQLHandler implements Handler {
 
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(MySQLHandler.class);
 	private String charset = "utf-8";
-	private List<DatabaseServer> databases = new ArrayList<DatabaseServer>();
+	private List<Database> databases = new ArrayList<Database>();
 	// private final static DbServer dbServer = DbServerFactory
 	// .getDbserver(new DefaultGroup(0));
 	private String database = "";
 
 	public MySQLHandler() {
 		charset = "utf-8";
-		databases.add(DatabaseServerFactory.getMySQLServer(database));
+		databases.add(DatabaseFactory.getMySQLServer(database));
 	}
 
 	public List<Packet> execute(Packet packet) throws ExecuteException {

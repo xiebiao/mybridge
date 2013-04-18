@@ -4,5 +4,5 @@ import com.github.mybridge.Lifecycle;
 
 public interface Engine extends Lifecycle{	
 	
-	public DatabaseServer getServer(String database);
+	public Database getServer(String database);
 }
