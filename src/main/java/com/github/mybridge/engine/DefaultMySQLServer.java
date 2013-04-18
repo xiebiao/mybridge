@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
-public class DefaultMySQLServer implements MySQLServer {
+public class DefaultMySQLServer implements DatabaseServer {
 	private JDBCProperties jdbc;
 	private static BoneCP pool;
 
@@ -39,10 +39,6 @@ public class DefaultMySQLServer implements MySQLServer {
 		return pool.getConnection();
 	}
 
-	public void destroy() {
-		pool.shutdown();
-	}
-
 	@Override
 	public boolean isMaster() {
 		// TODO Auto-generated method stub
@@ -50,15 +46,8 @@ public class DefaultMySQLServer implements MySQLServer {
 	}
 
 	@Override
-	public Group getGroup() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setGroup(Group group) {
-		// TODO Auto-generated method stub
-		
+	public void stop() {
+		pool.shutdown();
 	}
 
 }

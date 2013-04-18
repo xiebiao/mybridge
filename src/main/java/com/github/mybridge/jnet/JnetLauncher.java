@@ -2,7 +2,7 @@ package com.github.mybridge.jnet;
 
 import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
-import com.github.mybridge.exception.ConfigurationException;
+import com.github.mybridge.exception.ConfigException;
 
 public class JnetLauncher implements Launcher {
 	Configuration config;
@@ -25,7 +25,7 @@ public class JnetLauncher implements Launcher {
 	}
 
 	@Override
-	public void init() throws ConfigurationException {
+	public void init() throws ConfigException {
 
 	}
 

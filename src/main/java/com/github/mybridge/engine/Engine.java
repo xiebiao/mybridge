@@ -1,10 +1,8 @@
 package com.github.mybridge.engine;
 
-public interface Engine {
-	/**
-	 * 加载路由配置
-	 */
-	public void load();
+import com.github.mybridge.Lifecycle;
 
-	public MySQLServer getServer(Group group, String sql);
+public interface Engine extends Lifecycle{	
+	
+	public DatabaseServer getServer(String database);
 }

@@ -8,7 +8,7 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
-import com.github.mybridge.exception.ConfigurationException;
+import com.github.mybridge.exception.ConfigException;
 
 public class NettyLauncher implements Launcher {
 	private Configuration parameter;
@@ -34,7 +34,7 @@ public class NettyLauncher implements Launcher {
 			// Bind and start to accept incoming connections.
 			bootstrap.bind(new InetSocketAddress(parameter.getIp(), parameter
 					.getPort()));
-		} catch (ConfigurationException e) {
+		} catch (ConfigException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -42,7 +42,7 @@ public class NettyLauncher implements Launcher {
 	}
 
 	@Override
-	public void init() throws ConfigurationException {
+	public void init() throws ConfigException {
 
 	}
 

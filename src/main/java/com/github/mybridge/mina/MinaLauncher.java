@@ -14,7 +14,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
-import com.github.mybridge.exception.ConfigurationException;
+import com.github.mybridge.exception.ConfigException;
 
 public class MinaLauncher implements Launcher {
 	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
@@ -51,7 +51,7 @@ public class MinaLauncher implements Launcher {
 	}
 
 	@Override
-	public void init() throws ConfigurationException {
+	public void init() throws ConfigException {
 		// TODO Auto-generated method stub
 
 	}
