@@ -10,6 +10,8 @@ import com.github.mybridge.sharding.Shard;
 public class DefaultEngine implements Engine {
 	private static Map<String, Shard> shards = new HashMap<String, Shard>();
 	private static Map<String, Partition> partitions = new HashMap<String, Partition>();
+	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
+			.getLogger(DefaultEngine.class);
 
 	@Override
 	public Shard getServer(String sql, String database) {
@@ -26,7 +28,7 @@ public class DefaultEngine implements Engine {
 	@Override
 	public void init() throws LifecycleException {
 		// 初始化分区
-
+		logger.debug("init partitions");
 	}
 
 	@Override
