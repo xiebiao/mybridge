@@ -32,7 +32,10 @@ public class Shard implements Database {
 	 * 对应ShardGroup中的id
 	 */
 	private long groupId;
-	private boolean master = false;
+	/**
+	 * slave库不能写
+	 */
+	private boolean isWritable = false;
 	/**
 	 * 分片中所有表
 	 */
@@ -103,13 +106,11 @@ public class Shard implements Database {
 
 	@Override
 	public Host getHost() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.host;
 	}
 
 	@Override
 	public boolean isAlive() {
-
 		return ds.isEnable();
 	}
 
@@ -123,11 +124,11 @@ public class Shard implements Database {
 				+ this.host + ", tables:" + this.tables + "}";
 	}
 
-	public boolean isMaster() {
-		return master;
+	public boolean isWritable() {
+		return isWritable;
 	}
 
-	public void setMaster(boolean master) {
-		this.master = master;
+	public void setWritable(boolean canWritable) {
+		this.isWritable = canWritable;
 	}
 }

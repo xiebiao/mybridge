@@ -34,19 +34,26 @@ public class ShardGroup {
 	private List<Shard> shards;
 
 	/**
-	 * 获取一个写Shard
+	 * 获取可写分组
 	 * 
+	 * @param businessId
 	 * @return
 	 */
-	public Shard getWriteShard(long id) {
+	public Shard getWriteShard(String businessId) {
 		int size = shards.size();
 		for (int i = 0; i < size; i++) {
 			Shard s = shards.get(i);
-			if (s.isMaster() && s.isAlive()) {
+			if (s.isWritable() && s.isAlive()
+					&& getMod(businessId).equals(s.getHashValue())) {
 				return s;
 			}
 		}
 		return null;
+	}
+
+	private String getMod(String businessId) {
+		int mod = Integer.valueOf(businessId) % this.shards.size();
+		return String.valueOf(mod);
 	}
 
 	/**
@@ -54,14 +61,14 @@ public class ShardGroup {
 	 * 
 	 * @return
 	 */
-	public Shard getReadShard(long id) {
+	public Shard getReadShard(String businessId) {
 		int size = shards.size();
 		for (int i = 0; i < size; i++) {
 			Shard s = shards.get(i);
-			if (!s.isMaster() && s.isAlive()) {
+			if (!s.isWritable() && s.isAlive()
+					&& getMod(businessId).equals(s.getHashValue())) {
 				return s;
 			}
-
 		}
 		return null;
 	}

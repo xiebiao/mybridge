@@ -3,7 +3,10 @@ package com.github.mybridge.sharding;
 import java.util.List;
 
 /**
- * 一个分区内有多个分组
+ * <h2>分区</h2>
+ * <p>
+ * 按照业务关联性较强的库表组成一个分区,一个分区内有多个分组。
+ * </p>
  * 
  * @author xiebiao
  * 

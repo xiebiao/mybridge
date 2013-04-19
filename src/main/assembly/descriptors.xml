@@ -22,5 +22,9 @@
 			<directory>${basedir}/src/main/assembly/conf</directory>
 			<outputDirectory>/conf</outputDirectory>
 		</fileSet>
+		<fileSet>
+			<directory>${basedir}/src/main/assembly/sql</directory>
+			<outputDirectory>/sql</outputDirectory>
+		</fileSet>
 	</fileSets>
 </assembly>

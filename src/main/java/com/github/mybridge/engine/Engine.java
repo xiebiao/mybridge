@@ -5,6 +5,6 @@ import com.github.mybridge.sharding.Shard;
 
 public interface Engine extends Lifecycle {
 
-	public Shard getServer(String sql, String database);
+	public Shard getShard(String sql, String database);
 
 }

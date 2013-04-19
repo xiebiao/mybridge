@@ -1,6 +1,8 @@
 package com.github.mybridge.engine;
 
-import com.github.mybridge.sharding.Partition;
+import java.util.List;
+
+import com.github.mybridge.exception.ParserException;
 
 /**
  * 解析器
@@ -8,14 +10,6 @@ import com.github.mybridge.sharding.Partition;
  * @author xiebiao
  */
 public interface Parser {
-	/**
-	 * 获取分区
-	 * 
-	 * @param database
-	 *            从JDBC传入
-	 * @return
-	 */
-	Partition getPartition(String database);
 
 	/**
 	 * 是否写操作
@@ -23,5 +17,17 @@ public interface Parser {
 	 * @return
 	 */
 	boolean isWrite();
+
+	List<String> getFileds() throws ParserException;
+
+	List<String> getTables() throws ParserException;
+
+	/**
+	 * 分库分表业务id
+	 * 
+	 * @return
+	 * @throws ParserException
+	 */
+	String getId() throws ParserException;
 
 }
