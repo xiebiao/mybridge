@@ -20,6 +20,7 @@ import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
 import com.github.mybridge.engine.Database;
 import com.github.mybridge.engine.DatabaseFactory;
+import com.github.mybridge.engine.Engine;
 
 public class MySQLHandler implements Handler {
 
@@ -31,6 +32,10 @@ public class MySQLHandler implements Handler {
 	// .getDbserver(new DefaultGroup(0));
 	private String database = "";
 
+	// public MySQLHandler(Engine engine) {
+	// charset = "utf-8";
+	// databases.add(DatabaseFactory.getMySQLServer(database));
+	// }
 	public MySQLHandler() {
 		charset = "utf-8";
 		databases.add(DatabaseFactory.getMySQLServer(database));

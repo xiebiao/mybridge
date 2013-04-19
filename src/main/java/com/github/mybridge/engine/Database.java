@@ -7,8 +7,6 @@ public interface Database {
 
 	public Connection getConnection() throws SQLException;
 
-	public boolean isMaster();
-
 	public Host getHost();
 
 	public boolean isAlive();

@@ -4,20 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.mybridge.exception.LifecycleException;
+import com.github.mybridge.sharding.Partition;
+import com.github.mybridge.sharding.Shard;
 
 public class DefaultEngine implements Engine {
-	private static final String config = "mybridge.xml";
-	/** servers */
-	private static final Map<String, Database> servers = new HashMap<String, Database>();
+	private static Map<String, Shard> shards = new HashMap<String, Shard>();
+	private static Map<String, Partition> partitions = new HashMap<String, Partition>();
 
 	@Override
-	public Database getServer(String database) {
-		return servers.get(database);
+	public Shard getServer(String sql, String database) {
+		Shard shard = shards.get(sql);
+		if (null != shard) {
+			return shard;
+		}
+		Parser parser = new SqlParser(this);
+		// 解析SQL得到对应的Shard
+		return null;
+		// return servers.get(database);
 	}
 
 	@Override
 	public void init() throws LifecycleException {
-		// 加载配置文件 mybridge.xml
+		// 初始化分区
 
 	}
 

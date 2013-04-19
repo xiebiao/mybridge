@@ -34,11 +34,6 @@ public class DefaultDatabase implements Database {
 	}
 
 	@Override
-	public boolean isMaster() {
-		return false;
-	}
-
-	@Override
 	public void shutdown() {
 		ds.close();
 

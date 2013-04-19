@@ -40,12 +40,6 @@ public class DefaultMySQLServer implements Database {
 	}
 
 	@Override
-	public boolean isMaster() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void shutdown() {
 		pool.shutdown();
 	}

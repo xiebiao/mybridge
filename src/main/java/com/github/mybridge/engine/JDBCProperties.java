@@ -8,8 +8,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
-public class JDBCProperties {
-
+public final class JDBCProperties {
+	public static final String CHARACTER_ENCODING = "utf8";
 	@XStreamAsAttribute
 	String schema;
 	String url;
@@ -20,6 +20,10 @@ public class JDBCProperties {
 	int maxIdle;// 最大空闲数
 	int minIdle;// 最小空闲数
 	int maxWait;// 在等待到maxWait毫秒后 会根据是否要创建连接 还是要继续等待
+
+	public static String getPropertiesString() {
+		return "characterEncoding=" + CHARACTER_ENCODING;
+	}
 
 	@XStreamOmitField
 	Driver driver;

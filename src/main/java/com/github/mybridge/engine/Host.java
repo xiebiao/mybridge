@@ -7,7 +7,7 @@ public class Host {
 	public Host(String host) {
 		int tag = host.indexOf(":");
 		ip = host.substring(0, tag);
-		port = host.substring(tag, host.length());
+		port = host.substring(tag+1, host.length());
 	}
 
 	public String getIp() {
@@ -24,5 +24,9 @@ public class Host {
 
 	public void setPort(String port) {
 		this.port = port;
+	}
+
+	public String toString() {
+		return ip + ":" + port;
 	}
 }

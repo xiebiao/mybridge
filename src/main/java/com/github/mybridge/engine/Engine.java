@@ -1,8 +1,9 @@
 package com.github.mybridge.engine;
 
 import com.github.mybridge.Lifecycle;
+import com.github.mybridge.sharding.Shard;
 
 public interface Engine extends Lifecycle{	
 	
-	public Database getServer(String database);
+	public Shard getServer(String sql,String database);
 }
