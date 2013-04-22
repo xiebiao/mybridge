@@ -1,10 +1,9 @@
 package com.github.mybridge.sharding;
 
 /**
- * SQL路由
+ * 路由
  * 
- * @author xiebiao[谢彪]
- * @email xiebiao@jd.com
+ * @author xiebiao
  */
 public interface Router {
 	public static final int READ = 0;

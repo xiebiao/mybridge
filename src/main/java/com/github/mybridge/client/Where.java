@@ -1,4 +1,4 @@
-package com.github.mybridge.api;
+package com.github.mybridge.client;
 
 import java.util.List;
 

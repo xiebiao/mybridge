@@ -1,4 +1,4 @@
-package com.github.mybridge.api;
+package com.github.mybridge.client;
 
 /**
  * 字段

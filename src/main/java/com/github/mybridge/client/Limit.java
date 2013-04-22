@@ -1,4 +1,4 @@
-package com.github.mybridge.api;
+package com.github.mybridge.client;
 
 public class Limit {
 	private int start;

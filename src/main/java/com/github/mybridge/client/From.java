@@ -1,4 +1,4 @@
-package com.github.mybridge.api;
+package com.github.mybridge.client;
 
 public class From {
 	public From(String... tables) {
