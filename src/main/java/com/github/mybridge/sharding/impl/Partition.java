@@ -1,6 +1,8 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.sharding.impl;
 
 import java.util.List;
+
+import com.github.mybridge.sharding.State;
 
 /**
  * <h2>分区</h2>
@@ -38,7 +40,7 @@ public class Partition {
 		int size = shardGroups.size();
 		for (int i = 0; i < size; i++) {
 			ShardGroup sg = shardGroups.get(i);
-			if (sg.isWritable()) {
+			if (sg.getSate() == State.WRITE) {
 				return sg;
 			}
 		}

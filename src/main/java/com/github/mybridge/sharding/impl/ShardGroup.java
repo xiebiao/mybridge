@@ -1,6 +1,8 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.sharding.impl;
 
 import java.util.List;
+
+import com.github.mybridge.sharding.State;
 
 /**
  * <h2>分组</h2>
@@ -24,7 +26,7 @@ public class ShardGroup {
 	/**
 	 * 是否可用
 	 */
-	private boolean writable;
+	private State state;
 
 	private long startId;
 	private long endId;
@@ -32,6 +34,14 @@ public class ShardGroup {
 	 * 分组中所有shard
 	 */
 	private List<Shard> shards;
+
+	public ShardGroup(int id, String name, State state, long startId, long endId) {
+		this.id = id;
+		this.name = name;
+		this.state = state;
+		this.startId = startId;
+		this.endId = endId;
+	}
 
 	/**
 	 * 获取可写分组
@@ -89,12 +99,12 @@ public class ShardGroup {
 		this.name = name;
 	}
 
-	public boolean isWritable() {
-		return writable;
+	public State getSate() {
+		return this.state;
 	}
 
-	public void setWritable(boolean writable) {
-		this.writable = writable;
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	public long getStartId() {
@@ -119,6 +129,10 @@ public class ShardGroup {
 
 	public void setShards(List<Shard> shards) {
 		this.shards = shards;
+	}
+
+	public void addShard(Shard shard) {
+		//
 	}
 
 	public String toString() {

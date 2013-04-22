@@ -1,4 +1,4 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.sharding.impl;
 
 /**
  * <h2>分表信息</h2>

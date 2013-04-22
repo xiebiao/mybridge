@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 
-public class DefaultMySQLServer implements Database {
+public class DefaultMySQLServer implements DatabaseServer {
 	private JDBCProperties jdbc;
 	private static BoneCP pool;
 

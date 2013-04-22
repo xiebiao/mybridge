@@ -5,6 +5,10 @@ import java.util.List;
 
 import com.github.mybridge.engine.Host;
 import com.github.mybridge.engine.JDBCProperties;
+import com.github.mybridge.sharding.impl.FragmentTable;
+import com.github.mybridge.sharding.impl.Partition;
+import com.github.mybridge.sharding.impl.Shard;
+import com.github.mybridge.sharding.impl.ShardGroup;
 
 /**
  * 模拟按用户信息业务分区,用户信息中有两张表:user,profile

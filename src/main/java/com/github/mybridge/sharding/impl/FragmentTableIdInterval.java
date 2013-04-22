@@ -1,4 +1,4 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.sharding.impl;
 
 public class FragmentTableIdInterval {
 	private long fragmentTableId;

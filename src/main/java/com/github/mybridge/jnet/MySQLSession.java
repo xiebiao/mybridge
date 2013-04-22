@@ -4,7 +4,6 @@ import com.github.jnet.Session;
 import com.github.jnet.utils.IOBuffer;
 import com.github.mybridge.MySQLProtocol;
 import com.github.mybridge.core.packet.PacketHeader;
-import com.github.mybridge.engine.DefaultEngine;
 import com.github.mybridge.engine.Engine;
 
 public class MySQLSession extends Session {
@@ -17,7 +16,7 @@ public class MySQLSession extends Session {
 	private static Engine engine;
 
 	public MySQLSession() {
-		engine = new DefaultEngine();
+		//engine = new DefaultEngine();
 	}
 
 	@Override

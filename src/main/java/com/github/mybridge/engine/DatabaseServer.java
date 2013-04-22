@@ -3,7 +3,7 @@ package com.github.mybridge.engine;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface Database {
+public interface DatabaseServer {
 
 	public Connection getConnection() throws SQLException;
 

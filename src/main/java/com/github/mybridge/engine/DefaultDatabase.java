@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
-public class DefaultDatabase implements Database {
+public class DefaultDatabase implements DatabaseServer {
 	private static DruidDataSource ds;
 
 	public DefaultDatabase() {

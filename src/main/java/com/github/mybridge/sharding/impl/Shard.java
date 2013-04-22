@@ -1,11 +1,11 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.sharding.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.github.mybridge.engine.Database;
+import com.github.mybridge.engine.DatabaseServer;
 import com.github.mybridge.engine.Host;
 import com.github.mybridge.engine.JDBCProperties;
 
@@ -15,7 +15,7 @@ import com.github.mybridge.engine.JDBCProperties;
  * @author xiebiao
  * 
  */
-public class Shard implements Database {
+public class Shard implements DatabaseServer {
 	/**
 	 * 分片id
 	 */
@@ -36,6 +36,7 @@ public class Shard implements Database {
 	 * slave库不能写
 	 */
 	private boolean isWritable = false;
+
 	/**
 	 * 分片中所有表
 	 */

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.mybridge.exception.ParserException;
-import com.github.mybridge.sharding.Shard;
 
 /**
  * <h2>SQL解析器<h2>
