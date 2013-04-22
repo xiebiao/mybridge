@@ -2,6 +2,7 @@ package com.github.mybridge.sharding.impl;
 
 import java.util.List;
 
+import com.github.mybridge.sharding.ShardRouter;
 import com.github.mybridge.sharding.State;
 
 /**
@@ -34,6 +35,7 @@ public class ShardGroup {
 	 * 分组中所有shard
 	 */
 	private List<Shard> shards;
+	private ShardRouter shardRouter;
 
 	public ShardGroup(int id, String name, State state, long startId, long endId) {
 		this.id = id;
@@ -41,43 +43,15 @@ public class ShardGroup {
 		this.state = state;
 		this.startId = startId;
 		this.endId = endId;
+		shardRouter = new DefaultShardRouter();
 	}
 
-	/**
-	 * 获取可写分组
-	 * 
-	 * @param businessId
-	 * @return
-	 */
-	public Shard getWriteShard(String businessId) {
+	public Shard getShard(State state, long id) {
 		int size = shards.size();
 		for (int i = 0; i < size; i++) {
 			Shard s = shards.get(i);
-			if (s.isWritable() && s.isAlive()
-					&& getMod(businessId).equals(s.getHashValue())) {
-				return s;
-			}
-		}
-		return null;
-	}
-
-	private String getMod(String businessId) {
-		int mod = Integer.valueOf(businessId) % this.shards.size();
-		return String.valueOf(mod);
-	}
-
-	/**
-	 * 获取一个读Shard(默认一个master对应一个slave)
-	 * 
-	 * @return
-	 */
-	public Shard getReadShard(String businessId) {
-		int size = shards.size();
-		for (int i = 0; i < size; i++) {
-			Shard s = shards.get(i);
-			if (!s.isWritable() && s.isAlive()
-					&& getMod(businessId).equals(s.getHashValue())) {
-				return s;
+			if (!s.isWritable() && s.isAlive()) {
+				return shardRouter.getShard(this, state, id);
 			}
 		}
 		return null;
@@ -132,7 +106,9 @@ public class ShardGroup {
 	}
 
 	public void addShard(Shard shard) {
-		//
+		synchronized (this) {
+			this.shards.add(shard);
+		}
 	}
 
 	public String toString() {

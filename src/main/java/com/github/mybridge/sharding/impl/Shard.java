@@ -8,6 +8,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.github.mybridge.engine.DatabaseServer;
 import com.github.mybridge.engine.Host;
 import com.github.mybridge.engine.JDBCProperties;
+import com.github.mybridge.sharding.TableRouter;
 
 /**
  * <h2>分片</h2>
@@ -44,6 +45,7 @@ public class Shard implements DatabaseServer {
 	/** ------------------------------ 分片对应的物理信息 */
 	private static DruidDataSource ds;
 	private Host host;
+	private TableRouter tableRouter;
 
 	public Shard(int id, String name, long groupId, Host host) {
 		this.id = id;
@@ -58,6 +60,8 @@ public class Shard implements DatabaseServer {
 		ds.setUsername(jdbc.getUser());
 		ds.setPassword(jdbc.getPassword());
 		ds.setTestOnBorrow(false);
+		// tableRouter
+		tableRouter = new DefaultTableRouter();
 	}
 
 	public long getId() {
@@ -94,6 +98,10 @@ public class Shard implements DatabaseServer {
 
 	public List<FragmentTable> getTables() {
 		return tables;
+	}
+
+	public FragmentTable getTable(long id) {
+		return this.tableRouter.getTable(this, id);
 	}
 
 	public void setTables(List<FragmentTable> tables) {
