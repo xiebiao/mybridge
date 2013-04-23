@@ -2,8 +2,8 @@ package com.github.mybridge.jnet;
 
 import java.util.List;
 
-import com.github.jnet.IOState;
-import com.github.jnet.utils.IOBuffer;
+import com.github.jnet.Session.IoState;
+import com.github.jnet.utils.IoBuffer;
 import com.github.mybridge.MySQLProtocol;
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.Handler;
@@ -33,14 +33,14 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	}
 
 	@Override
-	public void connected(IOBuffer readBuffer, IOBuffer writeBuffer) {
+	public void connected(IoBuffer readBuffer, IoBuffer writeBuffer) {
 		InitialHandshakePacket init = new InitialHandshakePacket();
 		init.packetNumberInc();
 		writePacket(writeBuffer, init);
 	}
 
 	@Override
-	public void packetReceived(IOBuffer readBuffer, IOBuffer writeBuffer) {
+	public void packetReceived(IoBuffer readBuffer, IoBuffer writeBuffer) {
 		String msg = "";
 		ErrPacket errPacket = null;
 		switch (state) {
@@ -107,7 +107,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	}
 
 	@Override
-	public void packetSended(IOBuffer readBuffer, IOBuffer writeBuffer) {
+	public void packetSended(IoBuffer readBuffer, IoBuffer writeBuffer) {
 		switch (state) {
 		case WRITE_INIT:
 			state = HandshakeState.READ_AUTH;
@@ -124,14 +124,13 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 
 	}
 
-
-	private void readPacket(IOBuffer readBuf) {
+	private void readPacket(IoBuffer readBuf) {
 		readBuf.position(0);
 		readBuf.limit(4);
-		session.setNextState(IOState.READ);
+		session.setNextState(IoState.READ);
 	}
 
-	private void writePacketList(IOBuffer writeBuf, List<Packet> resultlist) {
+	private void writePacketList(IoBuffer writeBuf, List<Packet> resultlist) {
 		writeBuf.position(0);
 		for (Packet packet : resultlist) {
 			byte[] body = packet.getBytes();
@@ -143,10 +142,10 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 		}
 		writeBuf.limit(writeBuf.position());
 		writeBuf.position(0);
-		session.setNextState(IOState.WRITE);
+		session.setNextState(IoState.WRITE);
 	}
 
-	private void writePacket(IOBuffer writeBuf, Packet packet) {
+	private void writePacket(IoBuffer writeBuf, Packet packet) {
 		byte[] body = packet.getBytes();
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(body.length);
@@ -158,6 +157,6 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 		writeBuf.limit(writeBuf.position());
 		writeBuf.position(0);
 		// logger.debug(StringUtils.toString(body));
-		this.session.setNextState(IOState.WRITE);
+		this.session.setNextState(IoState.WRITE);
 	}
 }

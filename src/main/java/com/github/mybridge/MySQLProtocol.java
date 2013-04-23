@@ -1,13 +1,13 @@
 package com.github.mybridge;
 
-import com.github.jnet.utils.IOBuffer;
+import com.github.jnet.utils.IoBuffer;
 
 public interface MySQLProtocol {
 
-	public void connected(IOBuffer readBuffer, IOBuffer writeBuffer);
+	public void connected(IoBuffer readBuffer, IoBuffer writeBuffer);
 
-	public void packetReceived(IOBuffer readBuffer, IOBuffer writeBuffer);
+	public void packetReceived(IoBuffer readBuffer, IoBuffer writeBuffer);
 
-	public void packetSended(IOBuffer readBuffer, IOBuffer writeBuffer);
+	public void packetSended(IoBuffer readBuffer, IoBuffer writeBuffer);
 
 }

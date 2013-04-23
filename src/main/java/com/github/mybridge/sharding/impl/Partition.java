@@ -40,7 +40,7 @@ public class Partition {
 		int size = shardGroups.size();
 		for (int i = 0; i < size; i++) {
 			ShardGroup sg = shardGroups.get(i);
-			if (sg.getSate() == State.WRITE) {
+			if (sg.getState() == State.WRITE.ordinal()) {
 				return sg;
 			}
 		}

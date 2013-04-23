@@ -1,7 +1,7 @@
 package com.github.mybridge.jnet;
 
 import com.github.jnet.Session;
-import com.github.jnet.utils.IOBuffer;
+import com.github.jnet.utils.IoBuffer;
 import com.github.mybridge.MySQLProtocol;
 import com.github.mybridge.core.packet.PacketHeader;
 import com.github.mybridge.engine.Engine;
@@ -20,13 +20,13 @@ public class MySQLSession extends Session {
 	}
 
 	@Override
-	public void open(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
+	public void open(IoBuffer readBuf, IoBuffer writeBuf) throws Exception {
 		this.mysql = new JnetMySQLProtocolImpl(this);
 		this.mysql.connected(readBuf, writeBuf);
 	}
 
 	@Override
-	public void readCompleted(IOBuffer readBuf, IOBuffer writeBuf)
+	public void readCompleted(IoBuffer readBuf, IoBuffer writeBuf)
 			throws Exception {
 		if (currentState == READ_HEADER) {
 			PacketHeader header = new PacketHeader();
@@ -42,7 +42,7 @@ public class MySQLSession extends Session {
 	}
 
 	@Override
-	public void writeCompleted(IOBuffer readBuf, IOBuffer writeBuf)
+	public void writeCompleted(IoBuffer readBuf, IoBuffer writeBuf)
 			throws Exception {
 		this.mysql.packetSended(readBuf, writeBuf);
 	}
@@ -53,12 +53,12 @@ public class MySQLSession extends Session {
 	}
 
 	@Override
-	public void reading(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
+	public void reading(IoBuffer readBuf, IoBuffer writeBuf) throws Exception {
 
 	}
 
 	@Override
-	public void writing(IOBuffer readBuf, IOBuffer writeBuf) throws Exception {
+	public void writing(IoBuffer readBuf, IoBuffer writeBuf) throws Exception {
 
 	}
 

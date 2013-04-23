@@ -18,15 +18,7 @@ public class MiniEngine implements Engine {
 	private TableRouter tableRouter;
 
 	public MiniEngine() {
-		ShardGroup sg = new ShardGroup(0, "user", State.WRITE, 0, 10000);
-		Host host0 = new Host("localhost:3306");
-		Shard shard0 = new Shard(0, "shard", sg.getId(), host0);
-		Host host1 = new Host("localhost:3307");
-		Shard shard1 = new Shard(1, "shard", sg.getId(), host1);
-		sg.addShard(shard0);
-		sg.addShard(shard1);
-		sgList = new ArrayList<ShardGroup>();
-		sgList.add(sg);
+		
 	}
 
 	@Override
@@ -57,10 +49,8 @@ public class MiniEngine implements Engine {
 		// 解析SQL,得到id
 		long id = 10;
 		// 得到是写入sql
-		State state = State.WRITE;
-		ShardGroup sg = this.shardGroupRouter.getShardGroup(this.sgList, state,
-				id);
-		return sg.getShard(state, id);
+	
+		return null;
 	}
 
 	@Override

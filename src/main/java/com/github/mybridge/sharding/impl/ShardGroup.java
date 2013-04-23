@@ -27,7 +27,7 @@ public class ShardGroup {
 	/**
 	 * 是否可用
 	 */
-	private State state;
+	private int state;
 
 	private long startId;
 	private long endId;
@@ -35,27 +35,29 @@ public class ShardGroup {
 	 * 分组中所有shard
 	 */
 	private List<Shard> shards;
-	private ShardRouter shardRouter;
 
-	public ShardGroup(int id, String name, State state, long startId, long endId) {
+	public ShardGroup() {
+	}
+
+	public ShardGroup(int id, String name, int state, long startId, long endId) {
 		this.id = id;
 		this.name = name;
 		this.state = state;
 		this.startId = startId;
 		this.endId = endId;
-		shardRouter = new DefaultShardRouter();
 	}
 
-	public Shard getShard(State state, long id) {
-		int size = shards.size();
-		for (int i = 0; i < size; i++) {
-			Shard s = shards.get(i);
-			if (!s.isWritable() && s.isAlive()) {
-				return shardRouter.getShard(this, state, id);
-			}
-		}
-		return null;
-	}
+	//
+	// public Shard getShard(State state, long id) {
+	// int size = shards.size();
+	// for (int i = 0; i < size; i++) {
+	// Shard s = shards.get(i);
+	// if (!s.isWritable() && s.isAlive()) {
+	// return shardRouter.getShard(this, state, id);
+	// }
+	// }
+	// return null;
+	// }
 
 	public long getId() {
 		return id;
@@ -71,14 +73,6 @@ public class ShardGroup {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public State getSate() {
-		return this.state;
-	}
-
-	public void setState(State state) {
-		this.state = state;
 	}
 
 	public long getStartId() {
@@ -113,8 +107,15 @@ public class ShardGroup {
 
 	public String toString() {
 		return "{id:" + this.id + ", name:" + this.name + ", startId:"
-				+ this.startId + ", endId:" + this.endId + ", shards:"
-				+ this.shards + "}";
+				+ this.startId + " ,state="+this.state+" , endId:" + this.endId + "}";
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
 	}
 
 }

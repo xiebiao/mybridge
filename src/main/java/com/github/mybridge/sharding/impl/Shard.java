@@ -3,6 +3,7 @@ package com.github.mybridge.sharding.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.mybridge.engine.DatabaseServer;
@@ -28,7 +29,7 @@ public class Shard implements DatabaseServer {
 	/**
 	 * id%分片数量 = 分片id
 	 */
-	private String hashValue;
+	public Set<String> hashValue;
 	/**
 	 * 对应ShardGroup中的id
 	 */
@@ -46,6 +47,9 @@ public class Shard implements DatabaseServer {
 	private static DruidDataSource ds;
 	private Host host;
 	private TableRouter tableRouter;
+
+	public Shard() {
+	}
 
 	public Shard(int id, String name, long groupId, Host host) {
 		this.id = id;
@@ -78,14 +82,6 @@ public class Shard implements DatabaseServer {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getHashValue() {
-		return hashValue;
-	}
-
-	public void setHashValue(String hashValue) {
-		this.hashValue = hashValue;
 	}
 
 	public long getGroupId() {
@@ -129,8 +125,8 @@ public class Shard implements DatabaseServer {
 	}
 
 	public String toString() {
-		return "{ id:" + this.id + ", name:" + this.name + ", host:"
-				+ this.host + ", tables:" + this.tables + "}";
+		return "{id:" + this.id + ", name:" + this.name + ", host:"
+				+ this.host + "}";
 	}
 
 	public boolean isWritable() {
@@ -139,5 +135,13 @@ public class Shard implements DatabaseServer {
 
 	public void setWritable(boolean canWritable) {
 		this.isWritable = canWritable;
+	}
+
+	public Set<String> getHashValue() {
+		return hashValue;
+	}
+
+	public void setHashValue(Set<String> hash) {
+		this.hashValue = hash;
 	}
 }
