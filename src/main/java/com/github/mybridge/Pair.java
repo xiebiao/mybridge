@@ -1,4 +1,4 @@
-package com.github.mybridge.client;
+package com.github.mybridge;
 
 public class Pair<K, V> {
 	private K key;

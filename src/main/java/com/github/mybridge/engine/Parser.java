@@ -12,7 +12,11 @@ import com.github.mybridge.exception.ParserException;
 public interface Parser {
 
 	/**
-	 * 是否写操作
+	 * 是否写操作<br/>
+	 * <ul>
+	 * <li>INSERT,UPDATE,DELETE为写操作</li>
+	 * <li>SELECT为读操作</li>
+	 * </ul>
 	 * 
 	 * @return
 	 */

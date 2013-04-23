@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.mybridge.engine.DatabaseServer;
-import com.github.mybridge.engine.Host;
+import com.github.mybridge.engine.Address;
 import com.github.mybridge.engine.JDBCProperties;
 import com.github.mybridge.sharding.TableRouter;
 
@@ -45,17 +45,17 @@ public class Shard implements DatabaseServer {
 	private List<FragmentTable> tables;
 	/** ------------------------------ 分片对应的物理信息 */
 	private static DruidDataSource ds;
-	private Host host;
+	private Address address;
 	private TableRouter tableRouter;
 
 	public Shard() {
 	}
 
-	public Shard(int id, String name, long groupId, Host host) {
+	public Shard(int id, String name, long groupId, Address host) {
 		this.id = id;
 		this.name = name;
 		this.groupId = groupId;
-		this.host = host;
+		this.address = host;
 		JDBCProperties jdbc = new JDBCProperties();
 		ds = new DruidDataSource();
 		ds.setDriver(jdbc.getDriver());
@@ -110,8 +110,8 @@ public class Shard implements DatabaseServer {
 	}
 
 	@Override
-	public Host getHost() {
-		return this.host;
+	public Address getAddress() {
+		return this.address;
 	}
 
 	@Override
@@ -125,8 +125,8 @@ public class Shard implements DatabaseServer {
 	}
 
 	public String toString() {
-		return "{id:" + this.id + ", name:" + this.name + ", host:"
-				+ this.host + "}";
+		return "{id:" + this.id + ", name:" + this.name + ", address:"
+				+ this.address + "}";
 	}
 
 	public boolean isWritable() {

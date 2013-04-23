@@ -7,7 +7,7 @@ public interface DatabaseServer {
 
 	public Connection getConnection() throws SQLException;
 
-	public Host getHost();
+	public Address getAddress();
 
 	public boolean isAlive();
 

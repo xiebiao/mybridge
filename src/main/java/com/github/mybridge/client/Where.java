@@ -2,6 +2,8 @@ package com.github.mybridge.client;
 
 import java.util.List;
 
+import com.github.mybridge.Pair;
+
 public class Where {
 	private List<Pair<String, String>> pairs;
 

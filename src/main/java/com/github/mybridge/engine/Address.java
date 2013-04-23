@@ -1,13 +1,12 @@
 package com.github.mybridge.engine;
 
-public class Host {
+public class Address {
 	private String ip;
-	private String port;
+	private int port;
 
-	public Host(String host) {
-		int tag = host.indexOf(":");
-		ip = host.substring(0, tag);
-		port = host.substring(tag+1, host.length());
+	public Address(String ip, int port) {
+		this.ip = ip;
+		this.port = port;
 	}
 
 	public String getIp() {
@@ -18,14 +17,13 @@ public class Host {
 		this.ip = ip;
 	}
 
-	public String getPort() {
+	public int getPort() {
 		return port;
 	}
 
-	public void setPort(String port) {
+	public void setPort(int port) {
 		this.port = port;
 	}
-
 	public String toString() {
 		return ip + ":" + port;
 	}

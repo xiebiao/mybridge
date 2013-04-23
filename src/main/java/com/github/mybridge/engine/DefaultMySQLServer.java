@@ -45,7 +45,7 @@ public class DefaultMySQLServer implements DatabaseServer {
 	}
 
 	@Override
-	public Host getHost() {
+	public Address getAddress() {
 		// TODO Auto-generated method stub
 		return null;
 	}

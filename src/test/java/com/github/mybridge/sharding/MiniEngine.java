@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.mybridge.engine.Engine;
-import com.github.mybridge.engine.Host;
+import com.github.mybridge.engine.Address;
 import com.github.mybridge.exception.LifecycleException;
 import com.github.mybridge.sharding.impl.DefaultShardGroupRouter;
 import com.github.mybridge.sharding.impl.DefaultTableRouter;

@@ -15,6 +15,7 @@ public class SqlParser implements Parser {
 	private String sql;
 	private Engine engine;
 	private String businessId;
+	public static final String UPDATE = "^update ";
 
 	public SqlParser(String sql, Engine engine) {
 		if (null == sql) {
