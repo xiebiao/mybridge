@@ -16,8 +16,9 @@ public class JnetLauncher implements Launcher {
 	public void start() {
 		config.setIp("127.0.0.1");
 		config.setPort(3307);
-		server = new MyBridgeServer(config, MySQLSession.class);
+		server = new MyBridgeServer();
 		try {
+			server.init(config, MySQLSession.class);
 			server.start();
 		} catch (Exception e) {
 			e.printStackTrace();
