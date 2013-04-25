@@ -1,6 +1,5 @@
 package com.github.mybridge;
 
-import com.github.mybridge.exception.ConfigException;
 
 public interface Launcher {
 	/**
@@ -14,7 +13,7 @@ public interface Launcher {
 	 * 
 	 * @throws Exception
 	 */
-	public void init() throws ConfigException;
+	public void init() ;
 
 	public void stop();
 }

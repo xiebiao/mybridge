@@ -1,4 +1,4 @@
-package com.github.mybridge.exception;
+package com.github.mybridge;
 
 public class LifecycleException extends Exception {
 

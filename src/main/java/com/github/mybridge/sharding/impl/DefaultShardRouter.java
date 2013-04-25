@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.github.mybridge.sharding.ShardRouter;
-import com.github.mybridge.sharding.State;
 
 public class DefaultShardRouter extends AbstractRouter implements ShardRouter {
 
@@ -13,7 +12,7 @@ public class DefaultShardRouter extends AbstractRouter implements ShardRouter {
 	}
 
 	@Override
-	public Shard getShard(ShardGroup shardGroup, State state, long id) {
+	public Shard getShard(ShardGroup shardGroup, boolean canWrite, long id) {
 		List<Shard> shards = shardGroup.getShards();
 		int size = shards.size();
 		for (int i = 0; i < size; i++) {

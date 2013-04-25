@@ -1,4 +1,4 @@
-package com.github.mybridge;
+package com.github.mybridge.core;
 
 import com.github.jnet.utils.IoBuffer;
 

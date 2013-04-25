@@ -2,7 +2,6 @@ package com.github.mybridge.engine;
 
 import com.github.mybridge.Lifecycle;
 import com.github.mybridge.sharding.impl.FragmentTable;
-import com.github.mybridge.sharding.impl.Shard;
 
 public interface Engine extends Lifecycle {
 

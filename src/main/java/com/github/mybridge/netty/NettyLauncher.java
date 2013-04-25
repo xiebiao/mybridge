@@ -8,7 +8,6 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
-import com.github.mybridge.exception.ConfigException;
 
 public class NettyLauncher implements Launcher {
 	private Configuration parameter;
@@ -22,27 +21,22 @@ public class NettyLauncher implements Launcher {
 
 	@Override
 	public void start() {
-		try {
-			this.init();
-			// Configure the server.
-			ServerBootstrap bootstrap = new ServerBootstrap(
-					new NioServerSocketChannelFactory(
-							Executors.newCachedThreadPool(),
-							Executors.newCachedThreadPool()));
-			// Set up the pipeline factory.
-			bootstrap.setPipelineFactory(new ServerPipelineFactory());
-			// Bind and start to accept incoming connections.
-			bootstrap.bind(new InetSocketAddress(parameter.getIp(), parameter
-					.getPort()));
-		} catch (ConfigException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		this.init();
+		// Configure the server.
+		ServerBootstrap bootstrap = new ServerBootstrap(
+				new NioServerSocketChannelFactory(
+						Executors.newCachedThreadPool(),
+						Executors.newCachedThreadPool()));
+		// Set up the pipeline factory.
+		bootstrap.setPipelineFactory(new ServerPipelineFactory());
+		// Bind and start to accept incoming connections.
+		bootstrap.bind(new InetSocketAddress(parameter.getIp(), parameter
+				.getPort()));
 
 	}
 
 	@Override
-	public void init() throws ConfigException {
+	public void init() {
 
 	}
 

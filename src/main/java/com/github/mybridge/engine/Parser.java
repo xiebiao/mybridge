@@ -2,7 +2,7 @@ package com.github.mybridge.engine;
 
 import java.util.List;
 
-import com.github.mybridge.exception.ParserException;
+import com.alibaba.druid.sql.parser.ParserException;
 
 /**
  * 解析器

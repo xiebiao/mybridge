@@ -9,12 +9,10 @@ import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.executor.ExecutorFilter;
-import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
-import com.github.mybridge.exception.ConfigException;
 
 public class MinaLauncher implements Launcher {
 	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
@@ -51,7 +49,7 @@ public class MinaLauncher implements Launcher {
 	}
 
 	@Override
-	public void init() throws ConfigException {
+	public void init() {
 		// TODO Auto-generated method stub
 
 	}

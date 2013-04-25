@@ -16,7 +16,7 @@ public class RouterTest {
 	private List<ShardGroup> sgList;
 	private String sql;
 	private String database;
-	private State state;
+	private boolean writable;
 	private long id;
 	private ShardingRuleLoader loader = new ShardingRuleLoaderImpl();
 
@@ -28,13 +28,13 @@ public class RouterTest {
 		shardRouter = new DefaultShardRouter();
 
 		// 解析sql
-		this.state = State.WRITE;
+		this.writable = true;
 		this.id = 5001;
-		
+
 		ShardGroup sg = this.shardGroupRouter.getShardGroup(this.loader.load(),
-				state.ordinal(), id);
-		System.out.println("ShardGroup:" + sg);
-		Shard shard = this.shardRouter.getShard(sg, state, id);
+				writable, id);
+		System.out.println("group:" + sg);
+		Shard shard = this.shardRouter.getShard(sg, writable, id);
 		System.out.println("shard:" + shard);
 		System.out.println("table:" + this.tableRouter.getTable(shard, id));
 	}

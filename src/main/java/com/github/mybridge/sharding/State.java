@@ -1,10 +1,25 @@
 package com.github.mybridge.sharding;
 
+
 /**
- * 分片状态:只读,只写,可读写
+ * 读写状态
  * 
  * @author xiebiao
  */
-public enum State {
-	READ, WRITE, READ_WRITE
+public interface State {
+	/**
+	 * 可写入
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public boolean canWrite();
+
+	/**
+	 * 可读取
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public boolean canRead();
 }

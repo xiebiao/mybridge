@@ -1,6 +1,5 @@
 package com.github.mybridge;
 
-import com.github.mybridge.exception.LifecycleException;
 
 public interface Lifecycle {
 

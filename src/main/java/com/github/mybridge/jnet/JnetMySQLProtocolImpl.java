@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.github.jnet.Session.IoState;
 import com.github.jnet.utils.IoBuffer;
-import com.github.mybridge.MySQLProtocol;
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.Handler;
 import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.MySQLHandler;
+import com.github.mybridge.core.MySQLProtocol;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandsPacket;
 import com.github.mybridge.core.packet.ErrPacket;

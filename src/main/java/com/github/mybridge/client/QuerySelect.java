@@ -2,7 +2,7 @@ package com.github.mybridge.client;
 
 import java.util.List;
 
-import com.github.mybridge.api.example.User;
+import com.github.mybridge.client.example.User;
 
 public class QuerySelect implements Select<User> {
 

@@ -23,7 +23,7 @@ public class InitShardingRule {
 	public void initShardGroup() {
 
 		String sql = "insert into shard_group(id,name,state,start_id,end_id) values(0,'user',"
-				+ State.WRITE.ordinal() + ",0," + max + ")";
+				+ Router.OP_WRITE + ",0," + max + ")";
 		System.out.println(sql);
 		try {
 			ds.getConnection().createStatement().execute(sql);

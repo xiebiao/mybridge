@@ -2,7 +2,7 @@ package com.github.mybridge.sharding.impl;
 
 import java.util.List;
 
-import com.github.mybridge.sharding.State;
+import com.github.mybridge.sharding.Router;
 
 /**
  * <h2>分区</h2>
@@ -40,7 +40,7 @@ public class Partition {
 		int size = shardGroups.size();
 		for (int i = 0; i < size; i++) {
 			ShardGroup sg = shardGroups.get(i);
-			if (sg.getState() == State.WRITE.ordinal()) {
+			if (sg.canWrite()) {
 				return sg;
 			}
 		}

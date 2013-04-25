@@ -2,7 +2,7 @@ package com.github.mybridge.jnet;
 
 import com.github.jnet.Session;
 import com.github.jnet.utils.IoBuffer;
-import com.github.mybridge.MySQLProtocol;
+import com.github.mybridge.core.MySQLProtocol;
 import com.github.mybridge.core.packet.PacketHeader;
 import com.github.mybridge.engine.Engine;
 

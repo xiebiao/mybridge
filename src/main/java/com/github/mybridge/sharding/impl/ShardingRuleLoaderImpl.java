@@ -47,7 +47,7 @@ public class ShardingRuleLoaderImpl implements ShardingRuleLoader {
 				sg.setStartId(rs.getLong("start_id"));
 				sg.setEndId(rs.getLong("end_id"));
 				sg.setShards(this.loadShard(sg.getId()));
-				sg.setState(rs.getInt("state"));
+				sg.setWritable(rs.getInt("writable"));
 				list.add(sg);
 			}
 

@@ -2,7 +2,6 @@ package com.github.mybridge.sharding.impl;
 
 import java.util.List;
 
-import com.github.mybridge.sharding.ShardRouter;
 import com.github.mybridge.sharding.State;
 
 /**
@@ -15,7 +14,7 @@ import com.github.mybridge.sharding.State;
  * @author xiebiao
  * 
  */
-public class ShardGroup {
+public class ShardGroup implements State {
 	/**
 	 * 分组id
 	 */
@@ -27,7 +26,7 @@ public class ShardGroup {
 	/**
 	 * 是否可用
 	 */
-	private int state;
+	private int writable;
 
 	private long startId;
 	private long endId;
@@ -42,22 +41,10 @@ public class ShardGroup {
 	public ShardGroup(int id, String name, int state, long startId, long endId) {
 		this.id = id;
 		this.name = name;
-		this.state = state;
+		this.writable = state;
 		this.startId = startId;
 		this.endId = endId;
 	}
-
-	//
-	// public Shard getShard(State state, long id) {
-	// int size = shards.size();
-	// for (int i = 0; i < size; i++) {
-	// Shard s = shards.get(i);
-	// if (!s.isWritable() && s.isAlive()) {
-	// return shardRouter.getShard(this, state, id);
-	// }
-	// }
-	// return null;
-	// }
 
 	public long getId() {
 		return id;
@@ -107,15 +94,28 @@ public class ShardGroup {
 
 	public String toString() {
 		return "{id:" + this.id + ", name:" + this.name + ", startId:"
-				+ this.startId + " ,state="+this.state+" , endId:" + this.endId + "}";
+				+ this.startId + " ,state=" + this.writable + " , endId:"
+				+ this.endId + "}";
 	}
 
-	public int getState() {
-		return state;
+	@Override
+	public boolean canWrite() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	public void setState(int state) {
-		this.state = state;
+	@Override
+	public boolean canRead() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public int getWritable() {
+		return writable;
+	}
+
+	public void setWritable(int writable) {
+		this.writable = writable;
 	}
 
 }
