@@ -1,4 +1,4 @@
-package com.github.mybridge.jnet;
+package com.github.mybridge.server;
 
 public class MysqlSessionTest {
 

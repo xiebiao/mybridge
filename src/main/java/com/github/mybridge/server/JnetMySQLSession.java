@@ -1,4 +1,4 @@
-package com.github.mybridge.jnet;
+package com.github.mybridge.server;
 
 import com.github.jnet.Session;
 import com.github.jnet.utils.IoBuffer;

@@ -1,4 +1,4 @@
-package com.github.mybridge.mina;
+package com.github.mybridge.server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

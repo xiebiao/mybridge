@@ -1,4 +1,4 @@
-package com.github.mybridge.netty;
+package com.github.mybridge.server;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;

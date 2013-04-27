@@ -1,4 +1,4 @@
-package com.github.mybridge.jnet;
+package com.github.mybridge.server;
 
 import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;

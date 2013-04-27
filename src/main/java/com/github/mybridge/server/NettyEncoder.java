@@ -1,4 +1,4 @@
-package com.github.mybridge.netty;
+package com.github.mybridge.server;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;

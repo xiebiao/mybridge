@@ -1,4 +1,4 @@
-package com.github.mybridge.mina;
+package com.github.mybridge.server;
 
 import java.util.List;
 
@@ -17,25 +17,17 @@ import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 
-public class MinaServerHandler extends IoHandlerAdapter {
+public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(MinaServerHandler.class);
+			.getLogger(MinaMySQLProtocolImpl.class);
 	private HandshakeState state;
 	private Handler handler;
-
-	// private MySQLProtocol mysql;
-
-	public MinaServerHandler() {
-		// mysql = new MySQLProtocol();
-	}
 
 	@Override
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		super.messageReceived(session, message);
 		byte[] bytes = (byte[]) message;
-		// 需要重构MySQLProtocol接口,以便mina与netty公用。
-		// mysql.onRequestReceived(channel, bytes);
 		String msg = "";
 		switch (state) {
 		case READ_AUTH:
@@ -59,7 +51,6 @@ public class MinaServerHandler extends IoHandlerAdapter {
 							auth.databaseName.length() - 1);
 					handler.setDatabase(dbname);
 				}
-				logger.debug(auth.clientUser);
 				if (auth.checkAuth(user, auth.clientPassword)) {
 					OkPacket ok = new OkPacket();
 					session.write(ok.getBytes());
@@ -138,12 +129,12 @@ public class MinaServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionOpened(IoSession session) throws Exception {
 		super.sessionOpened(session);
-		//Packet.setPacketId((byte) 0);
+		// Packet.setPacketId((byte) 0);
 		state = HandshakeState.WRITE_INIT;
 		handler = new MySQLHandler();
 		InitialHandshakePacket initPacket = new InitialHandshakePacket();
-		byte[] temp = initPacket.getBytes();
-		session.write(temp);
+		byte[] init = initPacket.getBytes();
+		session.write(init);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.github.mybridge.mina;
+package com.github.mybridge.server;
 
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;

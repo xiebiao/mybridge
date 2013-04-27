@@ -1,7 +1,7 @@
 package com.github.mybridge;
 
 import com.github.jnet.Configuration;
-import com.github.mybridge.jnet.JnetLauncher;
+import com.github.mybridge.server.JnetLauncher;
 
 public final class DefaultLauncher implements Launcher {
 	private Launcher launcher;
