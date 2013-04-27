@@ -87,10 +87,10 @@ public class DefaultMySQLHandler implements MySQLHandler {
 		//Connection connection = databases.get(0).getConnection();
 		Connection connection = null;
 		boolean result;
-		Statement state;
+		Statement statement;
 		try {
-			state = connection.createStatement();
-			result = state.execute(sql);
+			statement = connection.createStatement();
+			result = statement.execute(sql);
 		} catch (SQLException e) {
 			ErrPacket err = new ErrPacket(e.getErrorCode(), e.getSQLState(),
 					e.getMessage());
@@ -99,11 +99,11 @@ public class DefaultMySQLHandler implements MySQLHandler {
 		}
 		if (result == false) {
 			OkPacket ok = new OkPacket();
-			ok.setAffectedRows(state.getUpdateCount());
+			ok.setAffectedRows(statement.getUpdateCount());
 			packetList.add(ok);
 			return packetList;
 		}
-		ResultSet rs = state.getResultSet();
+		ResultSet rs = statement.getResultSet();
 		ResultSetMetaData meta = rs.getMetaData();
 		ResultSetPacket resultPacket = new ResultSetPacket(
 				meta.getColumnCount());
@@ -131,9 +131,9 @@ public class DefaultMySQLHandler implements MySQLHandler {
 		}
 		packetList.add(new EofPacket());
 		rs.close();
-		state.close();
+		statement.close();
 		connection.close();
-		DbUtils.closeQuietly(connection, state, rs);
+		DbUtils.closeQuietly(connection, statement, rs);
 		return packetList;
 	}
 

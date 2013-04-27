@@ -4,9 +4,9 @@ import java.io.StringReader;
 
 import junit.framework.TestCase;
 import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.statement.drop.Drop;
-import net.sf.jsqlparser.statement.select.FromItem;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 
@@ -33,9 +33,9 @@ public class JsqlParserTest extends TestCase {
 			Select select = (Select) parserManager.parse(new StringReader(
 					statement));
 
-			FromItem s = ((PlainSelect) select.getSelectBody()).getFromItem();
-			System.out.println(s);
-
+			Expression s = ((PlainSelect) select.getSelectBody()).getWhere();
+			WhereExpressionVisitor visitor = new WhereExpressionVisitor(s);
+			//visitor.eval(values)
 		} catch (JSQLParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

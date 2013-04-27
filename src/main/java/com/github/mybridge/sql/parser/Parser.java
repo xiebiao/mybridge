@@ -1,6 +1,6 @@
 package com.github.mybridge.sql.parser;
 
-import com.github.mybridge.sql.statement.Statement;
+import net.sf.jsqlparser.statement.Statement;
 
 public interface Parser {
 	public String getId() throws ParserException;
