@@ -18,27 +18,16 @@ import com.github.mybridge.core.packet.OkPacket;
 import com.github.mybridge.core.packet.Packet;
 import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
-import com.github.mybridge.engine.DatabaseServer;
-import com.github.mybridge.engine.DatabaseServerFactory;
-import com.github.mybridge.engine.Engine;
 
 public class MySQLHandler implements Handler {
 
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(MySQLHandler.class);
 	private String charset = "utf-8";
-	private List<DatabaseServer> databases = new ArrayList<DatabaseServer>();
-	// private final static DbServer dbServer = DbServerFactory
-	// .getDbserver(new DefaultGroup(0));
 	private String database = "";
-
-	// public MySQLHandler(Engine engine) {
-	// charset = "utf-8";
-	// databases.add(DatabaseFactory.getMySQLServer(database));
-	// }
 	public MySQLHandler() {
 		charset = "utf-8";
-		databases.add(DatabaseServerFactory.getMySQLServer(database));
+		//databases.add(DatabaseServerFactory.getMySQLServer(database));
 	}
 
 	public List<Packet> execute(Packet packet) throws ExecuteException {
@@ -92,10 +81,11 @@ public class MySQLHandler implements Handler {
 		// 解析SQL
 		// 路由器
 		//
-		if (databases == null || databases.size() == 0) {
-			throw new SQLException("Can't find database.");
-		}
-		Connection connection = databases.get(0).getConnection();
+		// if (databases == null || databases.size() == 0) {
+		// throw new SQLException("Can't find database.");
+		// }
+		//Connection connection = databases.get(0).getConnection();
+		Connection connection = null;
 		boolean result;
 		Statement state;
 		try {

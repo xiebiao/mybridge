@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 public class ServerHandlerTest extends TestCase {
 	public void test() {
-		ServerHandler sh = new ServerHandler();
+		NettyServerHandler sh = new NettyServerHandler();
 
 	}
 }

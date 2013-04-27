@@ -20,14 +20,14 @@ import com.github.mybridge.core.packet.PacketHeader;
 import com.mysql.jdbc.StringUtils;
 
 public class JnetMySQLProtocolImpl implements MySQLProtocol {
-	private MySQLSession session;
+	private JnetMySQLSession session;
 	private HandshakeState state;
 	private static Handler handler = new MySQLHandler();
 	// private static Handler handler = new TestHandler();
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(JnetMySQLProtocolImpl.class);
 
-	public JnetMySQLProtocolImpl(MySQLSession session) {
+	public JnetMySQLProtocolImpl(JnetMySQLSession session) {
 		this.session = session;
 		state = HandshakeState.WRITE_INIT;
 	}

@@ -5,7 +5,7 @@ import com.github.mybridge.Launcher;
 
 public class JnetLauncher implements Launcher {
 	Configuration config;
-	MyBridgeServer server;
+	JnetMyBridgeServer server;
 
 	public JnetLauncher(Configuration config) {
 		this.config = config;
@@ -15,9 +15,9 @@ public class JnetLauncher implements Launcher {
 	public void start() {
 		config.setIp("127.0.0.1");
 		config.setPort(3307);
-		server = new MyBridgeServer();
+		server = new JnetMyBridgeServer();
 		try {
-			server.init(config, MySQLSession.class);
+			server.init(config, JnetMySQLSession.class);
 			server.start();
 		} catch (Exception e) {
 			e.printStackTrace();

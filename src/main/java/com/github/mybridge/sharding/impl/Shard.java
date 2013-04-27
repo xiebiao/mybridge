@@ -1,13 +1,9 @@
 package com.github.mybridge.sharding.impl;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.github.mybridge.engine.DatabaseServer;
-import com.github.mybridge.engine.Address;
 import com.github.mybridge.engine.JDBCProperties;
 import com.github.mybridge.sharding.TableRouter;
 
@@ -17,7 +13,7 @@ import com.github.mybridge.sharding.TableRouter;
  * @author xiebiao
  * 
  */
-public class Shard implements DatabaseServer {
+public class Shard {
 	/**
 	 * 分片id
 	 */
@@ -34,10 +30,6 @@ public class Shard implements DatabaseServer {
 	 * 对应ShardGroup中的id
 	 */
 	private long groupId;
-	/**
-	 * slave库不能写
-	 */
-	private boolean isWritable = false;
 
 	/**
 	 * 分片中所有表
@@ -45,22 +37,20 @@ public class Shard implements DatabaseServer {
 	private List<FragmentTable> tables;
 	/** ------------------------------ 分片对应的物理信息 */
 	private static DruidDataSource ds;
-	private Address address;
 	private TableRouter tableRouter;
 
 	public Shard() {
 	}
 
-	public Shard(int id, String name, long groupId, Address host) {
+	public Shard(int id, String name, long groupId) {
 		this.id = id;
 		this.name = name;
 		this.groupId = groupId;
-		this.address = host;
 		JDBCProperties jdbc = new JDBCProperties();
 		ds = new DruidDataSource();
 		ds.setDriver(jdbc.getDriver());
 		String database = this.name + this.id;
-		ds.setUrl("jdbc:mysql://" + host + "/" + database);
+		// ds.setUrl("jdbc:mysql://" + host + "/" + database);
 		ds.setUsername(jdbc.getUser());
 		ds.setPassword(jdbc.getPassword());
 		ds.setTestOnBorrow(false);
@@ -102,39 +92,6 @@ public class Shard implements DatabaseServer {
 
 	public void setTables(List<FragmentTable> tables) {
 		this.tables = tables;
-	}
-
-	@Override
-	public Connection getConnection() throws SQLException {
-		return ds.getConnection();
-	}
-
-	@Override
-	public Address getAddress() {
-		return this.address;
-	}
-
-	@Override
-	public boolean isAlive() {
-		return ds.isEnable();
-	}
-
-	@Override
-	public void shutdown() {
-		ds.close();
-	}
-
-	public String toString() {
-		return "{id:" + this.id + ", name:" + this.name + ", address:"
-				+ this.address + "}";
-	}
-
-	public boolean isWritable() {
-		return isWritable;
-	}
-
-	public void setWritable(boolean canWritable) {
-		this.isWritable = canWritable;
 	}
 
 	public Set<String> getHashValue() {

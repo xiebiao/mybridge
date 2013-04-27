@@ -6,7 +6,7 @@ public class MysqlSessionTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MySQLSession ms = new MySQLSession();
+		JnetMySQLSession ms = new JnetMySQLSession();
 
 	}
 

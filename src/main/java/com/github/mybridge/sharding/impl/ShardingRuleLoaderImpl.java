@@ -102,7 +102,6 @@ public class ShardingRuleLoaderImpl implements ShardingRuleLoader {
 					}
 				}
 				shard.setGroupId(rs.getLong("group_id"));
-				shard.setWritable(rs.getBoolean("writable"));
 				shard.setHashValue(set);
 				shard.setTables(this.loadTable(shard.getId()));
 				shards.add(shard);
