@@ -17,7 +17,7 @@ import com.github.mybridge.core.packet.RowDataPacket;
  * @author xiebiao
  * 
  */
-public class MockHandler implements Handler {
+public class MockHandler implements MySQLHandler {
 
 	@Override
 	public List<Packet> execute(Packet cmd) throws ExecuteException {

@@ -5,9 +5,9 @@ import java.util.List;
 import org.jboss.netty.channel.Channel;
 
 import com.github.mybridge.core.ExecuteException;
-import com.github.mybridge.core.Handler;
-import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.MySQLHandler;
+import com.github.mybridge.core.MySQLCommandPhase;
+import com.github.mybridge.core.DefaultMySQLHandler;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandsPacket;
 import com.github.mybridge.core.packet.ErrPacket;
@@ -20,10 +20,10 @@ public class NettyMySQLProtocolImpl {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(NettyMySQLProtocolImpl.class);
 	private HandshakeState state;
-	private Handler handler;
+	private MySQLHandler handler;
 
 	public NettyMySQLProtocolImpl() {
-		handler = new MySQLHandler();
+		handler = new DefaultMySQLHandler();
 	}
 
 	public void onConnected(Channel channel) {

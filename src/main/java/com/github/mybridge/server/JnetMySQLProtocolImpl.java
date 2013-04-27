@@ -5,9 +5,9 @@ import java.util.List;
 import com.github.jnet.Session.IoState;
 import com.github.jnet.utils.IoBuffer;
 import com.github.mybridge.core.ExecuteException;
-import com.github.mybridge.core.Handler;
-import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.MySQLHandler;
+import com.github.mybridge.core.MySQLCommandPhase;
+import com.github.mybridge.core.DefaultMySQLHandler;
 import com.github.mybridge.core.MySQLProtocol;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandsPacket;
@@ -22,7 +22,7 @@ import com.mysql.jdbc.StringUtils;
 public class JnetMySQLProtocolImpl implements MySQLProtocol {
 	private JnetMySQLSession session;
 	private HandshakeState state;
-	private static Handler handler = new MySQLHandler();
+	private static MySQLHandler handler = new DefaultMySQLHandler();
 	// private static Handler handler = new TestHandler();
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(JnetMySQLProtocolImpl.class);
