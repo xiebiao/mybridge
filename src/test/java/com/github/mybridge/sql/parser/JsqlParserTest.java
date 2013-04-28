@@ -11,7 +11,7 @@ import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 
 public class JsqlParserTest extends TestCase {
-	public void testDrop() {
+	public void atestDrop() {
 		CCJSqlParserManager parserManager = new CCJSqlParserManager();
 		String statement = "DROP TABLE mytab";
 		try {
@@ -29,13 +29,12 @@ public class JsqlParserTest extends TestCase {
 		CCJSqlParserManager parserManager = new CCJSqlParserManager();
 		String statement = "Select * from user where id='sss'";
 		try {
-
 			Select select = (Select) parserManager.parse(new StringReader(
 					statement));
-
-			Expression s = ((PlainSelect) select.getSelectBody()).getWhere();
-			WhereExpressionVisitor visitor = new WhereExpressionVisitor(s);
-			//visitor.eval(values)
+			Expression where = ((PlainSelect) select.getSelectBody())
+					.getWhere();
+			WhereExpressionVisitor visitor = new WhereExpressionVisitor(where);
+			System.out.println(visitor.eval());
 		} catch (JSQLParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

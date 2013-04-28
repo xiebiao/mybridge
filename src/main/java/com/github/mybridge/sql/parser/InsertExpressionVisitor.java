@@ -5,7 +5,6 @@ import net.sf.jsqlparser.expression.AnyComparisonExpression;
 import net.sf.jsqlparser.expression.CaseExpression;
 import net.sf.jsqlparser.expression.DateValue;
 import net.sf.jsqlparser.expression.DoubleValue;
-import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.ExpressionVisitor;
 import net.sf.jsqlparser.expression.Function;
 import net.sf.jsqlparser.expression.InverseExpression;
@@ -43,23 +42,11 @@ import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.select.SubSelect;
 
 /**
- * 解析WHERE中的id<br/>
+ * 解析INSERT语句中的id
  * 
  * @author xiebiao
  */
-public class WhereExpressionVisitor implements ExpressionVisitor {
-	private Expression expression;
-	private Object result;
-
-	public Object eval() {
-		expression.accept(this);
-		return result;
-	}
-
-	public WhereExpressionVisitor(Expression expression) {
-		this.expression = expression;
-		System.out.println(expression);
-	}
+public class InsertExpressionVisitor implements ExpressionVisitor {
 
 	@Override
 	public void visit(NullValue nullValue) {
@@ -87,13 +74,14 @@ public class WhereExpressionVisitor implements ExpressionVisitor {
 
 	@Override
 	public void visit(DoubleValue doubleValue) {
-		this.result = doubleValue.getValue();
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void visit(LongValue longValue) {
-		this.result = longValue.getValue();
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -122,7 +110,7 @@ public class WhereExpressionVisitor implements ExpressionVisitor {
 
 	@Override
 	public void visit(StringValue stringValue) {
-		this.result = stringValue.getValue();
+		// TODO Auto-generated method stub
 
 	}
 
@@ -170,7 +158,7 @@ public class WhereExpressionVisitor implements ExpressionVisitor {
 
 	@Override
 	public void visit(EqualsTo equalsTo) {
-		System.out.println(equalsTo.getLeftExpression());
+		// TODO Auto-generated method stub
 
 	}
 

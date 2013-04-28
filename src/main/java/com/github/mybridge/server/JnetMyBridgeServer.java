@@ -4,7 +4,8 @@ import com.github.jnet.Server;
 
 public class JnetMyBridgeServer extends Server<JnetMySQLSession> {
 
-	public JnetMyBridgeServer() {
+	public JnetMyBridgeServer(String name) {
+		super(name);
 	}
 
 }
