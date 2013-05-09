@@ -44,254 +44,253 @@ import net.sf.jsqlparser.statement.select.SubSelect;
 
 /**
  * 解析WHERE中的id<br/>
- * 
  * @author xiebiao
  */
 public class WhereExpressionVisitor implements ExpressionVisitor {
-	private Expression expression;
-	private Object result;
 
-	public Object eval() {
-		expression.accept(this);
-		return result;
-	}
+    // private static final org.slf4j.Logger logger =
+    // org.slf4j.LoggerFactory.getLogger(WhereExpressionVisitor.class);
+    private Expression expression;
+    private long       id;
 
-	public WhereExpressionVisitor(Expression expression) {
-		this.expression = expression;
-		System.out.println(expression);
-	}
+    public long getId() {
+        expression.accept(this);
+        return id;
+    }
 
-	@Override
-	public void visit(NullValue nullValue) {
-		// TODO Auto-generated method stub
+    public WhereExpressionVisitor(Expression expression) {
+        this.expression = expression;
+    }
 
-	}
+    @Override
+    public void visit(NullValue nullValue) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Function function) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Function function) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(InverseExpression inverseExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(InverseExpression inverseExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(JdbcParameter jdbcParameter) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(JdbcParameter jdbcParameter) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(DoubleValue doubleValue) {
-		this.result = doubleValue.getValue();
+    }
 
-	}
+    @Override
+    public void visit(DoubleValue doubleValue) {
 
-	@Override
-	public void visit(LongValue longValue) {
-		this.result = longValue.getValue();
-	}
+    }
 
-	@Override
-	public void visit(DateValue dateValue) {
-		// TODO Auto-generated method stub
+    @Override
+    public void visit(LongValue longValue) {
+        this.id = longValue.getValue();
+    }
 
-	}
+    @Override
+    public void visit(DateValue dateValue) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(TimeValue timeValue) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(TimeValue timeValue) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(TimestampValue timestampValue) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(TimestampValue timestampValue) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Parenthesis parenthesis) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Parenthesis parenthesis) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(StringValue stringValue) {
-		this.result = stringValue.getValue();
+    }
 
-	}
+    @Override
+    public void visit(StringValue stringValue) {
 
-	@Override
-	public void visit(Addition addition) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Addition addition) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Division division) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Division division) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Multiplication multiplication) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Multiplication multiplication) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Subtraction subtraction) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Subtraction subtraction) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(AndExpression andExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(AndExpression andExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(OrExpression orExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(OrExpression orExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Between between) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Between between) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(EqualsTo equalsTo) {
-		System.out.println(equalsTo.getLeftExpression());
+    }
 
-	}
+    @Override
+    public void visit(EqualsTo equalsTo) {
+        this.id = Long.valueOf(equalsTo.getRightExpression().toString());
 
-	@Override
-	public void visit(GreaterThan greaterThan) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(GreaterThan greaterThan) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(GreaterThanEquals greaterThanEquals) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(GreaterThanEquals greaterThanEquals) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(InExpression inExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(InExpression inExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(IsNullExpression isNullExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(IsNullExpression isNullExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(LikeExpression likeExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(LikeExpression likeExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(MinorThan minorThan) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(MinorThan minorThan) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(MinorThanEquals minorThanEquals) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(MinorThanEquals minorThanEquals) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(NotEqualsTo notEqualsTo) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(NotEqualsTo notEqualsTo) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Column tableColumn) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Column tableColumn) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(SubSelect subSelect) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(SubSelect subSelect) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(CaseExpression caseExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(CaseExpression caseExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(WhenClause whenClause) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(WhenClause whenClause) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(ExistsExpression existsExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(ExistsExpression existsExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(AllComparisonExpression allComparisonExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(AllComparisonExpression allComparisonExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(AnyComparisonExpression anyComparisonExpression) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(AnyComparisonExpression anyComparisonExpression) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Concat concat) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Concat concat) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(Matches matches) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(Matches matches) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(BitwiseAnd bitwiseAnd) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(BitwiseAnd bitwiseAnd) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(BitwiseOr bitwiseOr) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(BitwiseOr bitwiseOr) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void visit(BitwiseXor bitwiseXor) {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @Override
+    public void visit(BitwiseXor bitwiseXor) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

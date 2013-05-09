@@ -34,7 +34,7 @@ public class JsqlParserTest extends TestCase {
 			Expression where = ((PlainSelect) select.getSelectBody())
 					.getWhere();
 			WhereExpressionVisitor visitor = new WhereExpressionVisitor(where);
-			System.out.println(visitor.eval());
+			System.out.println(visitor.getId());
 		} catch (JSQLParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
