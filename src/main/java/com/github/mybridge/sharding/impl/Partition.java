@@ -2,8 +2,6 @@ package com.github.mybridge.sharding.impl;
 
 import java.util.List;
 
-import com.github.mybridge.sharding.Router;
-
 /**
  * <h2>分区</h2>
  * <p>

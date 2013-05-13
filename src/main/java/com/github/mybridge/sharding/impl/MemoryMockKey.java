@@ -4,6 +4,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.github.mybridge.sharding.UniquePrimaryKey;
 
+/**
+ * test code
+ * @author xiebiao
+ */
 public class MemoryMockKey implements UniquePrimaryKey {
 
     private AtomicInteger id   = new AtomicInteger(1);
