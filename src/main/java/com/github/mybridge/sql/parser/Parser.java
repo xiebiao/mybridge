@@ -6,5 +6,7 @@ public interface Parser {
 
     public long getId() throws ParserException;
 
+    public void setIdName(String name);
+
     public Statement getStatement() throws ParserException;
 }

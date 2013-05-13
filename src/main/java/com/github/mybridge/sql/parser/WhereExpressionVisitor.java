@@ -43,15 +43,14 @@ import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.select.SubSelect;
 
 /**
- * 解析WHERE中的id<br/>
+ * 解析where语句中的id对应的值<br/>
  * @author xiebiao
  */
 public class WhereExpressionVisitor implements ExpressionVisitor {
 
-    // private static final org.slf4j.Logger logger =
-    // org.slf4j.LoggerFactory.getLogger(WhereExpressionVisitor.class);
-    private Expression expression;
-    private long       id;
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(WhereExpressionVisitor.class);
+    private Expression                    expression;
+    private long                          id;
 
     public long getId() {
         expression.accept(this);
@@ -151,7 +150,7 @@ public class WhereExpressionVisitor implements ExpressionVisitor {
 
     @Override
     public void visit(AndExpression andExpression) {
-        // TODO Auto-generated method stub
+        logger.debug("" + andExpression);
 
     }
 
@@ -223,7 +222,7 @@ public class WhereExpressionVisitor implements ExpressionVisitor {
 
     @Override
     public void visit(Column tableColumn) {
-        // TODO Auto-generated method stub
+        logger.debug("" + tableColumn);
 
     }
 
@@ -241,7 +240,7 @@ public class WhereExpressionVisitor implements ExpressionVisitor {
 
     @Override
     public void visit(WhenClause whenClause) {
-        // TODO Auto-generated method stub
+        logger.debug("" + whenClause);
 
     }
 
