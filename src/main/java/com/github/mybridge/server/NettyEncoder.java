@@ -7,8 +7,6 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
 import com.github.mybridge.core.packet.PacketHeader;
-import com.github.mybridge.core.packet.Packet;
-import com.mysql.jdbc.StringUtils;
 
 /**
  * 编码

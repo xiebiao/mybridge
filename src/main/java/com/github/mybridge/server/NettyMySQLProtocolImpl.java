@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.jboss.netty.channel.Channel;
 
-import com.github.mybridge.core.ExecuteException;
-import com.github.mybridge.core.MySQLHandler;
-import com.github.mybridge.core.MySQLCommandPhase;
 import com.github.mybridge.core.DefaultMySQLHandler;
+import com.github.mybridge.core.ExecuteException;
+import com.github.mybridge.core.MySQLCommandPhase;
+import com.github.mybridge.core.MySQLHandler;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandsPacket;
 import com.github.mybridge.core.packet.ErrPacket;

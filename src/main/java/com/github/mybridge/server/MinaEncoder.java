@@ -6,7 +6,6 @@ import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 
 import com.github.mybridge.core.packet.PacketHeader;
-import com.github.mybridge.core.packet.Packet;
 
 public class MinaEncoder extends ProtocolEncoderAdapter {
 	// private final org.slf4j.Logger LOG =
