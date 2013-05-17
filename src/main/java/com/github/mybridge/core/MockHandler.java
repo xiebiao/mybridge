@@ -35,7 +35,7 @@ public class MockHandler implements MySQLHandler {
 			fieldPacket.setOrgTable("users");
 			fieldPacket.setName("name");
 			fieldPacket.setOrgName("name");
-			fieldPacket.setType((byte) MySQLCommandPhase
+			fieldPacket.setType((byte) MySQLCommand
 					.javaTypeToMysql(Types.CHAR));
 			fieldPacket.setLength(5);
 			packetList.add(fieldPacket);

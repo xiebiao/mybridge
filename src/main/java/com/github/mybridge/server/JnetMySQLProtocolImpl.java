@@ -6,7 +6,7 @@ import com.github.jnet.Session.IoState;
 import com.github.jnet.utils.IoBuffer;
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.MySQLHandler;
-import com.github.mybridge.core.MySQLCommandPhase;
+import com.github.mybridge.core.MySQLCommand;
 import com.github.mybridge.core.DefaultMySQLHandler;
 import com.github.mybridge.core.MySQLProtocol;
 import com.github.mybridge.core.packet.AuthenticationPacket;
@@ -56,9 +56,9 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 						authPacket.clientUser.length() - 1);
 			}
 			try {
-				if (MySQLCommandPhase.index2Charset
+				if (MySQLCommand.index2Charset
 						.containsKey((int) authPacket.charsetNum)) {
-					handler.setCharset(MySQLCommandPhase.index2Charset
+					handler.setCharset(MySQLCommand.index2Charset
 							.get((int) authPacket.charsetNum));
 				}
 				if (authPacket.databaseName.length() > 0) {

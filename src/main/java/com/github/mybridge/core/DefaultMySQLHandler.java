@@ -37,16 +37,16 @@ public class DefaultMySQLHandler implements MySQLHandler {
 		try {
 			packetList = new ArrayList<Packet>();
 			switch (cmdType) {
-			case MySQLCommandPhase.COM_QUERY:
+			case MySQLCommand.COM_QUERY:
 				String sql = new String(cmdPacket.getValue(), charset);
 				logger.debug("COM_QUERY: " + sql);
 				return executeSQL(sql);
-			case MySQLCommandPhase.COM_QUIT:
+			case MySQLCommand.COM_QUIT:
 				return null;
-			case MySQLCommandPhase.COM_FIELD_LIST:
+			case MySQLCommand.COM_FIELD_LIST:
 				packetList.add(new EofPacket());
 				return packetList;
-			case MySQLCommandPhase.COM_INIT_DB:
+			case MySQLCommand.COM_INIT_DB:
 				String db = new String(cmdPacket.getValue(), charset);
 				sql = "USE" + db;
 				logger.debug("COM_INIT_DB: " + db);
@@ -115,7 +115,7 @@ public class DefaultMySQLHandler implements MySQLHandler {
 			fieldPacket.setOrgTable(meta.getTableName(i));
 			fieldPacket.setName(meta.getColumnName(i));
 			fieldPacket.setOrgName(meta.getColumnName(i));
-			fieldPacket.setType((byte) MySQLCommandPhase.javaTypeToMysql(meta
+			fieldPacket.setType((byte) MySQLCommand.javaTypeToMysql(meta
 					.getColumnType(i)));
 			fieldPacket.setLength(meta.getColumnDisplaySize(i));
 			packetList.add(fieldPacket);
