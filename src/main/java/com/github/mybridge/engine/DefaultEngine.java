@@ -55,8 +55,10 @@ public class DefaultEngine implements Engine {
         DefaultParser parser = new DefaultParser(sql);
         try {
             Statement st = parser.getStatement();
-
             long id = parser.getId();
+            ShardGroup sg = this.shardGroupRouter.getShardGroup(this.shardGroups, true, id);
+            this.shardRouter.getShard(sg, id);
+           
 
         } catch (ParserException e) {
             // TODO Auto-generated catch block
