@@ -6,88 +6,84 @@ package com.github.mybridge.sharding.impl;
  * <pre>
  * 		<code>endId - startId</code>：决定了分表的容量
  * </pre>
- * 
  * @author xiebiao
- * 
  */
 public class FragmentTable {
-	private long id;
-	/**
-	 * 分片id
-	 */
-	private long shardId;
-	/**
-	 * 表名
-	 */
-	private String name;
-	private long startId;
-	private long endId;
 
-	public FragmentTable() {
-	}
+    private long   id;
+    /**
+     * 分片id
+     */
+    private long   shardId;
+    /**
+     * 表名
+     */
+    private String tableName;
+    private long   startId;
+    private long   endId;
 
-	public FragmentTable(String tableName) {
-		this.name = tableName;
-	}
+    public FragmentTable() {}
 
-	public FragmentTable(long id, String tableName) {
-		this.id = 0;
-		this.name = tableName;
-	}
+    public FragmentTable(String tableName) {
+        this.tableName = tableName;
+    }
 
-	public FragmentTable(long id, String tableName, long shardId, long startId,
-			long endId) {
-		this.id = id;
-		this.name = tableName;
-		this.startId = startId;
-		this.shardId = shardId;
-		this.startId = startId;
-		this.endId = endId;
-	}
+    public FragmentTable(long id, String tableName) {
+        this.id = 0;
+        this.tableName = tableName;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public FragmentTable(long id, String tableName, long shardId, long startId, long endId) {
+        this.id = id;
+        this.tableName = tableName;
+        this.startId = startId;
+        this.shardId = shardId;
+        this.startId = startId;
+        this.endId = endId;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public long getShardId() {
-		return shardId;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setShardId(long shardId) {
-		this.shardId = shardId;
-	}
+    public long getShardId() {
+        return shardId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setShardId(long shardId) {
+        this.shardId = shardId;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public long getStartId() {
-		return startId;
-	}
+    public void setTableName(String name) {
+        this.tableName = name;
+    }
 
-	public void setStartId(long startId) {
-		this.startId = startId;
-	}
+    public long getStartId() {
+        return startId;
+    }
 
-	public long getEndId() {
-		return endId;
-	}
+    public void setStartId(long startId) {
+        this.startId = startId;
+    }
 
-	public void setEndId(long endId) {
-		this.endId = endId;
-	}
+    public long getEndId() {
+        return endId;
+    }
 
-	public String toString() {
-		return "{id:" + this.id + ", name:" + this.name + ", groupId:"
-				+ this.getShardId() + ", startId:" + this.shardId + ", endId:"
-				+ this.endId + "}";
-	}
+    public void setEndId(long endId) {
+        this.endId = endId;
+    }
+
+    public String toString() {
+        return "{id:" + this.id + ", tableName:" + this.tableName + ", groupId:" + this.getShardId() + ", startId:"
+                + this.shardId + ", endId:" + this.endId + "}";
+    }
 }

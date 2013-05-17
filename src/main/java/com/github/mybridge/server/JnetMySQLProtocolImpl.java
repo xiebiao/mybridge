@@ -150,7 +150,6 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
 		PacketHeader header = new PacketHeader();
 		header.setPacketLen(body.length);
 		header.packetNumberInc();
-		logger.debug("packetId:" + header.getPacketNumber());
 		writeBuf.position(0);
 		writeBuf.writeBytes(header.getBytes());
 		writeBuf.writeBytes(body);

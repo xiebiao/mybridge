@@ -20,6 +20,10 @@ public class DefaultParser implements Parser {
 
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
 
+    public DefaultParser() {
+
+    }
+
     public DefaultParser(String sql) {
         this.sql = sql;
     }
@@ -78,5 +82,13 @@ public class DefaultParser implements Parser {
     public void setIdName(String name) {
         this.idName = name;
 
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public void setSql(String sql) {
+        this.sql = sql;
     }
 }

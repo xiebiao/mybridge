@@ -9,6 +9,6 @@ import com.github.mybridge.sharding.impl.ShardGroup;
  * 
  * @author xiebiao
  */
-public interface ShardingRuleLoader {
+public interface ShardingConfigLoader {
 	public List<ShardGroup> load();
 }

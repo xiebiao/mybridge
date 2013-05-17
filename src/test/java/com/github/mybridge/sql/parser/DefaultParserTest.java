@@ -35,7 +35,7 @@ public class DefaultParserTest extends TestCase {
 
     public void no_test_select_1() {
         long id = 1000;
-        String sql = "select * from user where name='xiaog' and id=" + id;
+        String sql = "select * from user where name='xiebiao' and id=" + id;
         DefaultParser dp = new DefaultParser(sql);
         try {
             dp.setIdName("id");

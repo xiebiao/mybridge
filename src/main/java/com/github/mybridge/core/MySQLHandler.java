@@ -4,12 +4,16 @@ import java.util.List;
 
 import com.github.mybridge.core.packet.Packet;
 
+/**
+ * (线程安全)
+ * @author xiebiao
+ */
 public interface MySQLHandler {
 
-	public List<Packet> execute(Packet cmd) throws ExecuteException;
+    public List<Packet> execute(Packet cmd) throws ExecuteException;
 
-	public void setCharset(String charset);
+    public void setCharset(String charset);
 
-	public void setDatabase(String database);
+    public void setDatabase(String database);
 
 }

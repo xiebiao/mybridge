@@ -5,10 +5,9 @@ import com.github.mybridge.sharding.impl.ShardGroup;
 
 /**
  * 分片路由
- * 
  * @author xiebiao
  */
 public interface ShardRouter extends Router {
 
-	public Shard getShard(ShardGroup shardGroup, boolean canWrite, long id);
+    public Shard getShard(ShardGroup shardGroup, long id);
 }
