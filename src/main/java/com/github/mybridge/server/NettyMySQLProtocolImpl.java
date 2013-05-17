@@ -6,7 +6,7 @@ import org.jboss.netty.channel.Channel;
 
 import com.github.mybridge.core.ExecuteException;
 import com.github.mybridge.core.MySQLHandler;
-import com.github.mybridge.core.MySQLCommandPhase;
+import com.github.mybridge.core.MySQLCommand;
 import com.github.mybridge.core.DefaultMySQLHandler;
 import com.github.mybridge.core.packet.AuthenticationPacket;
 import com.github.mybridge.core.packet.CommandsPacket;
@@ -63,9 +63,9 @@ public class NettyMySQLProtocolImpl {
 						auth.clientUser.length() - 1);
 			}
 			try {
-				if (MySQLCommandPhase.index2Charset
+				if (MySQLCommand.index2Charset
 						.containsKey((int) auth.charsetNum)) {
-					handler.setCharset(MySQLCommandPhase.index2Charset
+					handler.setCharset(MySQLCommand.index2Charset
 							.get((int) auth.charsetNum));
 				}
 				if (auth.databaseName.length() > 0) {
