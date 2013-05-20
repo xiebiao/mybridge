@@ -20,6 +20,8 @@ import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
 import com.github.mybridge.engine.DefaultEngine;
 import com.github.mybridge.engine.Engine;
+import com.github.mybridge.sharding.ConnectionPool;
+import com.github.mybridge.sharding.support.SimpleConnectionPool;
 
 public class DefaultMySQLHandler implements MySQLHandler {
 
@@ -27,6 +29,7 @@ public class DefaultMySQLHandler implements MySQLHandler {
     private String                        charset = "utf-8";
     private String                        database;
     private Engine                        engine;
+    private static final ConnectionPool   cp      = new SimpleConnectionPool();
 
     public DefaultMySQLHandler() {
         this.engine = new DefaultEngine();
@@ -78,7 +81,7 @@ public class DefaultMySQLHandler implements MySQLHandler {
 
     private List<Packet> execute(String sql) throws SQLException {
         List<Packet> packetList = new ArrayList<Packet>();
-        Connection connection = engine.getNode(sql).getConnection();
+        Connection connection = cp.getConnection();
         boolean result;
         Statement statement;
         try {

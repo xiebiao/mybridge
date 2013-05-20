@@ -1,7 +1,7 @@
 package com.github.mybridge.sharding;
 
-import com.github.mybridge.sharding.impl.Shard;
-import com.github.mybridge.sharding.impl.ShardGroup;
+import com.github.mybridge.sharding.support.Shard;
+import com.github.mybridge.sharding.support.ShardGroup;
 
 /**
  * 分片路由

@@ -1,5 +1,7 @@
 package com.github.mybridge.server;
 
+import com.github.mybridge.transport.netty.NettyServerHandler;
+
 import junit.framework.TestCase;
 
 public class ServerHandlerTest extends TestCase {

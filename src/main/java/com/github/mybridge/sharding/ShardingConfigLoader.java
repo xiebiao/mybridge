@@ -2,7 +2,7 @@ package com.github.mybridge.sharding;
 
 import java.util.List;
 
-import com.github.mybridge.sharding.impl.ShardGroup;
+import com.github.mybridge.sharding.support.ShardGroup;
 
 /**
  * 路由规则加载器

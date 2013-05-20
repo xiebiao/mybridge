@@ -30,7 +30,7 @@ public class Base {
 		Connection conn = ds.getConnection();
 		try {
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from wp_users");
+			ResultSet rs = stmt.executeQuery("select * from shard");
 			while (rs.next()) {
 				logger.info("select [" + i + "]:\t" + rs.getString(1) + " \t"
 						+ rs.getString(2) + "\t" + rs.getString(3));

@@ -1,35 +1,35 @@
 package com.github.mybridge;
 
 import com.github.jnet.Configuration;
-import com.github.mybridge.server.JnetLauncher;
+import com.github.mybridge.transport.netty.NettyLauncher;
 
 public final class DefaultLauncher implements Launcher {
-	private Launcher launcher;
-	public static final org.slf4j.Logger logger = org.slf4j.LoggerFactory
-			.getLogger(DefaultLauncher.class);
-	private Configuration config;
 
-	public DefaultLauncher(Configuration config) {
-		this.config = config;
-		launcher = new JnetLauncher(config);
-		// launcher = new MinaLauncher(config);
-		// launcher = new NettyLauncher(config);
-	}
+    private Launcher                     launcher;
+    public static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DefaultLauncher.class);
+    private Configuration                config;
 
-	@Override
-	public void start() {
-		launcher.start();
-		logger.debug("Started " + config);
-	}
+    public DefaultLauncher(Configuration config) {
+        this.config = config;
+        //launcher = new JnetLauncher(config);
+        //launcher = new MinaLauncher(config);
+         launcher = new NettyLauncher(config);
+    }
 
-	@Override
-	public void init() {
-		launcher.init();
-	}
+    @Override
+    public void start() {
+        launcher.start();
+        logger.debug("Started " + config);
+    }
 
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
+    @Override
+    public void init() {
+        launcher.init();
+    }
 
-	}
+    @Override
+    public void stop() {
+        // TODO Auto-generated method stub
+
+    }
 }

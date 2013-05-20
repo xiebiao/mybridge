@@ -4,7 +4,7 @@ import com.github.mybridge.Lifecycle;
 import com.github.mybridge.sharding.ShardGroupRouter;
 import com.github.mybridge.sharding.ShardRouter;
 import com.github.mybridge.sharding.TableRouter;
-import com.github.mybridge.sharding.impl.Node;
+import com.github.mybridge.sharding.support.Node;
 
 /**
  * <pre>

@@ -1,7 +1,7 @@
 package com.github.mybridge.sharding;
 
-import com.github.mybridge.sharding.impl.FragmentTable;
-import com.github.mybridge.sharding.impl.Shard;
+import com.github.mybridge.sharding.support.FragmentTable;
+import com.github.mybridge.sharding.support.Shard;
 
 /**
  * 分表路由

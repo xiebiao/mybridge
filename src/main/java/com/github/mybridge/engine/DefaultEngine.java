@@ -9,9 +9,9 @@ import com.github.mybridge.sharding.ShardGroupRouter;
 import com.github.mybridge.sharding.ShardRouter;
 import com.github.mybridge.sharding.ShardingConfigLoader;
 import com.github.mybridge.sharding.TableRouter;
-import com.github.mybridge.sharding.impl.Node;
-import com.github.mybridge.sharding.impl.ShardGroup;
-import com.github.mybridge.sharding.impl.ShardingConfigLoaderImpl;
+import com.github.mybridge.sharding.support.Node;
+import com.github.mybridge.sharding.support.ShardGroup;
+import com.github.mybridge.sharding.support.ShardingConfigLoaderImpl;
 import com.github.mybridge.sql.parser.DefaultParser;
 import com.github.mybridge.sql.parser.ParserException;
 

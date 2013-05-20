@@ -1,5 +1,7 @@
 package com.github.mybridge.server;
 
+import com.github.mybridge.transport.jnet.JnetMySQLSession;
+
 public class MysqlSessionTest {
 
 	/**

@@ -2,12 +2,12 @@ package com.github.mybridge.sharding;
 
 import java.util.List;
 
-import com.github.mybridge.sharding.impl.DefaultShardGroupRouter;
-import com.github.mybridge.sharding.impl.DefaultShardRouter;
-import com.github.mybridge.sharding.impl.DefaultTableRouter;
-import com.github.mybridge.sharding.impl.Shard;
-import com.github.mybridge.sharding.impl.ShardGroup;
-import com.github.mybridge.sharding.impl.ShardingConfigLoaderImpl;
+import com.github.mybridge.sharding.support.DefaultShardGroupRouter;
+import com.github.mybridge.sharding.support.DefaultShardRouter;
+import com.github.mybridge.sharding.support.DefaultTableRouter;
+import com.github.mybridge.sharding.support.Shard;
+import com.github.mybridge.sharding.support.ShardGroup;
+import com.github.mybridge.sharding.support.ShardingConfigLoaderImpl;
 
 public class RouterTest {
 
