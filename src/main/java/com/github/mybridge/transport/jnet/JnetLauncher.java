@@ -1,14 +1,15 @@
 package com.github.mybridge.transport.jnet;
 
-import com.github.jnet.Configuration;
+import com.github.jnet.SessionManager;
 import com.github.mybridge.Launcher;
+import com.github.mybridge.config.ServerConfiguration;
 
 public class JnetLauncher implements Launcher {
 
-    Configuration      config;
-    JnetServer server;
+    private ServerConfiguration config;
+    private JnetServer          server;
 
-    public JnetLauncher(Configuration config) {
+    public JnetLauncher(ServerConfiguration config) {
         this.config = config;
     }
 
@@ -17,8 +18,9 @@ public class JnetLauncher implements Launcher {
         config.setIp("127.0.0.1");
         config.setPort(3307);
         server = new JnetServer();
+        SessionManager sessionManager = new SessionManager(JnetMySQLSession.class);
         try {
-            server.init(config, JnetMySQLSession.class);
+            server.init(sessionManager);
             server.start();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,15 +1,15 @@
 package com.github.mybridge;
 
-import com.github.jnet.Configuration;
+import com.github.mybridge.config.ServerConfiguration;
 import com.github.mybridge.transport.netty.NettyLauncher;
 
 public final class DefaultLauncher implements Launcher {
 
     private Launcher                     launcher;
     public static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DefaultLauncher.class);
-    private Configuration                config;
+    private ServerConfiguration                config;
 
-    public DefaultLauncher(Configuration config) {
+    public DefaultLauncher(ServerConfiguration config) {
         this.config = config;
         //launcher = new JnetLauncher(config);
         //launcher = new MinaLauncher(config);

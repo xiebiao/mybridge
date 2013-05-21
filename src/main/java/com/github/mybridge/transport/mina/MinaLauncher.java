@@ -11,15 +11,15 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-import com.github.jnet.Configuration;
 import com.github.mybridge.Launcher;
+import com.github.mybridge.config.ServerConfiguration;
 
 public class MinaLauncher implements Launcher {
 	private final org.slf4j.Logger logger = org.slf4j.LoggerFactory
 			.getLogger(this.getClass());
-	private Configuration config;
+	private ServerConfiguration config;
 
-	public MinaLauncher(Configuration config) {
+	public MinaLauncher(ServerConfiguration config) {
 		this.config = config;
 	}
 
