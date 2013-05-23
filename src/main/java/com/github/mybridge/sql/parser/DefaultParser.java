@@ -2,6 +2,8 @@ package com.github.mybridge.sql.parser;
 
 import java.io.StringReader;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
@@ -18,21 +20,22 @@ import com.github.mybridge.sharding.SqlType;
 
 public class DefaultParser extends AbstractParser implements Parser {
 
+    private String                        orginSql;
     private String                        sql;
     private Statement                     statement;
-    private String                        idName = "id";
+    private String                        idName           = "id";
     private long                          idValue;
     private String                        tableName;
-    private static final org.slf4j.Logger LOG    = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
+    private static final String           INSERT_TABLE_REG = "^INSERT INTO\\s(\\w*)\\s.*$";
+    private static final org.slf4j.Logger LOG              = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
 
     public DefaultParser(String sql, String idName) {
-        this.sql = sql;
+        this.orginSql = sql;
         this.idName = idName;
         CCJSqlParserManager parser = new CCJSqlParserManager();
         try {
-            statement = parser.parse(new StringReader(sql));
-            System.out.println("statement:" + statement);
-
+            statement = parser.parse(new StringReader(orginSql));
+            this.sql = statement.toString();
             if (statement instanceof Insert) {
                 parseInsert();
             } else if (statement instanceof Select) {
@@ -59,7 +62,7 @@ public class DefaultParser extends AbstractParser implements Parser {
         } else if (statement instanceof Delete) {
             return SqlType.WRITE;
         }
-        throw new UnsupportSqlTypeException("不支持Sql:" + this.sql);
+        throw new UnsupportSqlTypeException("不支持Sql:" + this.orginSql);
     }
 
     private void parseSelect() {
@@ -88,16 +91,25 @@ public class DefaultParser extends AbstractParser implements Parser {
     }
 
     public String getSql() {
-        return sql;
+        return orginSql;
     }
 
     public void setSql(String sql) {
-        this.sql = sql;
+        this.orginSql = sql;
     }
 
     @Override
     public String replace(String tableName) throws ParserException {
         // 只能用正则替换了
+        Pattern pattern = Pattern.compile(INSERT_TABLE_REG);
+        Matcher matcher = pattern.matcher(this.sql);
+        System.out.println(this.sql);
+        if (matcher.find()) {
+            String t = matcher.group(1);
+            System.out.println("tableName:" + t);
+        } else {
+            System.out.println("没有匹配");
+        }
         return null;
     }
 

@@ -16,7 +16,7 @@ public class DefaultParserTest extends TestCase {
     private String              insertSql         = "insert    into " + tableName + " (" + idName + ",name) values("
                                                           + id + ",'xx')";
     private String              selectSql         = "select * from    " + tableName + " where " + idName + "=" + id;
-    private static final String INSERT_TABLE_REGX = "INSERT (.*)";
+
 
     public void test_get_id_from_insert_sql() {
         DefaultParser dp = new DefaultParser(insertSql, idName);
@@ -63,7 +63,17 @@ public class DefaultParserTest extends TestCase {
         Assert.assertEquals(this.tableName, dp.getTableName());
 
     }
+    public void test_repalce() {
+        long id = 1000;
+        DefaultParser dp = new DefaultParser(this.insertSql, idName);
+        try {
+            Assert.assertEquals(this.tableName, dp.replace("xxx"));
+        } catch (ParserException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+    }
     public void test_insert_sql_type() {
         long id = 1000;
         DefaultParser dp = new DefaultParser(insertSql, idName);
