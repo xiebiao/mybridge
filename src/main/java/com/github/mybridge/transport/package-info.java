@@ -1,5 +1,5 @@
 package com.github.mybridge.transport;
 
 /**
- *<h2> MyBridge Server</h2>
+ *<h2> MyBridge Transport</h2>
  */

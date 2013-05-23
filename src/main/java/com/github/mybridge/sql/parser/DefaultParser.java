@@ -26,7 +26,7 @@ public class DefaultParser extends AbstractParser implements Parser {
     private String                        idName           = "id";
     private long                          idValue;
     private String                        tableName;
-    private static final String           INSERT_TABLE_REG = "^INSERT INTO\\s(\\w*)\\s.*$";
+    private static final String           INSERT_TABLE_REG = "^(INSERT INTO\\s)(\\w*)\\s(.*)$";
     private static final org.slf4j.Logger LOG              = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
 
     public DefaultParser(String sql, String idName) {
@@ -103,11 +103,13 @@ public class DefaultParser extends AbstractParser implements Parser {
         // 只能用正则替换了
         Pattern pattern = Pattern.compile(INSERT_TABLE_REG);
         Matcher matcher = pattern.matcher(this.sql);
+
         System.out.println(this.sql);
         if (matcher.find()) {
-            String t = matcher.group(1);
-            System.out.println("tableName:" + t);
+            String _t = matcher.replaceAll(tableName);
+            System.out.println("t:" + _t);
         } else {
+            LOG.warn("{}, Can't find Table Name", this.sql);
             System.out.println("没有匹配");
         }
         return null;
@@ -116,5 +118,12 @@ public class DefaultParser extends AbstractParser implements Parser {
     @Override
     public String getTableName() {
         return tableName;
+    }
+
+    public static void main(String[] args) {
+        String str = "INSERT INTO user (sid, name) VALUES (1000, 'xx')";
+                     
+        String replacement = "替换";
+        System.out.println(str.replaceAll("^(INSERT INTO\\s)(\\w*)(\\s.*)", "$1xxx$3"));
     }
 }

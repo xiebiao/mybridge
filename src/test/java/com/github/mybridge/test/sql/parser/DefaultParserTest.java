@@ -10,13 +10,11 @@ import com.github.mybridge.sql.parser.UnsupportSqlTypeException;
 
 public class DefaultParserTest extends TestCase {
 
-    long                        id                = 1000;
-    private String              idName            = "sid";
-    private String              tableName         = "user";
-    private String              insertSql         = "insert    into " + tableName + " (" + idName + ",name) values("
-                                                          + id + ",'xx')";
-    private String              selectSql         = "select * from    " + tableName + " where " + idName + "=" + id;
-
+    long           id        = 1000;
+    private String idName    = "sid";
+    private String tableName = "user";
+    private String insertSql = "insert    into " + tableName + " (" + idName + ",name) values(" + id + ",'xx')";
+    private String selectSql = "select * from    " + tableName + " where " + idName + "=" + id;
 
     public void test_get_id_from_insert_sql() {
         DefaultParser dp = new DefaultParser(insertSql, idName);
@@ -63,17 +61,21 @@ public class DefaultParserTest extends TestCase {
         Assert.assertEquals(this.tableName, dp.getTableName());
 
     }
+
     public void test_repalce() {
         long id = 1000;
+        String _newTableName = "User_0";
+        String _insertSql = "INSERT    INTO  " + _newTableName + " (" + idName + ",name) VALUES(" + id + ",'xx')";
         DefaultParser dp = new DefaultParser(this.insertSql, idName);
         try {
-            Assert.assertEquals(this.tableName, dp.replace("xxx"));
+            Assert.assertEquals(_insertSql, dp.replace(_newTableName));
         } catch (ParserException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
+
     public void test_insert_sql_type() {
         long id = 1000;
         DefaultParser dp = new DefaultParser(insertSql, idName);
