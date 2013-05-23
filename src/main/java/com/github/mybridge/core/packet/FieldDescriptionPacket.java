@@ -122,80 +122,75 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * (filler)            00 00                      ..
  * In the example, we see what the server returns for "SELECT s1 AS S1 FROM t7 AS T7" where column s1 is defined as CHAR(1).
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class FieldDescriptionPacket extends Packet {
-	private String catalog = "def";
-	private String database = "";
-	private String table = "";
-	private String orgTable = "";
-	private String name = "";
-	private String orgName = "";
-	private byte fill1 = 0x0c;// 影响client 显示格式
-	private int charsetnr = 0x08;
-	private long length;
-	private byte type;
-	private int flag = 0;
-	private byte decimals = 0;
-	private byte[] fill2 = new byte[2];
+public class FieldDescriptionPacket extends AbstractPacket implements Packet {
 
-	@Override
-	public byte[] getBytes() {
-		int len = ByteBuffer.getLCStringLen(catalog)
-				+ ByteBuffer.getLCStringLen(database)
-				+ ByteBuffer.getLCStringLen(table)
-				+ ByteBuffer.getLCStringLen(orgTable)
-				+ ByteBuffer.getLCStringLen(name)
-				+ ByteBuffer.getLCStringLen(orgName) + 13;
-		ByteBuffer buf = new ByteBuffer(len);
-		buf.putLCString(catalog);
-		buf.putLCString(database);
-		buf.putLCString(table);
-		buf.putLCString(orgTable);
-		buf.putLCString(name);
-		buf.putLCString(orgName);
-		buf.putByte(fill1);
-		buf.putUInt16(charsetnr);
-		buf.putUInt32(length);
-		buf.putByte(type);
-		buf.putUInt16(flag);
-		buf.putByte(decimals);
-		buf.putBytes(fill2);
-		return buf.getBytes();
-	}
+    private String catalog   = "def";
+    private String database  = "";
+    private String table     = "";
+    private String orgTable  = "";
+    private String name      = "";
+    private String orgName   = "";
+    private byte   fill1     = 0x0c;        // 影响client 显示格式
+    private int    charsetnr = 0x08;
+    private long   length;
+    private byte   type;
+    private int    flag      = 0;
+    private byte   decimals  = 0;
+    private byte[] fill2     = new byte[2];
 
-	@Override
-	public void putBytes(byte[] bs) {
-	}
+    @Override
+    public byte[] getBytes() {
+        int len = ByteBuffer.getLCStringLen(catalog) + ByteBuffer.getLCStringLen(database)
+                + ByteBuffer.getLCStringLen(table) + ByteBuffer.getLCStringLen(orgTable)
+                + ByteBuffer.getLCStringLen(name) + ByteBuffer.getLCStringLen(orgName) + 13;
+        ByteBuffer buf = new ByteBuffer(len);
+        buf.putLCString(catalog);
+        buf.putLCString(database);
+        buf.putLCString(table);
+        buf.putLCString(orgTable);
+        buf.putLCString(name);
+        buf.putLCString(orgName);
+        buf.putByte(fill1);
+        buf.putUInt16(charsetnr);
+        buf.putUInt32(length);
+        buf.putByte(type);
+        buf.putUInt16(flag);
+        buf.putByte(decimals);
+        buf.putBytes(fill2);
+        return buf.getBytes();
+    }
 
-	public void setDatabase(String db) {
-		this.database = db;
-	}
+    @Override
+    public void putBytes(byte[] bs) {}
 
-	public void setTable(String table) {
-		this.table = table;
-	}
+    public void setDatabase(String db) {
+        this.database = db;
+    }
 
-	public void setOrgTable(String orgTable) {
-		this.orgTable = orgTable;
-	}
+    public void setTable(String table) {
+        this.table = table;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setOrgTable(String orgTable) {
+        this.orgTable = orgTable;
+    }
 
-	public void setOrgName(String orgName) {
-		this.orgName = orgName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setType(byte type) {
-		this.type = type;
-	}
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
-	public void setLength(long length) {
-		this.length = length;
-	}
+    public void setType(byte type) {
+        this.type = type;
+    }
+
+    public void setLength(long length) {
+        this.length = length;
+    }
 
 }

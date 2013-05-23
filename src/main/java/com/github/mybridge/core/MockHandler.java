@@ -7,7 +7,7 @@ import java.util.List;
 import com.github.mybridge.core.packet.EofPacket;
 import com.github.mybridge.core.packet.FieldDescriptionPacket;
 import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
+import com.github.mybridge.core.packet.AbstractPacket;
 import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
 
@@ -20,10 +20,10 @@ import com.github.mybridge.core.packet.RowDataPacket;
 public class MockHandler implements MySQLHandler {
 
 	@Override
-	public List<Packet> execute(Packet cmd) throws ExecuteException {
+	public List<AbstractPacket> execute(AbstractPacket cmd) throws ExecuteException {
 		int columnCount = 3;
 		int dataCount = 2;
-		List<Packet> packetList = new ArrayList<Packet>();
+		List<AbstractPacket> packetList = new ArrayList<AbstractPacket>();
 		OkPacket ok = new OkPacket();
 		packetList.add(ok);
 		ResultSetPacket resultPacket = new ResultSetPacket(columnCount);

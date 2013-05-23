@@ -28,36 +28,35 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * 
  * In the example, the value 02 in the command field stands for COM_INIT_DB. This is the packet that the client puts together for "use test;".
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class CommandsPacket extends Packet {
-	private byte type;// 占一个字节,表示客户端请求类型,如0x03 mysql_real_query
-	private byte[] value;
+public class CommandsPacket extends AbstractPacket implements Packet {
 
-	@Override
-	public byte[] getBytes() {
-		return value;
-	}
+    private byte   type;  // 占一个字节,表示客户端请求类型,如0x03 mysql_real_query
+    private byte[] value;
 
-	@Override
-	public void putBytes(byte[] bs) {
-		ByteBuffer buf = new ByteBuffer(bs);
-		type = buf.readByte();
-		value = buf.readRemainBytes();
-	}
+    @Override
+    public byte[] getBytes() {
+        return value;
+    }
 
-	public void setType(byte type) {
-		this.type = type;
-	}
+    @Override
+    public void putBytes(byte[] bs) {
+        ByteBuffer buf = new ByteBuffer(bs);
+        type = buf.readByte();
+        value = buf.readRemainBytes();
+    }
 
-	public byte getType() {
-		return type;
-	}
+    public void setType(byte type) {
+        this.type = type;
+    }
 
-	public byte[] getValue() {
-		return value;
-	}
+    public byte getType() {
+        return type;
+    }
+
+    public byte[] getValue() {
+        return value;
+    }
 
 }

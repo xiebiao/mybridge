@@ -1,6 +1,8 @@
-package com.github.mybridge.sql.parser;
+package com.github.mybridge.test.sql.parser;
 
 import java.io.StringReader;
+
+import com.github.mybridge.sql.parser.WhereExpressionVisitor;
 
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;

@@ -8,62 +8,72 @@ import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.operators.relational.ItemsList;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.delete.Delete;
 import net.sf.jsqlparser.statement.insert.Insert;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
+import net.sf.jsqlparser.statement.update.Update;
 
-public class DefaultParser implements Parser {
+import com.github.mybridge.sharding.SqlType;
+
+public class DefaultParser extends AbstractParser implements Parser {
 
     private String                        sql;
     private Statement                     statement;
     private String                        idName = "id";
+    private long                          idValue;
+    private String                        tableName;
+    private static final org.slf4j.Logger LOG    = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
 
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
-
-    public DefaultParser() {
-
-    }
-
-    public DefaultParser(String sql) {
+    public DefaultParser(String sql, String idName) {
         this.sql = sql;
+        this.idName = idName;
+        CCJSqlParserManager parser = new CCJSqlParserManager();
+        try {
+            statement = parser.parse(new StringReader(sql));
+            System.out.println("statement:" + statement);
+
+            if (statement instanceof Insert) {
+                parseInsert();
+            } else if (statement instanceof Select) {
+                parseSelect();
+            }// 后面再支持Delete,Update
+        } catch (JSQLParserException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public long getId() throws ParserException {
-        if (statement == null) {
-            this.getStatement();
-        }
-        if (statement instanceof Insert) {
-            return parseInsert();
-        } else if (statement instanceof Select) {
-            return parseSelect();
-        }
-
-        return 0;
+        return this.idValue;
     }
 
     @Override
-    public Statement getStatement() throws ParserException {
-        if (statement != null) return statement;
-        CCJSqlParserManager parser = new CCJSqlParserManager();
-        try {
-            statement = parser.parse(new StringReader(sql));
-            return this.statement;
-        } catch (JSQLParserException e) {
-            e.printStackTrace();
+    public SqlType getType() throws UnsupportSqlTypeException {
+        if (statement instanceof Select) {
+            return SqlType.READ;
+        } else if (statement instanceof Insert) {
+            return SqlType.WRITE;
+        } else if (statement instanceof Update) {
+            return SqlType.WRITE;
+        } else if (statement instanceof Delete) {
+            return SqlType.WRITE;
         }
-        return statement;
+        throw new UnsupportSqlTypeException("不支持Sql:" + this.sql);
     }
 
-    private long parseSelect() {
+    private void parseSelect() {
         Select select = (Select) statement;
-        Expression where = ((PlainSelect) select.getSelectBody()).getWhere();
+        PlainSelect ps = (PlainSelect) select.getSelectBody();
+        this.tableName = ps.getFromItem().toString();// 不支持多表查询
+        Expression where = ps.getWhere();
         WhereExpressionVisitor visitor = new WhereExpressionVisitor(where);
-        return visitor.getId();
+        this.idValue = visitor.getId();
     }
 
-    private long parseInsert() {
+    private void parseInsert() {
         Insert insert = (Insert) statement;
+        this.tableName = insert.getTable().getName();
         List columns = insert.getColumns();
         ItemsList values = insert.getItemsList();
         int index = 0;
@@ -74,14 +84,7 @@ public class DefaultParser implements Parser {
         }
         IdItemsListVisitor iv = new IdItemsListVisitor(index);
         values.accept(iv);
-        return iv.getValue();
-
-    }
-
-    @Override
-    public void setIdName(String name) {
-        this.idName = name;
-
+        this.idValue = iv.getValue();
     }
 
     public String getSql() {
@@ -90,5 +93,16 @@ public class DefaultParser implements Parser {
 
     public void setSql(String sql) {
         this.sql = sql;
+    }
+
+    @Override
+    public String replace(String tableName) throws ParserException {
+        // 只能用正则替换了
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return tableName;
     }
 }

@@ -1,4 +1,4 @@
-package com.github.mybridge.server;
+package com.github.mybridge.test.server;
 
 import com.github.mybridge.transport.netty.NettyServerHandler;
 

@@ -1,8 +1,7 @@
-package com.github.mybridge.sharding.support;
+package com.github.mybridge.sharding;
 
 import java.util.List;
 
-import com.github.mybridge.sharding.State;
 
 /**
  * <h2>分组</h2>
@@ -83,12 +82,12 @@ public class ShardGroup implements State {
     }
 
     @Override
-    public boolean canWrite() {
+    public boolean writable() {
         return true;
     }
 
     @Override
-    public boolean canRead() {
+    public boolean readable() {
         return true;
     }
 

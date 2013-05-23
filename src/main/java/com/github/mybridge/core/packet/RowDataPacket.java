@@ -3,7 +3,6 @@ package com.github.mybridge.core.packet;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.github.mybridge.core.buffer.ByteBuffer;
 import com.github.mybridge.utils.CharsetUtils;
 
@@ -36,37 +35,35 @@ import com.github.mybridge.utils.CharsetUtils;
  * (second column)     02 35 35                   .55
  * In the example, we see what the packet contains after a SELECT from a table defined as "(s1 CHAR, s2 INTEGER)" and containing one row where s1='X' and s2=55.
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class RowDataPacket extends Packet {
-	private String charset = "utf-8";
-	private List<String> valueList = new ArrayList<String>();
+public class RowDataPacket extends AbstractPacket implements Packet {
 
-	public RowDataPacket(String charset) {
-		this.charset = charset;
-	}
+    private String       charset   = "utf-8";
+    private List<String> valueList = new ArrayList<String>();
 
-	@Override
-	public byte[] getBytes() {
-		int len = 0;
-		for (String value : valueList) {
-			len += ByteBuffer.getLCStringLen(value, charset);
-		}
-		ByteBuffer buf = new ByteBuffer(len);
-		for (String value : valueList) {
-			buf.putLCString(value, CharsetUtils.getCharset(value));// 编码
-		}
-		return buf.getBytes();
-	}
+    public RowDataPacket(String charset) {
+        this.charset = charset;
+    }
 
-	public void addValue(String value) {
-		valueList.add(value);
-	}
+    @Override
+    public byte[] getBytes() {
+        int len = 0;
+        for (String value : valueList) {
+            len += ByteBuffer.getLCStringLen(value, charset);
+        }
+        ByteBuffer buf = new ByteBuffer(len);
+        for (String value : valueList) {
+            buf.putLCString(value, CharsetUtils.getCharset(value));// 编码
+        }
+        return buf.getBytes();
+    }
 
-	@Override
-	public void putBytes(byte[] bs) {
-	}
+    public void addValue(String value) {
+        valueList.add(value);
+    }
+
+    @Override
+    public void putBytes(byte[] bs) {}
 
 }

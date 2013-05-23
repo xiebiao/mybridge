@@ -1,7 +1,9 @@
-package com.github.mybridge.sharding.support;
+package com.github.mybridge.sharding;
 
 import java.util.List;
 import java.util.Set;
+
+import com.github.mybridge.sharding.support.FragmentTable;
 
 /**
  * <h2>分片</h2>

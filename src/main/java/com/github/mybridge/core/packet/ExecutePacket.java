@@ -56,22 +56,20 @@ package com.github.mybridge.core.packet;
  * 
  * Relevant MySQL Source Code: libmysql/libmysql.c cli_read_prepare_result()
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class ExecutePacket extends Packet {
+public class ExecutePacket extends AbstractPacket implements Packet {
 
-	@Override
-	public byte[] getBytes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public byte[] getBytes() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void putBytes(byte[] bytes) {
-		// TODO Auto-generated method stub
+    @Override
+    public void putBytes(byte[] bytes) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
 }

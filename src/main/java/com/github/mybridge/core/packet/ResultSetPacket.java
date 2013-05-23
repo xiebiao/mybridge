@@ -40,34 +40,31 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * field_count         03                         .
  * In the example, we se what the packet would contain after "SELECT * FROM t7" if table t7 has 3 columns.
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class ResultSetPacket extends Packet {
-	private long fieldCount;
+public class ResultSetPacket extends AbstractPacket implements Packet {
 
-	public ResultSetPacket() {
-	}
+    private long fieldCount;
 
-	public ResultSetPacket(long fieldCount) {
-		this.fieldCount = fieldCount;
-	}
+    public ResultSetPacket() {}
 
-	@Override
-	public byte[] getBytes() {
-		int len = ByteBuffer.getLCBLen(fieldCount);
-		ByteBuffer buf = new ByteBuffer(len);
-		buf.putLCB(fieldCount);
-		return buf.getBytes();
-	}
+    public ResultSetPacket(long fieldCount) {
+        this.fieldCount = fieldCount;
+    }
 
-	@Override
-	public void putBytes(byte[] bs) {
-	}
+    @Override
+    public byte[] getBytes() {
+        int len = ByteBuffer.getLCBLen(fieldCount);
+        ByteBuffer buf = new ByteBuffer(len);
+        buf.putLCB(fieldCount);
+        return buf.getBytes();
+    }
 
-	public void setFieldCount(long fieldCount) {
-		this.fieldCount = fieldCount;
-	}
+    @Override
+    public void putBytes(byte[] bs) {}
+
+    public void setFieldCount(long fieldCount) {
+        this.fieldCount = fieldCount;
+    }
 
 }

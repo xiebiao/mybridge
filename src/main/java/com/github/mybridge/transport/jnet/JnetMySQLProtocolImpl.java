@@ -23,7 +23,7 @@ import com.github.mybridge.core.packet.FieldDescriptionPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
+import com.github.mybridge.core.packet.AbstractPacket;
 import com.github.mybridge.core.packet.PacketHeader;
 import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
@@ -96,7 +96,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
                 CommandsPacket cmdPacket = new CommandsPacket();
                 byte[] bytes = readBuffer.getBytes(0, readBuffer.limit());
                 cmdPacket.putBytes(bytes);
-                List<Packet> resultList = null;
+                List<AbstractPacket> resultList = null;
                 try {
                     resultList = execute(cmdPacket);
                 } catch (ExecuteException e) {
@@ -132,8 +132,8 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
     }
 
     /** ------------------------------------------ private */
-    private List<Packet> execute(String sql) throws SQLException {
-        List<Packet> packetList = new ArrayList<Packet>();
+    private List<AbstractPacket> execute(String sql) throws SQLException {
+        List<AbstractPacket> packetList = new ArrayList<AbstractPacket>();
         // Engine切入点
         Connection connection = cp.getConnection();
         boolean result;
@@ -184,8 +184,8 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
         return packetList;
     }
 
-    private List<Packet> executeSQL(String sql) {
-        List<Packet> packetList = new ArrayList<Packet>();
+    private List<AbstractPacket> executeSQL(String sql) {
+        List<AbstractPacket> packetList = new ArrayList<AbstractPacket>();
         try {
             packetList = execute(sql);
         } catch (Exception e) {
@@ -194,12 +194,12 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
         return packetList;
     }
 
-    private List<Packet> execute(Packet packet) throws ExecuteException {
-        List<Packet> packetList = null;
+    private List<AbstractPacket> execute(AbstractPacket packet) throws ExecuteException {
+        List<AbstractPacket> packetList = null;
         CommandsPacket cmdPacket = (CommandsPacket) packet;
         int cmdType = cmdPacket.getType();
         try {
-            packetList = new ArrayList<Packet>();
+            packetList = new ArrayList<AbstractPacket>();
             switch (cmdType) {
                 case MySQLCommand.COM_QUERY:
                     String sql = new String(cmdPacket.getValue(), charset);
@@ -230,9 +230,9 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
         session.setNextState(IoState.READ);
     }
 
-    private void writePacketList(IoBuffer writeBuf, List<Packet> resultlist) {
+    private void writePacketList(IoBuffer writeBuf, List<AbstractPacket> resultlist) {
         writeBuf.position(0);
-        for (Packet packet : resultlist) {
+        for (AbstractPacket packet : resultlist) {
             byte[] body = packet.getBytes();
             PacketHeader header = new PacketHeader();
             header.setPacketLen(body.length);
@@ -245,7 +245,7 @@ public class JnetMySQLProtocolImpl implements MySQLProtocol {
         session.setNextState(IoState.WRITE);
     }
 
-    private void writePacket(IoBuffer writeBuf, Packet packet) {
+    private void writePacket(IoBuffer writeBuf, AbstractPacket packet) {
         byte[] body = packet.getBytes();
         PacketHeader header = new PacketHeader();
         header.setPacketLen(body.length);

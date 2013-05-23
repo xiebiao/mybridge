@@ -1,4 +1,4 @@
-package com.github.mybridge.sql.parser;
+package com.github.mybridge.test.sql.parser;
 
 import java.util.List;
 

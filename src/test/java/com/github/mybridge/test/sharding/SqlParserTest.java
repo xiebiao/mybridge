@@ -1,4 +1,4 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.test.sharding;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

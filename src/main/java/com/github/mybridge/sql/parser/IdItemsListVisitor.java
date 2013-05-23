@@ -10,7 +10,7 @@ public class IdItemsListVisitor implements ItemsListVisitor {
 
     private int                           index;
     private long                          idValue;
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
+    private static final org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
 
     public IdItemsListVisitor(int index) {
         this.index = index;

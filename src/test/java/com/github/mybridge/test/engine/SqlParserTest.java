@@ -1,4 +1,4 @@
-package com.github.mybridge.engine;
+package com.github.mybridge.test.engine;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

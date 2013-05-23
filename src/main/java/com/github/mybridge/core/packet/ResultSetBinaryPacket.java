@@ -47,23 +47,21 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * 
  * Except for the different way of signalling NULLs, the server/client parameter interaction here proceeds the say way that the server sends result set data to the client. Since the data is not sent as a string, the length and meaning depend on the data type. The client must make appropriate conversions given its knowledge of the data type.
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class ResultSetBinaryPacket extends Packet {
-	private long fieldCount;
+public class ResultSetBinaryPacket extends AbstractPacket implements Packet {
 
-	@Override
-	public byte[] getBytes() {
-		int len = ByteBuffer.getLCBLen(fieldCount);
-		ByteBuffer buf = new ByteBuffer(len);
-		buf.putLCB(fieldCount);
-		return buf.getBytes();
-	}
+    private long fieldCount;
 
-	@Override
-	public void putBytes(byte[] bs) {
-	}
+    @Override
+    public byte[] getBytes() {
+        int len = ByteBuffer.getLCBLen(fieldCount);
+        ByteBuffer buf = new ByteBuffer(len);
+        buf.putLCB(fieldCount);
+        return buf.getBytes();
+    }
+
+    @Override
+    public void putBytes(byte[] bs) {}
 
 }

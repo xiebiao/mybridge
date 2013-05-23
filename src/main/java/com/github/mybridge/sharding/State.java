@@ -10,21 +10,19 @@ package com.github.mybridge.sharding;
  * <li>3. 可读写</li>
  * </ul>
  * </p>
- * 
  * @author xiebiao
  */
 public interface State {
-	/**
-	 * 可写入
-	 * 
-	 * @return true:可写,false:不可写
-	 */
-	public boolean canWrite();
 
-	/**
-	 * 可读取
-	 * 
-	 * @return true:可读,false:不可读
-	 */
-	public boolean canRead();
+    /**
+     * 可写入
+     * @return true:可写,false:不可写
+     */
+    public boolean writable();
+
+    /**
+     * 可读取
+     * @return true:可读,false:不可读
+     */
+    public boolean readable();
 }

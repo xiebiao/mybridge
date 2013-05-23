@@ -15,7 +15,7 @@ import com.github.mybridge.core.packet.EofPacket;
 import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.FieldDescriptionPacket;
 import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
+import com.github.mybridge.core.packet.AbstractPacket;
 import com.github.mybridge.core.packet.ResultSetPacket;
 import com.github.mybridge.core.packet.RowDataPacket;
 import com.github.mybridge.engine.DefaultEngine;
@@ -35,12 +35,12 @@ public class DefaultMySQLHandler implements MySQLHandler {
         this.engine = new DefaultEngine();
     }
 
-    public List<Packet> execute(Packet packet) throws ExecuteException {
-        List<Packet> packetList = null;
+    public List<AbstractPacket> execute(AbstractPacket packet) throws ExecuteException {
+        List<AbstractPacket> packetList = null;
         CommandsPacket cmdPacket = (CommandsPacket) packet;
         int cmdType = cmdPacket.getType();
         try {
-            packetList = new ArrayList<Packet>();
+            packetList = new ArrayList<AbstractPacket>();
             switch (cmdType) {
                 case MySQLCommand.COM_QUERY:
                     String sql = new String(cmdPacket.getValue(), charset);
@@ -69,8 +69,8 @@ public class DefaultMySQLHandler implements MySQLHandler {
      * 执行Mysql Commond sql 如：SHOW SESSION VARIABLES,Show Collection,sql
      * @param sql
      */
-    private List<Packet> executeSQL(String sql) {
-        List<Packet> packetList = new ArrayList<Packet>();
+    private List<AbstractPacket> executeSQL(String sql) {
+        List<AbstractPacket> packetList = new ArrayList<AbstractPacket>();
         try {
             packetList = execute(sql);
         } catch (Exception e) {
@@ -79,8 +79,8 @@ public class DefaultMySQLHandler implements MySQLHandler {
         return packetList;
     }
 
-    private List<Packet> execute(String sql) throws SQLException {
-        List<Packet> packetList = new ArrayList<Packet>();
+    private List<AbstractPacket> execute(String sql) throws SQLException {
+        List<AbstractPacket> packetList = new ArrayList<AbstractPacket>();
         Connection connection = cp.getConnection();
         boolean result;
         Statement statement;

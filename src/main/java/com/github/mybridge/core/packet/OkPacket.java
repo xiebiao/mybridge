@@ -60,40 +60,38 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  *     ..
  * In the example, the optional message field is missing (the client can determine this by examining the packet length). This is a packet that the server returns after a successful INSERT of a single row that contains no auto_increment columns.
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class OkPacket extends Packet {
-	private byte type = 0;
-	private long affectedRows = 0;
-	private long insertId = 0;
-	private int serverStatus = 2;
-	private int warningCount = 0;
-	private String message = "";
+public class OkPacket extends AbstractPacket implements Packet {
 
-	@Override
-	public byte[] getBytes() {
-		int len = 1 + ByteBuffer.getLCBLen(affectedRows)
-				+ ByteBuffer.getLCBLen(insertId) + 4
-				+ message.getBytes().length;
-		ByteBuffer buf = new ByteBuffer(len);
-		buf.putByte(type);
-		buf.putLCB(affectedRows);
-		buf.putLCB(insertId);
-		buf.putUInt16(serverStatus);
-		buf.putUInt16(warningCount);
-		buf.putRemainString(message);
-		return buf.getBytes();
-	}
+    private byte   type         = 0;
+    private long   affectedRows = 0;
+    private long   insertId     = 0;
+    private int    serverStatus = 2;
+    private int    warningCount = 0;
+    private String message      = "";
 
-	@Override
-	public void putBytes(byte[] bs) {
+    @Override
+    public byte[] getBytes() {
+        int len = 1 + ByteBuffer.getLCBLen(affectedRows) + ByteBuffer.getLCBLen(insertId) + 4
+                + message.getBytes().length;
+        ByteBuffer buf = new ByteBuffer(len);
+        buf.putByte(type);
+        buf.putLCB(affectedRows);
+        buf.putLCB(insertId);
+        buf.putUInt16(serverStatus);
+        buf.putUInt16(warningCount);
+        buf.putRemainString(message);
+        return buf.getBytes();
+    }
 
-	}
+    @Override
+    public void putBytes(byte[] bs) {
 
-	public void setAffectedRows(long affectedRows) {
-		this.affectedRows = affectedRows;
-	}
+    }
+
+    public void setAffectedRows(long affectedRows) {
+        this.affectedRows = affectedRows;
+    }
 
 }

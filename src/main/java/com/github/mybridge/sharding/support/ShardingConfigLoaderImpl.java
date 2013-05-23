@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.Set;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.github.mybridge.Constants;
 import com.github.mybridge.engine.JDBCProperties;
+import com.github.mybridge.sharding.Node;
+import com.github.mybridge.sharding.Shard;
+import com.github.mybridge.sharding.ShardGroup;
 import com.github.mybridge.sharding.ShardingConfigLoader;
 
 /**
@@ -75,7 +79,7 @@ public class ShardingConfigLoaderImpl implements ShardingConfigLoader {
                 table.setStartId(rs.getLong("start_id"));
                 table.setEndId(rs.getLong("end_id"));
                 tables.add(table);
-                logger.debug("Loading Table:" + table);
+                logger.debug(Constants.LOG_PREFIX + "Loading Table config:" + table);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -110,7 +114,7 @@ public class ShardingConfigLoaderImpl implements ShardingConfigLoader {
                 shard.setTables(this.loadTable(shard.getId()));
                 shard.setNodes(this.loadNodes(shard.getId()));
                 shards.add(shard);
-                logger.debug("Loading Shard:" + shard);
+                logger.debug(Constants.LOG_PREFIX + "Loading Shard config:" + shard);
             }
 
         } catch (SQLException e) {
@@ -134,7 +138,7 @@ public class ShardingConfigLoaderImpl implements ShardingConfigLoader {
                 node.setWritable(rs.getBoolean("writable"));
                 node.setAvailable(rs.getBoolean("available"));
                 nodes.add(node);
-                logger.debug("Loading Node:" + node);
+                logger.debug(Constants.LOG_PREFIX + "Loading Node config:" + node);
             }
         } catch (SQLException e) {
             e.printStackTrace();

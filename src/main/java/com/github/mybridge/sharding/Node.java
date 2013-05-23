@@ -1,14 +1,15 @@
-package com.github.mybridge.sharding.support;
+package com.github.mybridge.sharding;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 
-import com.github.mybridge.sharding.ConnectionPool;
-import com.github.mybridge.sharding.State;
 
 /**
- * 数据库节点
+ * 数据库节点:
+ * <p>
+ * 同分片下的节点是同级的，只有Master/Slave之分
+ * </p>
  * @author xiebiao
  */
 public class Node implements State, ConnectionPool {
@@ -76,13 +77,13 @@ public class Node implements State, ConnectionPool {
     }
 
     @Override
-    public boolean canWrite() {
+    public boolean writable() {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public boolean canRead() {
+    public boolean readable() {
         // TODO Auto-generated method stub
         return false;
     }

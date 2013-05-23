@@ -1,12 +1,29 @@
 package com.github.mybridge.sql.parser;
 
-import net.sf.jsqlparser.statement.Statement;
+import com.github.mybridge.sharding.SqlType;
 
 public interface Parser {
 
+    /**
+     * 分表id
+     * @return
+     * @throws ParserException
+     */
     public long getId() throws ParserException;
 
-    public void setIdName(String name);
+    /**
+     * 获取表名称
+     * @return
+     */
+    public String getTableName();
 
-    public Statement getStatement() throws ParserException;
+    /**
+     * 替换表名称,返回替换表名后的sql
+     * @param tableName
+     * @return
+     * @throws ParserException
+     */
+    public String replace(String tableName) throws ParserException;
+
+    public SqlType getType() throws UnsupportSqlTypeException;
 }

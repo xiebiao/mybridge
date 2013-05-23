@@ -1,9 +1,10 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.test.sharding;
 
 import java.sql.SQLException;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.mybridge.engine.JDBCProperties;
+import com.github.mybridge.sharding.Router;
 
 public class InitShardingRule {
 	private static DruidDataSource ds;

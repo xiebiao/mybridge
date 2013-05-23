@@ -1,10 +1,16 @@
 package com.github.mybridge.sql.parser;
 
-public class ParserException extends Exception {
+import net.sf.jsqlparser.JSQLParserException;
 
-	/**
+public class ParserException extends JSQLParserException {
+
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
+    public ParserException(String message) {
+        super(message);
+    }
 
 }

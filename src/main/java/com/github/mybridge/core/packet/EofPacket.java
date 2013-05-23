@@ -41,27 +41,25 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * warning_count       00 00                      ..
  * server_status       00 00                      ..
  * </pre>
- * 
  * @author xiebiao
- * 
  */
-public class EofPacket extends Packet {
-	private byte type = (byte) 0xfe;
-	private int warningCount = 0;
-	private int statusFlags = 0;
+public class EofPacket extends AbstractPacket implements Packet {
 
-	@Override
-	public byte[] getBytes() {
-		int len = 5;
-		ByteBuffer buf = new ByteBuffer(len);
-		buf.putByte(type);
-		buf.putUInt16(warningCount);
-		buf.putUInt16(statusFlags);
-		return buf.getBytes();
-	}
+    private byte type         = (byte) 0xfe;
+    private int  warningCount = 0;
+    private int  statusFlags  = 0;
 
-	@Override
-	public void putBytes(byte[] bs) {
-	}
+    @Override
+    public byte[] getBytes() {
+        int len = 5;
+        ByteBuffer buf = new ByteBuffer(len);
+        buf.putByte(type);
+        buf.putUInt16(warningCount);
+        buf.putUInt16(statusFlags);
+        return buf.getBytes();
+    }
+
+    @Override
+    public void putBytes(byte[] bs) {}
 
 }

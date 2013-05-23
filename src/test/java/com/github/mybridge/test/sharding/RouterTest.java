@@ -1,12 +1,16 @@
-package com.github.mybridge.sharding;
+package com.github.mybridge.test.sharding;
 
 import java.util.List;
 
+import com.github.mybridge.sharding.NotFoundShardException;
+import com.github.mybridge.sharding.NotFoundShardGroupException;
+import com.github.mybridge.sharding.NotFoundTableException;
+import com.github.mybridge.sharding.Shard;
+import com.github.mybridge.sharding.ShardGroup;
+import com.github.mybridge.sharding.ShardingConfigLoader;
 import com.github.mybridge.sharding.support.DefaultShardGroupRouter;
 import com.github.mybridge.sharding.support.DefaultShardRouter;
 import com.github.mybridge.sharding.support.DefaultTableRouter;
-import com.github.mybridge.sharding.support.Shard;
-import com.github.mybridge.sharding.support.ShardGroup;
 import com.github.mybridge.sharding.support.ShardingConfigLoaderImpl;
 
 public class RouterTest {
@@ -32,11 +36,22 @@ public class RouterTest {
         this.writable = true;
         this.id = 5001;
 
-        ShardGroup sg = this.shardGroupRouter.getShardGroup(this.loader.load(), writable, id);
-        System.out.println("group:" + sg);
-        Shard shard = this.shardRouter.getShard(sg, id);
-        System.out.println("shard:" + shard);
-        System.out.println("table:" + this.tableRouter.getTable(shard, id));
+        try {
+            ShardGroup sg = this.shardGroupRouter.getShardGroup(this.loader.load(), writable, id);
+            System.out.println("group:" + sg);
+            Shard shard = this.shardRouter.getShard(sg, id);
+            System.out.println("shard:" + shard);
+            System.out.println("table:" + this.tableRouter.getTable(shard, id));
+        } catch (NotFoundShardGroupException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NotFoundShardException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NotFoundTableException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**

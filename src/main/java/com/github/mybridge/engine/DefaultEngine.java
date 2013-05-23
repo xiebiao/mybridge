@@ -2,18 +2,19 @@ package com.github.mybridge.engine;
 
 import java.util.List;
 
-import net.sf.jsqlparser.statement.Statement;
-
+import com.github.mybridge.Constants;
 import com.github.mybridge.LifecycleException;
+import com.github.mybridge.Pair;
+import com.github.mybridge.sharding.Node;
+import com.github.mybridge.sharding.NodeRouter;
+import com.github.mybridge.sharding.ShardGroup;
 import com.github.mybridge.sharding.ShardGroupRouter;
 import com.github.mybridge.sharding.ShardRouter;
 import com.github.mybridge.sharding.ShardingConfigLoader;
 import com.github.mybridge.sharding.TableRouter;
-import com.github.mybridge.sharding.support.Node;
-import com.github.mybridge.sharding.support.ShardGroup;
 import com.github.mybridge.sharding.support.ShardingConfigLoaderImpl;
 import com.github.mybridge.sql.parser.DefaultParser;
-import com.github.mybridge.sql.parser.ParserException;
+import com.github.mybridge.sql.parser.Parser;
 
 public class DefaultEngine implements Engine {
 
@@ -21,6 +22,7 @@ public class DefaultEngine implements Engine {
     private TableRouter      tableRouter;
     private ShardGroupRouter shardGroupRouter;
     private ShardRouter      shardRouter;
+    private NodeRouter       nodeRouter;
 
     public DefaultEngine() {
 
@@ -51,19 +53,11 @@ public class DefaultEngine implements Engine {
     }
 
     @Override
-    public Node getNode(String sql) {
-        DefaultParser parser = new DefaultParser(sql);
-        try {
-            Statement st = parser.getStatement();
-            long id = parser.getId();
-            ShardGroup sg = this.shardGroupRouter.getShardGroup(this.shardGroups, true, id);
-            this.shardRouter.getShard(sg, id);
-           
+    public Pair<Node, String> match(String sql) {
+        Parser parser = new DefaultParser(sql, Constants.DEFAULT_ID_NAME);
+       
+        Pair<Node, String> matched = new Pair<Node, String>();
 
-        } catch (ParserException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         return null;
     }
 
@@ -84,4 +78,9 @@ public class DefaultEngine implements Engine {
         this.shardGroupRouter = shardGroupRouter;
     }
 
+    @Override
+    public void setNodeRouter(NodeRouter nodeRouter) {
+        this.nodeRouter = nodeRouter;
+
+    }
 }

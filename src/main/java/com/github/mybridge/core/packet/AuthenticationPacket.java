@@ -53,74 +53,72 @@ import com.github.mybridge.core.buffer.ByteBuffer;
  * 
  * Alternative terms: "Client authentication packet" is sometimes called "client auth response" or "client auth packet" or "login packet". "Scramble_buff" is sometimes called "crypted password".
  * </pre>
- * 
- * 
  */
-public class AuthenticationPacket extends Packet {
+public class AuthenticationPacket extends AbstractPacket implements Packet {
 
-	public long clientFlag;
-	public long maxPacketSize;
-	public byte charsetNum;
-	public byte[] filler;
-	public String clientUser;
-	public byte[] clientPassword;
-	public String databaseName;
-	// Mybridge 配置
-	private String serverUser = "root";// the server name
-	private String serverPassword = "yes";// the server pass
+    public long    clientFlag;
+    public long    maxPacketSize;
+    public byte    charsetNum;
+    public byte[]  filler;
+    public String  clientUser;
+    public byte[]  clientPassword;
+    public String  databaseName;
+    // Mybridge 配置
+    private String serverUser     = "root"; // the server name
+    private String serverPassword = "yes";  // the server pass
 
-	@Override
-	public byte[] getBytes() {
-		return null;
-	}
+    @Override
+    public byte[] getBytes() {
+        return null;
+    }
 
-	@Override
-	public void putBytes(byte[] bytes) {
-		ByteBuffer buf = new ByteBuffer(bytes);
-		clientFlag = buf.readUInt32();
-		maxPacketSize = buf.readUInt32();
-		charsetNum = buf.readByte();
-		filler = buf.readBytes(23);
-		clientUser = buf.readNullString();
-		clientPassword = buf.readLCBytes();
-		databaseName = buf.readNullString();
-	}
+    @Override
+    public void putBytes(byte[] bytes) {
+        ByteBuffer buf = new ByteBuffer(bytes);
+        clientFlag = buf.readUInt32();
+        maxPacketSize = buf.readUInt32();
+        charsetNum = buf.readByte();
+        filler = buf.readBytes(23);
+        clientUser = buf.readNullString();
+        clientPassword = buf.readLCBytes();
+        databaseName = buf.readNullString();
+    }
 
-	public boolean checkAuth(String clientUser, byte[] cPass) throws Exception {
-		if (!serverUser.equals(clientUser)) {
-			return false;
-		}
-		if (cPass.length == 0 && serverPassword.length() == 0) {
-			return true;
-		}
-		byte[] sPass = encodePassword(serverPassword);
-		if (cPass.length != sPass.length) {
-			return false;
-		}
-		for (int i = 0; i < sPass.length; i++) {
-			if (cPass[i] != sPass[i]) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public boolean checkAuth(String clientUser, byte[] cPass) throws Exception {
+        if (!serverUser.equals(clientUser)) {
+            return false;
+        }
+        if (cPass.length == 0 && serverPassword.length() == 0) {
+            return true;
+        }
+        byte[] sPass = encodePassword(serverPassword);
+        if (cPass.length != sPass.length) {
+            return false;
+        }
+        for (int i = 0; i < sPass.length; i++) {
+            if (cPass[i] != sPass[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	byte[] encodePassword(String password) throws Exception {
-		MessageDigest md;
-		byte[] seed = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 };
-		md = MessageDigest.getInstance("SHA-1");
-		byte[] passwordHashStage1 = md.digest(password.getBytes("ASCII"));
-		md.reset();
-		byte[] passwordHashStage2 = md.digest(passwordHashStage1);
-		md.reset();
-		md.update(seed);
-		md.update(passwordHashStage2);
-		byte[] toBeXord = md.digest();
-		int numToXor = toBeXord.length;
-		for (int i = 0; i < numToXor; i++) {
-			toBeXord[i] = (byte) (toBeXord[i] ^ passwordHashStage1[i]);
-		}
-		return toBeXord;
-	}
+    byte[] encodePassword(String password) throws Exception {
+        MessageDigest md;
+        byte[] seed = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 };
+        md = MessageDigest.getInstance("SHA-1");
+        byte[] passwordHashStage1 = md.digest(password.getBytes("ASCII"));
+        md.reset();
+        byte[] passwordHashStage2 = md.digest(passwordHashStage1);
+        md.reset();
+        md.update(seed);
+        md.update(passwordHashStage2);
+        byte[] toBeXord = md.digest();
+        int numToXor = toBeXord.length;
+        for (int i = 0; i < numToXor; i++) {
+            toBeXord[i] = (byte) (toBeXord[i] ^ passwordHashStage1[i]);
+        }
+        return toBeXord;
+    }
 
 }

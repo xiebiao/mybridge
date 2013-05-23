@@ -14,7 +14,7 @@ import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
+import com.github.mybridge.core.packet.AbstractPacket;
 
 public class NettyMySQLProtocolImpl {
 
@@ -90,7 +90,7 @@ public class NettyMySQLProtocolImpl {
                 state = HandshakeState.WRITE_RESULT;
                 CommandsPacket cmd = new CommandsPacket();
                 cmd.putBytes(bytes);
-                List<Packet> resultlist = null;
+                List<AbstractPacket> resultlist = null;
                 try {
                     resultlist = handler.execute(cmd);
                 } catch (ExecuteException e) {
@@ -107,8 +107,8 @@ public class NettyMySQLProtocolImpl {
         }
     }
 
-    private void writePacketList(Channel channel, List<Packet> resultlist) {
-        for (Packet packet : resultlist) {
+    private void writePacketList(Channel channel, List<AbstractPacket> resultlist) {
+        for (AbstractPacket packet : resultlist) {
             byte[] temp = packet.getBytes();
             channel.write(temp);
         }

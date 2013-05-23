@@ -15,7 +15,7 @@ import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
+import com.github.mybridge.core.packet.AbstractPacket;
 
 public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
 
@@ -68,7 +68,7 @@ public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
                 state = HandshakeState.WRITE_RESULT;
                 CommandsPacket cmd = new CommandsPacket();
                 cmd.putBytes(bytes);
-                List<Packet> resultlist = handler.execute(cmd);
+                List<AbstractPacket> resultlist = handler.execute(cmd);
                 if (resultlist != null && resultlist.size() > 0) {
                     writePacketList(session, resultlist);
                 }
@@ -83,8 +83,8 @@ public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
      * @param session
      * @param resultlist
      */
-    private void writePacketList(IoSession session, List<Packet> resultlist) {
-        for (Packet packet : resultlist) {
+    private void writePacketList(IoSession session, List<AbstractPacket> resultlist) {
+        for (AbstractPacket packet : resultlist) {
             byte[] temp = packet.getBytes();
             session.write(temp);
         }
