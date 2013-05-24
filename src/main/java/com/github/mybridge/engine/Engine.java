@@ -1,8 +1,7 @@
 package com.github.mybridge.engine;
 
 import com.github.mybridge.Lifecycle;
-import com.github.mybridge.Pair;
-import com.github.mybridge.sharding.Node;
+import com.github.mybridge.sharding.NodeExecuter;
 import com.github.mybridge.sharding.NodeRouter;
 import com.github.mybridge.sharding.ShardGroupRouter;
 import com.github.mybridge.sharding.ShardRouter;
@@ -19,7 +18,7 @@ import com.github.mybridge.sharding.TableRouter;
  */
 public interface Engine extends Lifecycle {
 
-    public Pair<Node, String> match(String sql);
+    public NodeExecuter getNodeExecuter(String sql);
 
     public void setTableRouter(TableRouter tableRouter);
 

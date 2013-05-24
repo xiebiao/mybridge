@@ -4,14 +4,16 @@ import java.util.List;
 
 import com.github.mybridge.Constants;
 import com.github.mybridge.LifecycleException;
-import com.github.mybridge.Pair;
 import com.github.mybridge.sharding.Node;
+import com.github.mybridge.sharding.NodeExecuter;
 import com.github.mybridge.sharding.NodeRouter;
+import com.github.mybridge.sharding.Shard;
 import com.github.mybridge.sharding.ShardGroup;
 import com.github.mybridge.sharding.ShardGroupRouter;
 import com.github.mybridge.sharding.ShardRouter;
 import com.github.mybridge.sharding.ShardingConfigLoader;
 import com.github.mybridge.sharding.TableRouter;
+import com.github.mybridge.sharding.support.FragmentTable;
 import com.github.mybridge.sharding.support.ShardingConfigLoaderImpl;
 import com.github.mybridge.sql.parser.DefaultParser;
 import com.github.mybridge.sql.parser.Parser;
@@ -53,12 +55,32 @@ public class DefaultEngine implements Engine {
     }
 
     @Override
-    public Pair<Node, String> match(String sql) {
+    public NodeExecuter getNodeExecuter(String sql) {
         Parser parser = new DefaultParser(sql, Constants.DEFAULT_ID_NAME);
-       
-        Pair<Node, String> matched = new Pair<Node, String>();
+        NodeExecuter ne = null;
+        try {
+            long id = parser.getId();
+            ShardGroup group = this.shardGroupRouter.getShardGroup(shardGroups, true, id);
+            Shard shard = this.shardRouter.getShard(group, id);
+            FragmentTable table = this.tableRouter.getTable(shard, id);
+            long tableId = table.getId();
+            
+            ne = new NodeExecuter() {
 
-        return null;
+                @Override
+                public Node getNode() {
+                    // TODO Auto-generated method stub
+                    return null;
+                }
+
+                @Override
+                public String getSql() {
+                    // TODO Auto-generated method stub
+                    return null;
+                }
+            };
+        } catch (Exception e) {}
+        return ne;
     }
 
     @Override

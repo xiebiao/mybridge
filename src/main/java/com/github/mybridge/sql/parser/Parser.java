@@ -23,7 +23,7 @@ public interface Parser {
      * @return
      * @throws ParserException
      */
-    public String replace(String tableName) throws ParserException;
+    public String replace(String tableName);
 
     public SqlType getType() throws UnsupportSqlTypeException;
 }

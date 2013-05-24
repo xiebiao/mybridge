@@ -16,9 +16,13 @@ public class FragmentTable {
      */
     private long   shardId;
     /**
-     * 表名
+     * 表名=id+
      */
     private String tableName;
+    /**
+     * 原始
+     */
+    private String originalName;
     private long   startId;
     private long   endId;
 

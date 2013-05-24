@@ -15,9 +15,9 @@ import com.github.mybridge.core.packet.ErrPacket;
 import com.github.mybridge.core.packet.HandshakeState;
 import com.github.mybridge.core.packet.InitialHandshakePacket;
 import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.AbstractPacket;
+import com.github.mybridge.core.packet.Packet;
 
-public class MinaServerHandler extends IoHandlerAdapter  implements com.github.mybridge.server.Server{
+public class MinaServerHandler extends IoHandlerAdapter implements com.github.mybridge.server.Server {
 
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MinaServerHandler.class);
     private HandshakeState                state;
@@ -73,7 +73,7 @@ public class MinaServerHandler extends IoHandlerAdapter  implements com.github.m
                 state = HandshakeState.WRITE_RESULT;
                 CommandsPacket cmd = new CommandsPacket();
                 cmd.putBytes(bytes);
-                List<AbstractPacket> resultlist = handler.execute(cmd);
+                List<Packet> resultlist = handler.execute(cmd);
                 if (resultlist != null && resultlist.size() > 0) {
                     writePacketList(session, resultlist);
                 }
@@ -88,8 +88,8 @@ public class MinaServerHandler extends IoHandlerAdapter  implements com.github.m
      * @param session
      * @param resultlist
      */
-    private void writePacketList(IoSession session, List<AbstractPacket> resultlist) {
-        for (AbstractPacket packet : resultlist) {
+    private void writePacketList(IoSession session, List<Packet> resultlist) {
+        for (Packet packet : resultlist) {
             byte[] temp = packet.getBytes();
             session.write(temp);
         }
@@ -98,7 +98,6 @@ public class MinaServerHandler extends IoHandlerAdapter  implements com.github.m
     @Override
     public void messageSent(IoSession session, Object message) throws Exception {
         super.messageSent(session, message);
-
         switch (state) {
             case WRITE_INIT:
                 state = HandshakeState.READ_AUTH;

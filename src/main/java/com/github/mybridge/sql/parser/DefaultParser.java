@@ -23,11 +23,12 @@ public class DefaultParser extends AbstractParser implements Parser {
     private String                        orginSql;
     private String                        sql;
     private Statement                     statement;
-    private String                        idName           = "id";
+    private String                        idName     = "id";
     private long                          idValue;
     private String                        tableName;
-    private static final String           INSERT_TABLE_REG = "^(INSERT INTO\\s)(\\w*)\\s(.*)$";
-    private static final org.slf4j.Logger LOG              = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
+    private static final String           INSERT_REG = "^(INSERT INTO\\s)(\\w*)(\\s.*)$";
+    private static final String           SELECT_REG = "^(SELECT\\s)(.*)(\\sFROM\\s)(\\w*)(\\s.*)$";
+    private static final org.slf4j.Logger LOG        = org.slf4j.LoggerFactory.getLogger(DefaultParser.class);
 
     public DefaultParser(String sql, String idName) {
         this.orginSql = sql;
@@ -99,31 +100,22 @@ public class DefaultParser extends AbstractParser implements Parser {
     }
 
     @Override
-    public String replace(String tableName) throws ParserException {
-        // 只能用正则替换了
-        Pattern pattern = Pattern.compile(INSERT_TABLE_REG);
+    public String replace(String tableName) {
+        Pattern pattern = Pattern.compile(INSERT_REG);
         Matcher matcher = pattern.matcher(this.sql);
-
-        System.out.println(this.sql);
         if (matcher.find()) {
-            String _t = matcher.replaceAll(tableName);
-            System.out.println("t:" + _t);
-        } else {
-            LOG.warn("{}, Can't find Table Name", this.sql);
-            System.out.println("没有匹配");
+            return this.sql.replaceAll(INSERT_REG, "$1" + tableName + "$3");
         }
-        return null;
+        pattern = Pattern.compile(SELECT_REG);
+        matcher = pattern.matcher(this.sql);
+        if (matcher.find()) {
+            return this.sql.replaceAll(SELECT_REG, "$1$2$3" + tableName + "$5");
+        }
+        return this.sql;
     }
 
     @Override
     public String getTableName() {
         return tableName;
-    }
-
-    public static void main(String[] args) {
-        String str = "INSERT INTO user (sid, name) VALUES (1000, 'xx')";
-                     
-        String replacement = "替换";
-        System.out.println(str.replaceAll("^(INSERT INTO\\s)(\\w*)(\\s.*)", "$1xxx$3"));
     }
 }
