@@ -1,6 +1,5 @@
 package com.github.mybridge.sharding;
 
-
 /**
  * 节点路由:
  * <p>
@@ -16,5 +15,5 @@ public interface NodeRouter extends Router {
      * @param writable 可写
      * @return
      */
-    public Node getNode(Shard shard, boolean writable) throws NotFoundNodeException;
+    public Node getNode(Shard shard, Operation operation) throws NotFoundNodeException;
 }

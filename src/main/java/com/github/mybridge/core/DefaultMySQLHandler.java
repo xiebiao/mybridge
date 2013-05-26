@@ -21,6 +21,7 @@ import com.github.mybridge.core.packet.RowDataPacket;
 import com.github.mybridge.engine.DefaultEngine;
 import com.github.mybridge.engine.Engine;
 import com.github.mybridge.sharding.ConnectionPool;
+import com.github.mybridge.sharding.NodeExecuter;
 import com.github.mybridge.sharding.support.SimpleConnectionPool;
 
 public class DefaultMySQLHandler implements MySQLHandler {
@@ -84,7 +85,9 @@ public class DefaultMySQLHandler implements MySQLHandler {
 
     private List<Packet> execute(String sql) throws SQLException {
         List<Packet> packetList = new ArrayList<Packet>();
-        Connection connection = cp.getConnection();
+        //不能解析 SHOW *类的sql
+        //NodeExecuter ne = this.engine.getNodeExecuter(sql);
+        Connection connection = this.cp.getConnection();
         boolean result;
         Statement statement;
         try {

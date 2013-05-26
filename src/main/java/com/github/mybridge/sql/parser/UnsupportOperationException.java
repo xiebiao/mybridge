@@ -7,14 +7,14 @@ package com.github.mybridge.sql.parser;
  * </p>
  * @author xiebiao
  */
-public class UnsupportSqlTypeException extends Exception {
+public class UnsupportOperationException extends Exception {
 
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
 
-    public UnsupportSqlTypeException(String message) {
+    public UnsupportOperationException(String message) {
         super(message);
     }
 

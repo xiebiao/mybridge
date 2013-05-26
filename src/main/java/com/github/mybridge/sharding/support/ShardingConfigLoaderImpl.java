@@ -37,7 +37,7 @@ public class ShardingConfigLoaderImpl implements ShardingConfigLoader {
         ds.setDriver(jdbc.getDriver());
         ds.setUrl("jdbc:mysql://127.0.0.1:3306/mybridge?characterEncoding=utf-8");
         ds.setUsername("root");
-        ds.setPassword("xiebiao");
+        ds.setPassword("wangzhu");
         ds.setTestOnBorrow(false);
     }
 
