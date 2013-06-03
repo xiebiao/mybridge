@@ -10,7 +10,7 @@ import com.github.mybridge.core.packet.Packet;
  */
 public interface MySQLHandler {
 
-    public List<Packet> execute(Packet cmd) throws ExecuteException;
+    public List<Packet> execute(Packet packet) throws ExecuteException;
 
     public void setCharset(String charset);
 
