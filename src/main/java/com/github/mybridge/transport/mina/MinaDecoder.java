@@ -5,7 +5,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderAdapter;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
-import com.github.mybridge.core.packet.PacketHeader;
+import com.github.mybridge.mysql.packet.PacketHeader;
 
 public class MinaDecoder extends ProtocolDecoderAdapter {
 	// private final org.slf4j.Logger LOG =

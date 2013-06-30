@@ -3,8 +3,8 @@ package com.github.mybridge.transport.jnet;
 import com.github.jnet.Session;
 import com.github.jnet.utils.IoBuffer;
 import com.github.mybridge.core.MySQLProtocol;
-import com.github.mybridge.core.packet.PacketHeader;
 import com.github.mybridge.engine.Engine;
+import com.github.mybridge.mysql.packet.PacketHeader;
 
 public class JnetMySQLSession extends Session {
 	private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory

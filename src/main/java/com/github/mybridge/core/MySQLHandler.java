@@ -2,7 +2,7 @@ package com.github.mybridge.core;
 
 import java.util.List;
 
-import com.github.mybridge.core.packet.Packet;
+import com.github.mybridge.mysql.packet.Packet;
 
 /**
  * (线程安全)

@@ -1,4 +1,4 @@
-package com.github.mybridge.core.packet;
+package com.github.mybridge.mysql.packet;
 
 public final class CharacterSet {
 	private String name;
