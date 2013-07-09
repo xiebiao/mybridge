@@ -4,13 +4,13 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.mybridge.core.packet.AbstractPacket;
-import com.github.mybridge.core.packet.EofPacket;
-import com.github.mybridge.core.packet.FieldDescriptionPacket;
-import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
-import com.github.mybridge.core.packet.ResultSetPacket;
-import com.github.mybridge.core.packet.RowDataPacket;
+import com.github.mybridge.mysql.packet.AbstractPacket;
+import com.github.mybridge.mysql.packet.EofPacket;
+import com.github.mybridge.mysql.packet.FieldDescriptionPacket;
+import com.github.mybridge.mysql.packet.OkPacket;
+import com.github.mybridge.mysql.packet.Packet;
+import com.github.mybridge.mysql.packet.ResultSetPacket;
+import com.github.mybridge.mysql.packet.RowDataPacket;
 
 /**
  * just for test

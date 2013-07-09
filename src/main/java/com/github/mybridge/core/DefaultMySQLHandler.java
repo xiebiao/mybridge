@@ -10,17 +10,18 @@ import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
 
-import com.github.mybridge.core.packet.CommandsPacket;
-import com.github.mybridge.core.packet.EofPacket;
-import com.github.mybridge.core.packet.ErrPacket;
-import com.github.mybridge.core.packet.FieldDescriptionPacket;
-import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
-import com.github.mybridge.core.packet.ResultSetPacket;
-import com.github.mybridge.core.packet.RowDataPacket;
 import com.github.mybridge.engine.DefaultEngine;
 import com.github.mybridge.engine.Engine;
+import com.github.mybridge.mysql.packet.CommandsPacket;
+import com.github.mybridge.mysql.packet.EofPacket;
+import com.github.mybridge.mysql.packet.ErrPacket;
+import com.github.mybridge.mysql.packet.FieldDescriptionPacket;
+import com.github.mybridge.mysql.packet.OkPacket;
+import com.github.mybridge.mysql.packet.Packet;
+import com.github.mybridge.mysql.packet.ResultSetPacket;
+import com.github.mybridge.mysql.packet.RowDataPacket;
 import com.github.mybridge.sharding.ConnectionPool;
+import com.github.mybridge.sharding.NodeExecuter;
 import com.github.mybridge.sharding.support.SimpleConnectionPool;
 
 public class DefaultMySQLHandler implements MySQLHandler {
@@ -84,7 +85,9 @@ public class DefaultMySQLHandler implements MySQLHandler {
 
     private List<Packet> execute(String sql) throws SQLException {
         List<Packet> packetList = new ArrayList<Packet>();
-        Connection connection = cp.getConnection();
+        //不能解析 SHOW *类的sql
+        //NodeExecuter ne = this.engine.getNodeExecuter(sql);
+        Connection connection = this.cp.getConnection();
         boolean result;
         Statement statement;
         try {

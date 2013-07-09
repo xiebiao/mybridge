@@ -3,10 +3,10 @@ package com.github.mybridge.test.sql.parser;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import com.github.mybridge.sharding.SqlType;
+import com.github.mybridge.sharding.Operation;
 import com.github.mybridge.sql.parser.DefaultParser;
 import com.github.mybridge.sql.parser.ParserException;
-import com.github.mybridge.sql.parser.UnsupportSqlTypeException;
+import com.github.mybridge.sql.parser.UnsupportOperationException;
 
 public class DefaultParserTest extends TestCase {
 
@@ -40,8 +40,8 @@ public class DefaultParserTest extends TestCase {
         long id = 1000;
         DefaultParser dp = new DefaultParser(selectSql, idName);
         try {
-            Assert.assertEquals(SqlType.READ, dp.getType());
-        } catch (UnsupportSqlTypeException e) {
+            Assert.assertEquals(Operation.READ, dp.getOperation());
+        } catch (UnsupportOperationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -78,8 +78,8 @@ public class DefaultParserTest extends TestCase {
         long id = 1000;
         DefaultParser dp = new DefaultParser(insertSql, idName);
         try {
-            Assert.assertEquals(SqlType.WRITE, dp.getType());
-        } catch (UnsupportSqlTypeException e) {
+            Assert.assertEquals(Operation.WRITE, dp.getOperation());
+        } catch (UnsupportOperationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

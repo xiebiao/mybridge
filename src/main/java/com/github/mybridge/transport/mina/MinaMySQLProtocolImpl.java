@@ -9,13 +9,13 @@ import org.apache.mina.core.session.IoSession;
 import com.github.mybridge.core.DefaultMySQLHandler;
 import com.github.mybridge.core.MySQLCommand;
 import com.github.mybridge.core.MySQLHandler;
-import com.github.mybridge.core.packet.AuthenticationPacket;
-import com.github.mybridge.core.packet.CommandsPacket;
-import com.github.mybridge.core.packet.ErrPacket;
-import com.github.mybridge.core.packet.HandshakeState;
-import com.github.mybridge.core.packet.InitialHandshakePacket;
-import com.github.mybridge.core.packet.OkPacket;
-import com.github.mybridge.core.packet.Packet;
+import com.github.mybridge.mysql.packet.AuthenticationPacket;
+import com.github.mybridge.mysql.packet.CommandsPacket;
+import com.github.mybridge.mysql.packet.ErrPacket;
+import com.github.mybridge.mysql.packet.HandshakeState;
+import com.github.mybridge.mysql.packet.InitialHandshakePacket;
+import com.github.mybridge.mysql.packet.OkPacket;
+import com.github.mybridge.mysql.packet.Packet;
 
 public class MinaMySQLProtocolImpl extends IoHandlerAdapter {
 

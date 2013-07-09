@@ -20,11 +20,12 @@ import com.github.mybridge.sql.parser.Parser;
 
 public class DefaultEngine implements Engine {
 
-    private List<ShardGroup> shardGroups;
-    private TableRouter      tableRouter;
-    private ShardGroupRouter shardGroupRouter;
-    private ShardRouter      shardRouter;
-    private NodeRouter       nodeRouter;
+    private List<ShardGroup>              shardGroups;
+    private TableRouter                   tableRouter;
+    private ShardGroupRouter              shardGroupRouter;
+    private ShardRouter                   shardRouter;
+    private NodeRouter                    nodeRouter;
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(DefaultEngine.class);
 
     public DefaultEngine() {
 
@@ -63,23 +64,25 @@ public class DefaultEngine implements Engine {
             ShardGroup group = this.shardGroupRouter.getShardGroup(shardGroups, true, id);
             Shard shard = this.shardRouter.getShard(group, id);
             FragmentTable table = this.tableRouter.getTable(shard, id);
-            long tableId = table.getId();
-            
+            final Node node = this.nodeRouter.getNode(shard, parser.getOperation());
+            final String _sql = parser.replace(table.getTableName() + "_" + table.getId());
+            logger.debug("sql:{}, find in Node:{}, excute sql:", sql, node, _sql);
             ne = new NodeExecuter() {
 
                 @Override
                 public Node getNode() {
                     // TODO Auto-generated method stub
-                    return null;
+                    return node;
                 }
 
                 @Override
                 public String getSql() {
                     // TODO Auto-generated method stub
-                    return null;
+                    return _sql;
                 }
             };
         } catch (Exception e) {}
+
         return ne;
     }
 

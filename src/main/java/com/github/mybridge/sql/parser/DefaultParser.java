@@ -16,7 +16,7 @@ import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.statement.update.Update;
 
-import com.github.mybridge.sharding.SqlType;
+import com.github.mybridge.sharding.Operation;
 
 public class DefaultParser extends AbstractParser implements Parser {
 
@@ -35,13 +35,16 @@ public class DefaultParser extends AbstractParser implements Parser {
         this.idName = idName;
         CCJSqlParserManager parser = new CCJSqlParserManager();
         try {
-            statement = parser.parse(new StringReader(orginSql));
-            this.sql = statement.toString();
-            if (statement instanceof Insert) {
-                parseInsert();
-            } else if (statement instanceof Select) {
-                parseSelect();
-            }// 后面再支持Delete,Update
+            LOG.debug("Parsing sql:", this.orginSql);
+            if (!"".equals(this.orginSql) && null != this.orginSql) {
+                statement = parser.parse(new StringReader(orginSql));
+                this.sql = statement.toString();
+                if (statement instanceof Insert) {
+                    parseInsert();
+                } else if (statement instanceof Select) {
+                    parseSelect();
+                }// 后面再支持Delete,Update
+            }
         } catch (JSQLParserException e) {
             e.printStackTrace();
         }
@@ -53,17 +56,17 @@ public class DefaultParser extends AbstractParser implements Parser {
     }
 
     @Override
-    public SqlType getType() throws UnsupportSqlTypeException {
+    public Operation getOperation() throws UnsupportOperationException {
         if (statement instanceof Select) {
-            return SqlType.READ;
+            return Operation.READ;
         } else if (statement instanceof Insert) {
-            return SqlType.WRITE;
+            return Operation.WRITE;
         } else if (statement instanceof Update) {
-            return SqlType.WRITE;
+            return Operation.WRITE;
         } else if (statement instanceof Delete) {
-            return SqlType.WRITE;
+            return Operation.WRITE;
         }
-        throw new UnsupportSqlTypeException("不支持Sql:" + this.orginSql);
+        throw new UnsupportOperationException("不支持Sql:" + this.orginSql);
     }
 
     private void parseSelect() {

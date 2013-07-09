@@ -1,4 +1,4 @@
-package com.github.mybridge.core.packet;
+package com.github.mybridge.mysql.packet;
 
 import java.security.MessageDigest;
 
@@ -65,7 +65,7 @@ public class AuthenticationPacket extends AbstractPacket implements Packet {
     public String  databaseName;
     // Mybridge 配置
     private String serverUser     = "root"; // the server name
-    private String serverPassword = "yes";  // the server pass
+    private String serverPassword = "yes"; // the server pass
 
     @Override
     public byte[] getBytes() {
@@ -103,7 +103,7 @@ public class AuthenticationPacket extends AbstractPacket implements Packet {
         return true;
     }
 
-    byte[] encodePassword(String password) throws Exception {
+    private byte[] encodePassword(String password) throws Exception {
         MessageDigest md;
         byte[] seed = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1 };
         md = MessageDigest.getInstance("SHA-1");

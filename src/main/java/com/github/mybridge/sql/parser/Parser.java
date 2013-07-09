@@ -1,6 +1,6 @@
 package com.github.mybridge.sql.parser;
 
-import com.github.mybridge.sharding.SqlType;
+import com.github.mybridge.sharding.Operation;
 
 public interface Parser {
 
@@ -25,5 +25,5 @@ public interface Parser {
      */
     public String replace(String tableName);
 
-    public SqlType getType() throws UnsupportSqlTypeException;
+    public Operation getOperation() throws UnsupportOperationException;
 }

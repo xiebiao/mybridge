@@ -18,7 +18,7 @@ public class SimpleConnectionPool implements ConnectionPool {
             ds.setDriver(driver);
             ds.setUrl("jdbc:mysql://127.0.0.1:3306/mybridge");
             ds.setUsername("root");
-            ds.setPassword("xiebiao");
+            ds.setPassword("wangzhu");
             ds.setTestOnBorrow(false);
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
